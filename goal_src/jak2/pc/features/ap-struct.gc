@@ -323,7 +323,7 @@
         (script-eval '(talker-spawn "car001")) ;; rift rider
         ))
     (('dark-eco-pill)
-      (sound-play "pill-pickup")
+      (sound-play "pill-pickup") ;; dark eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 5.0)
      )
     (('health-pack)
@@ -341,7 +341,11 @@
     (('ammo-blue)
       (sound-play "ammo-pickup")
       (send-event *target* 'get-pickup (pickup-type ammo-blue) 10.0)
-    )
+     )
+    (('ammo-dark)
+      (sound-play "ammo-pickup") ;; vulcan fury filler item
+      (send-event *target* 'get-pickup (pickup-type ammo-dark) 1.0)
+     )
     )
   ;; (auto-save-command 'save 0 0 *default-pool* #f) ;; <ap:todo> Fails compilation because ap-struct declared too early. Any way to fix this?
   #t
