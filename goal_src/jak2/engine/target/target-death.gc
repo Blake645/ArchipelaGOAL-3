@@ -8,6 +8,7 @@
 (define-extern intro-play (function none))
 (define-extern find-nearest-entity (function vector type entity))
 (define-extern warp-gate type)
+(define-extern runs-on-jak-death (function symbol none))
 
 ;; DECOMP BEGINS
 
@@ -1459,6 +1460,9 @@
     (set-vector! (-> self draw color-mult) 1.0 1.0 1.0 1.0)
     )
   :trans (-> target-hit trans)
+  :enter (behavior ((arg0 symbol))
+          (runs-on-jak-death arg0)
+          )
   :code (behavior ((arg0 symbol))
     (set! (-> self control unknown-word04) (the-as uint #f))
     (set! (-> self control did-move-to-pole-or-max-jump-height)
