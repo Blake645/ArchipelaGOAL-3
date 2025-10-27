@@ -318,4 +318,28 @@
     )
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; mod settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define *mod-settings-filename* "ap-settings.gc")
+
+(deftype mod-settings-jak2 (basic)
+  (
+    (version    uint64)
+    (deathlink? symbol)
+  )
+  (:methods
+    (new (symbol type) (_type_))
+    (initialize (_type_) _type_)
+    (reset (_type_ symbol) int)
+    (read-from-file (_type_ string) symbol)
+    (commit-to-file (_type_) none)
+    (write-to-file (_type_ string) symbol)
+    (handle-input-settings (_type_ file-stream) object)
+    (handle-output-settings (_type_ file-stream) object)
+    (load-settings (_type_) int)
+  )
+)
+
+(define *mod-settings* (the mod-settings-jak2 #f))
