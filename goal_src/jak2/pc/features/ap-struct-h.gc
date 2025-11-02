@@ -94,3 +94,5 @@
 (define-extern ap-route-slums-to-nest? (function symbol))
 
 (define-extern ap-setup-options! (function ap-seed-options symbol))
+
+(define-extern ap-settings-update (function none))

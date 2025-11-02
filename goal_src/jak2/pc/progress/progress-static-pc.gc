@@ -682,10 +682,10 @@ This gives us more freedom to write code how we want.
     :name (text-id progress-menu-deathlink)
     :truthy-text (text-id progress-menu-enabled)
     :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-info-jak2* deathlink-enabled)))
-    :on-confirm (lambda ((val uint))
-      (set! (-> *ap-info-jak2* deathlink-enabled) val)
-      (mod-settings-save))))
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* deathlink?)))
+    :on-confirm (lambda ((val symbol))
+      (set! (-> *ap-settings* deathlink?) val)
+      (ap-settings-save))))
 
 (defmacro misc-options-pc-discord-rpc ()
   `(new 'static 'menu-generic-boolean-option

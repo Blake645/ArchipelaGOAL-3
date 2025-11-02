@@ -117,6 +117,19 @@
     )
   )
 
+(deftype ap-settings (basic)
+  ((version              uint64)
+   (deathlink?           symbol))
+  (:methods
+   (new (symbol type) _type_)
+   (reset (_type_) none)
+   (read-from-file (_type_ string) symbol)
+   (commit-to-file (_type_) none)
+   (write-to-file (_type_ string) symbol)
+   (load-settings (_type_) int)))
+
+(define *ap-settings* (the ap-settings #f))
+
 (define *pc-settings* (the pc-settings-jak2 #f))
 (define *matrix-minimap-north* (quaternion->matrix (new 'static 'matrix) (quaternion-vector-angle! (new 'static 'quaternion) *y-vector* (degrees 180))))
 
@@ -207,7 +220,13 @@
     )
   0)
 
-
+(defmethod reset ap-settings
+  ((obj ap-settings))
+  "Set the default settings for archipelago"
+  (format 0 "Resetting archipelago settings~%")
+  (set! (-> obj version) 0)
+  (set! (-> obj deathlink?) #f)
+  (none))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; other
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -228,7 +247,9 @@
 
 (defun get-video-params () *video-params*)
 
-
+(defun ap-settings-save ()
+  (commit-to-file *ap-settings*)
+  )
 
 ;; for debugging
 (defenum pc-pat-skip-hack
@@ -317,29 +338,3 @@
     (logclear! (-> *pc-settings* cheats-revealed) (pc-cheats ,@cheats))
     )
   )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; mod settings
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define *mod-settings-filename* "ap-settings.gc")
-
-(deftype mod-settings-jak2 (basic)
-  (
-    (version    uint64)
-    (deathlink? symbol)
-  )
-  (:methods
-    (new (symbol type) (_type_))
-    (initialize (_type_) _type_)
-    (reset (_type_ symbol) int)
-    (read-from-file (_type_ string) symbol)
-    (commit-to-file (_type_) none)
-    (write-to-file (_type_ string) symbol)
-    (handle-input-settings (_type_ file-stream) object)
-    (handle-output-settings (_type_ file-stream) object)
-    (load-settings (_type_) int)
-  )
-)
-
-(define *mod-settings* (the mod-settings-jak2 #f))

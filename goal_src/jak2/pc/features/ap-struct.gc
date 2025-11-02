@@ -414,3 +414,8 @@
   ;; <ap:todo> handle these later: (charp<-string (-> *ap-info-jak2* slot-name) (-> options slot-name))
   ;; <ap:todo> handle these later: (charp<-string (-> *ap-info-jak2* slot-seed) (-> options slot-seed))
   #t)
+
+(defun ap-settings-update ()
+  (set! (-> *ap-info-jak2* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
+  (none)
+)
