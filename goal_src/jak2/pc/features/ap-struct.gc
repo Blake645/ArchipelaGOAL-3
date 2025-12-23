@@ -4,47 +4,16 @@
 (define *ap-info-jak2* (new 'static 'ap-info-jak2))
 (pc-get-archipelago-struct)
 
-;; Debug: Print initialization status with prominent visibility
-(format 0 "============================================~%")
-(format 0 "ARCHIPELAGO SYSTEM INITIALIZING~%")
-(format 0 "============================================~%")
-(format 0 "Archipelago struct initialized at address: ~X~%" *ap-info-jak2*)
-(format 0 "Memory struct size: ~D bytes~%" (size-of ap-info-jak2))
-
 ;; Initialize connection status to default (0)
 (set! (-> *ap-info-jak2* connection-status) (ap-connection-status default))
 
 ;; Setup markers
 (charp<-string (-> *ap-info-jak2* end-marker) "end")
 
-;; Debug: Verify end marker was set
-(string<-charp (clear *temp-string*) (the-as (pointer uint8) (-> *ap-info-jak2* end-marker)))
-(format 0 "Archipelago end marker set to: ~S~%" *temp-string*)
-
 ;; ****************************************************************************
 ;; **** This number must match expected_memory_version in MemoryReader.py! ****
 ;; ****************************************************************************
-(set! (-> *ap-info-jak2* version) 3)
-
-;; Debug: Verify version was set
-(format 0 "Archipelago version set to: ~D~%" (-> *ap-info-jak2* version))
-(format 0 "============================================~%")
-(format 0 "ARCHIPELAGO INITIALIZATION COMPLETE~%")
-(format 0 "============================================~%")
-
-;; Debug: Print structure size for memory reader alignment
-(format 0 "Archipelago structure size: ~D bytes~%" (size-of ap-info-jak2))
-
-;; NOTE: Array field offsets cannot be calculated using & operator in GOAL
-;; If memory reader needs exact offsets, they should be calculated manually:
-;; - version: offset 0 (uint32 = 4 bytes)
-;; - next-mission-index: offset 4 (uint = 4 bytes)
-;; - next-side-mission-index: offset 8 (uint = 4 bytes)
-;; - missions-checked: offset 12 (uint32[70] = 280 bytes)
-;; - side-missions-checked: offset 292 (uint32[24] = 96 bytes)
-;; - connection-status: offset 388 (ap-connection-status/uint32 = 4 bytes)
-;; - end-marker: offset 392 (uint8[4] = 4 bytes)
-(format 0 "Structure layout documented in comments above for memory reader~%")
+(set! (-> *ap-info-jak2* version) 4)
 
 (defun ap-mission-checked! ((mission-id uint))
   (format 0 "~%~%*************************************************~%")
