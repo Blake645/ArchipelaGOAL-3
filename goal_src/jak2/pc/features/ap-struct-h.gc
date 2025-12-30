@@ -52,6 +52,9 @@
     (cause-of-death                  uint8)
     (deathlink-enabled               uint8)
 
+    ;; Trap Information
+    (trap-duration                   float)
+
     ;; End Marker
     (end-marker           uint8 4)))
 
@@ -64,6 +67,8 @@
 (define-extern ap-verify-game-completed! (function uint symbol))
 
 (define-extern ap-item-received! (function symbol symbol))
+
+(define-extern ap-trap-received! (function uint symbol))
 
 (define-extern ap-set-connection-status! (function ap-connection-status ap-connection-status))
 

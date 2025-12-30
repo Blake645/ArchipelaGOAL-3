@@ -327,6 +327,21 @@
   #t
   )
 
+(defun ap-trap-received! ((trap-id uint))
+  (when (> (-> *ap-info-jak2* trap-duration) 0.0)
+      (sound-play "warning" :pitch -0.25)
+      (cond
+        ((= trap-id 1) ;; trip trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (send-event *target* 'loading)
+              (if (> (-> *ap-info-jak2* trap-duration) 5.0)
+                (dotimes (i (- (/ (the int (-> *ap-info-jak2* trap-duration)) 5) 1))
+                  (suspend-for (seconds 5))
+                  (send-event *target* 'loading))))))
+        ))
+    (and (> (-> *ap-info-jak2* trap-duration) 0.0)))
+
 (defun ap-route-slums-to-port? ()
   (or (logtest? (-> *game-info* features) (game-feature pass-red))                 ;; direct route.
       (logtesta? (-> *game-info* features) (game-feature pass-green pass-yellow))  ;; through stadium town and farms.
