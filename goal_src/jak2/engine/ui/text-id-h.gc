@@ -925,6 +925,9 @@
   (progress-menu-disabled #x2161)
   
   (burningbush-incoming-call #x2162)
+
+  (progress-menu-traps #x2163)
+  (progress-menu-traps-trip #x2164)
   
   ;; destination names text
   (caspad-name #x10000)
