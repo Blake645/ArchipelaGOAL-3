@@ -339,6 +339,15 @@
                 (dotimes (i (- (/ (the int (-> *ap-info-jak2* trap-duration)) 5) 1))
                   (suspend-for (seconds 5))
                   (send-event *target* 'loading))))))
+        (('five-star) ;; high alert trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (stack-size-set! (-> self main-thread) 512)
+              (send-event *traffic-manager* 'set-max-alert-level 5)
+              (send-event *traffic-manager* 'set-alert-level 5)
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (send-event *traffic-manager* 'set-alert-level 0))))
+        ;;<ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
         ))
     (and (> (-> *ap-info-jak2* trap-duration) 0.0)))
 
