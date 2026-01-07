@@ -368,11 +368,20 @@
         (('hit-by-bus) ;; no health trap
           (process-spawn-function process
             (lambda :behavior process ()
-              (stack-size-set! (-> self main-thread) 512)
               (let ((curr-health (-> *target* fact health)))
                 (send-event *target* 'get-pickup (pickup-type health) -8.0)
                 (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
                 (send-event *target* 'get-pickup (pickup-type health) curr-health)))))
+        (('anger-issues) ;; forced dark jak trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (while (logtest? (-> *target* control current-surface flags) (surface-flag air))
+                (suspend)
+              )
+              (send-event *target* 'change-mode 'normal)
+              )))
         ))
     (and (> (-> *ap-info-jak2* trap-duration) 0.0)))
 
