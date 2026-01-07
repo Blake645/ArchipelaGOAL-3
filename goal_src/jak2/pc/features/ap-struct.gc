@@ -377,11 +377,10 @@
             (lambda :behavior process ()
               (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
               (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
-              (while (logtest? (-> *target* control current-surface flags) (surface-flag air))
+              (while (logtest? (-> *target* control current-surface flags) (surface-flag air)) ;; if jak is in the air, wait until he lands
                 (suspend)
               )
-              (send-event *target* 'change-mode 'normal)
-              )))
+              (send-event *target* 'change-mode 'normal))))
         ))
     (and (> (-> *ap-info-jak2* trap-duration) 0.0)))
 
