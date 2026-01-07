@@ -348,6 +348,31 @@
               (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
               (send-event *traffic-manager* 'set-alert-level 0))))
         ;;<ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
+        (('russian-roulette) ;; ammoless trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (stack-size-set! (-> self main-thread) 1024)
+              (let ((curr-red (-> *game-info* gun-ammo (- (pickup-type ammo-red) 13)))
+                    (curr-yellow (-> *game-info* gun-ammo (- (pickup-type ammo-yellow) 13)))
+                    (curr-blue (-> *game-info* gun-ammo (- (pickup-type ammo-blue) 13)))
+                    (curr-dark (-> *game-info* gun-ammo (- (pickup-type ammo-dark) 13))))
+                    (send-event *target* 'get-pickup (pickup-type ammo-red) -100.0)
+                    (send-event *target* 'get-pickup (pickup-type ammo-yellow) -200.0)
+                    (send-event *target* 'get-pickup (pickup-type ammo-blue) -200.0)
+                    (send-event *target* 'get-pickup (pickup-type ammo-dark) -10.0)
+                    (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+                    (send-event *target* 'get-pickup (pickup-type ammo-red) curr-red)
+                    (send-event *target* 'get-pickup (pickup-type ammo-yellow) curr-yellow)
+                    (send-event *target* 'get-pickup (pickup-type ammo-blue) curr-blue)
+                    (send-event *target* 'get-pickup (pickup-type ammo-dark) curr-dark)))))
+        (('hit-by-bus) ;; no health trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (stack-size-set! (-> self main-thread) 512)
+              (let ((curr-health (-> *target* fact health)))
+                (send-event *target* 'get-pickup (pickup-type health) -8.0)
+                (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+                (send-event *target* 'get-pickup (pickup-type health) curr-health)))))
         ))
     (and (> (-> *ap-info-jak2* trap-duration) 0.0)))
 
