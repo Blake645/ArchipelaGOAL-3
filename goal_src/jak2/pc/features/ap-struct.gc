@@ -331,6 +331,7 @@
   (when (> (-> *ap-info-jak2* trap-duration) 0.0)
     (sound-play "timer-warn")
       (case trap
+      ;; jak 1 ap traps (ordered in the same way)
         (('trip) ;; trip trap
           (process-spawn-function process
             (lambda :behavior process ()
@@ -339,6 +340,64 @@
                 (dotimes (i (- (/ (the int (-> *ap-info-jak2* trap-duration)) 5) 1))
                   (suspend-for (seconds 5))
                   (send-event *target* 'loading))))))
+        (('ice-physics) ;; slip trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (set! (-> *stone-surface* slope-slip-angle) 16384.0)
+              (set! (-> *stone-surface* slip-factor) 0.7)
+              (set! (-> *stone-surface* transv-max) 1.5)
+              (set! (-> *stone-surface* turnv) 0.5)
+              (set! (-> *stone-surface* nonlin-fric-dist) 4091904.0)
+              (set! (-> *stone-surface* fric) 23756.8)
+              (set! (-> *gravel-surface* slope-slip-angle) 16384.0)
+              (set! (-> *gravel-surface* slip-factor) 0.7)
+              (set! (-> *gravel-surface* transv-max) 1.5)
+              (set! (-> *gravel-surface* turnv) 0.5)
+              (set! (-> *gravel-surface* nonlin-fric-dist) 4091904.0)
+              (set! (-> *gravel-surface* fric) 23756.8)
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (set! (-> *stone-surface* slope-slip-angle) 8192.0)
+              (set! (-> *stone-surface* slip-factor) 1.0)
+              (set! (-> *stone-surface* transv-max) 1.0)
+              (set! (-> *stone-surface* turnv) 1.0)
+              (set! (-> *stone-surface* nonlin-fric-dist) 5120.0)
+              (set! (-> *stone-surface* fric) 153600.0)
+              (set! (-> *gravel-surface* slope-slip-angle) 16384.0)
+              (set! (-> *gravel-surface* slip-factor) 1.0)
+              (set! (-> *gravel-surface* transv-max) 1.0)
+              (set! (-> *gravel-surface* turnv) 1.0)
+              (set! (-> *gravel-surface* nonlin-fric-dist) 4096.0)
+              (set! (-> *gravel-surface* fric) 122880.0))))
+        (('the-big-apple) ;; gravity trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (*! (-> *standard-dynamics* gravity-length) 3.0)
+              (*! (-> *target* control dynam gravity-length) 3.0)
+              (set! (-> *TARGET-bank* fall-far) (meters 2.5))
+              (set! (-> *TARGET-bank* fall-far-inc) (meters 3.5))
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (/! (-> *standard-dynamics* gravity-length) 3.0)
+              (/! (-> *target* control dynam gravity-length) 3.0)
+              (set! (-> *TARGET-bank* fall-far) (meters 30))
+              (set! (-> *TARGET-bank* fall-far-inc) (meters 20)))))
+        (('nikon-f) ;; camera trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (stack-size-set! (-> self main-thread) 512)
+              (send-event *target* 'no-look-around (seconds (-> *ap-info-jak2* trap-duration)))
+              (send-event *camera* 'change-mode cam-fixed 0)
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (send-event *target* 'no-look-around (seconds 0))
+              (send-event *camera* 'change-mode cam-circular 0))))
+        (('hit-by-bus) ;; no health trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (let ((curr-health (-> *target* fact health)))
+                (send-event *target* 'get-pickup (pickup-type health) -8.0)
+                (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+                (send-event *target* 'get-pickup (pickup-type health) curr-health)))))
+        ;;<ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
+        ;; jak 2 ap traps
         (('five-star) ;; high alert trap
           (process-spawn-function process
             (lambda :behavior process ()
@@ -347,7 +406,6 @@
               (send-event *traffic-manager* 'set-alert-level 5)
               (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
               (send-event *traffic-manager* 'set-alert-level 0))))
-        ;;<ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
         (('russian-roulette) ;; ammoless trap
           (process-spawn-function process
             (lambda :behavior process ()
@@ -365,13 +423,6 @@
                     (send-event *target* 'get-pickup (pickup-type ammo-yellow) curr-yellow)
                     (send-event *target* 'get-pickup (pickup-type ammo-blue) curr-blue)
                     (send-event *target* 'get-pickup (pickup-type ammo-dark) curr-dark)))))
-        (('hit-by-bus) ;; no health trap
-          (process-spawn-function process
-            (lambda :behavior process ()
-              (let ((curr-health (-> *target* fact health)))
-                (send-event *target* 'get-pickup (pickup-type health) -8.0)
-                (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
-                (send-event *target* 'get-pickup (pickup-type health) curr-health)))))
         (('anger-issues) ;; forced dark jak trap
           (process-spawn-function process
             (lambda :behavior process ()
