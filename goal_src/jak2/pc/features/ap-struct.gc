@@ -380,15 +380,20 @@
               (/! (-> *target* control dynam gravity-length) 3.0)
               (set! (-> *TARGET-bank* fall-far) (meters 30))
               (set! (-> *TARGET-bank* fall-far-inc) (meters 20)))))
-        (('nikon-f) ;; camera trap
+        (('caught-in-4k) ;; camera trap
           (process-spawn-function process
             (lambda :behavior process ()
               (stack-size-set! (-> self main-thread) 512)
-              (send-event *target* 'no-look-around (seconds (-> *ap-info-jak2* trap-duration)))
-              (send-event *camera* 'change-mode cam-fixed 0)
+              (set-setting-by-param *setting-control* 'mode-name 'cam-fixed 0 0)
               (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
-              (send-event *target* 'no-look-around (seconds 0))
-              (send-event *camera* 'change-mode cam-circular 0))))
+              (remove-setting-by-arg0 *setting-control* 'mode-name))))
+        (('daredevil) ;; darkness trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (send-event (ppointer->process *time-of-day*) 'change 'ratio 0.0)
+              (set! (-> *time-of-day-context* mode) (the-as time-of-day-palette-id (/ (the-as int 16384) 8)))
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (send-event (ppointer->process *time-of-day*) 'change 'ratio 1.0))))
         (('hit-by-bus) ;; no health trap
           (process-spawn-function process
             (lambda :behavior process ()
