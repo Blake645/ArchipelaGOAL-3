@@ -394,6 +394,51 @@
               (set! (-> *time-of-day-context* mode) (the-as time-of-day-palette-id (/ (the-as int 16384) 8)))
               (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
               (send-event (ppointer->process *time-of-day*) 'change 'ratio 1.0))))
+        (('caseoh) ;; earthquake trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (suspend-for (seconds 1))
+              (activate! *camera-smush-control* 3000.0 50 (the int (seconds (-> *ap-info-jak2* trap-duration))) 1.0 1.0 (-> self clock))
+              (dotimes (i (* 100 (the int (-> *ap-info-jak2* trap-duration))))
+                (set! (-> *standard-dynamics* gravity x) (* 3.0 (the float (update! *camera-smush-control*))))
+                (suspend-for (seconds 0.01))
+                (set! (-> *standard-dynamics* gravity z) (* 3.0 (the float (update! *camera-smush-control*))))
+                (suspend-for (seconds 0.01))))))
+        (('instant-transmission) ;; teleport trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (suspend-for (seconds 1))
+              (while (movie?) (suspend-for (seconds 1)))
+              (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "ctysluma-alley"))
+              (initialize! *game-info* 'die (the-as game-save #f) "ctysluma-alley"))))
+        ;; <ap:todo> come back to this later when you figure out how to do it properly (despair trap)
+#|         (('despair) ;; despair trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (let ((curr-lang (the-as language-enum (get-game-language *pc-settings*))))
+                (set-game-language! *pc-settings* (language-enum japanese))
+                (suspend-for (seconds 1))
+                (sound-play "erol03")
+                (when (> (-> *ap-info-jak2* trap-duration) 10.0)
+                  (dotimes (i (- (/ (the int (-> *ap-info-jak2* trap-duration)) 10) 1))
+                    (suspend-for (seconds 10.01))
+                    (sound-play "erol03")))
+                (when (!= curr-lang (language-enum japanese))
+                  (set-game-language! *pc-settings* curr-lang))))))
+|#      
+        (('personal-bubble) ;; pacifism trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (set! (-> *TARGET-bank* punch-radius) (meters -1.0))
+              (set! (-> *TARGET-bank* spin-radius) (meters -1.0))
+              (set! (-> *TARGET-bank* flop-radius) (meters -1.0))
+              (set! (-> *TARGET-bank* uppercut-radius) (meters -1.0))
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (set! (-> *TARGET-bank* punch-radius) (meters 1.3))
+              (set! (-> *TARGET-bank* spin-radius) (meters 2.2))
+              (set! (-> *TARGET-bank* flop-radius) (meters 1.4))
+              (set! (-> *TARGET-bank* uppercut-radius) (meters 1.0)))))
+        ;; <ap:note> ecoless trap doesn't really make sense in jak 2, as there isn't really any eco besides dark jak and the weapons, and the ammoless trap already exists.      
         (('hit-by-bus) ;; no health trap
           (process-spawn-function process
             (lambda :behavior process ()
@@ -401,7 +446,22 @@
                 (send-event *target* 'get-pickup (pickup-type health) -8.0)
                 (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
                 (send-event *target* 'get-pickup (pickup-type health) curr-health)))))
-        ;;<ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
+        (('rivals-of-aether) ;; ledge trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (set! (-> *collide-edge-spec* max-dir-cosa-delta) 999.0)
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (set! (-> *collide-edge-spec* max-dir-cosa-delta) 0.6))))
+        ;; <ap:note> zoomer trap doesn't work (to my knowledge)
+        (('man-in-the-mirror) ;; mirror trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (logxor! (-> *game-info* secrets) (the-as uint (/ 16 8))) ;; mirror world secret as a bitflag
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (logxor! (-> *game-info* secrets) (the-as uint (/ 16 8)))
+              )
+          ))
+        ;; <ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
         ;; jak 2 ap traps
         (('five-star) ;; high alert trap
           (process-spawn-function process
@@ -437,6 +497,26 @@
                 (suspend)
               )
               (send-event *target* 'change-mode 'normal))))
+        (('sonic-speed) ;; fast speed trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (update-rates! (-> *display* entity-clock) (* 60.0 (-> *display* entity-clock clock-ratio)))
+              (update-rates! (-> *display* target-clock) (* 2.0 (-> *display* target-clock clock-ratio)))
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (update-rates! (-> *display* entity-clock) (/ 60.0 (-> *display* entity-clock clock-ratio)))
+              (update-rates! (-> *display* target-clock) (/ 2.0 (-> *display* target-clock clock-ratio)))
+              )))
+        (('la-traffic) ;; slow speed trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (update-rates! (-> *display* entity-clock) (* 0.3 (-> *display* entity-clock clock-ratio)))
+              (update-rates! (-> *display* target-clock) (* 0.5 (-> *display* target-clock clock-ratio)))
+              (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
+              (update-rates! (-> *display* entity-clock) (/ 0.3 (-> *display* entity-clock clock-ratio)))
+              (update-rates! (-> *display* target-clock) (/ 0.5 (-> *display* target-clock clock-ratio)))
+              )
+            )
+          )
         ))
     (and (> (-> *ap-info-jak2* trap-duration) 0.0)))
 
