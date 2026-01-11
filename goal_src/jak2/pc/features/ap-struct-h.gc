@@ -68,6 +68,8 @@
 
 (define-extern ap-item-received! (function symbol symbol))
 
+(define-extern ap-deathlink-received! (function symbol symbol))
+
 (define-extern ap-trap-received! (function symbol symbol))
 
 (define-extern ap-set-connection-status! (function ap-connection-status ap-connection-status))

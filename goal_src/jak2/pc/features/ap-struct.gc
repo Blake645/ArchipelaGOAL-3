@@ -327,6 +327,10 @@
   #t
   )
 
+(defun ap-deathlink-received ((chosen-death symbol))
+  ;; <note> if you're in onin's game, whack a metal, or the gun courses, retry/fail immediately. otherwise, kill jak or fail mission
+  )
+
 (defun ap-trap-received! ((trap symbol))
   (when (> (-> *ap-info-jak2* trap-duration) 0.0)
     (sound-play "timer-warn")
