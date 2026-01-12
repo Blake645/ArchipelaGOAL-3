@@ -336,7 +336,7 @@
       :forbid-when (lambda () (task-node-closed? (game-task-node dig-find-totem-resolution)))
       )
     (static-taskable-menu-entry
-      :task-node (game-task-node city-play-onin-game-introduction)
+      :task-node (game-task-node city-play-onin-game-wait)
       :event-idx 0
       :continue "onintent-start"
       :text-id (text-id progress-missions-onin-game)
@@ -517,7 +517,7 @@
 (define *tess-menu-list*
   (new 'static 'boxed-array :type taskable-menu-entry
     (static-taskable-menu-entry
-      :task-node (game-task-node city-whack-introduction)
+      :task-node (game-task-node city-whack-wait)
       :event-idx 0
       :continue "hiphog-start"
       :text-id (text-id progress-missions-beat-whack)

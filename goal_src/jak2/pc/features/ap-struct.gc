@@ -327,9 +327,16 @@
   #t
   )
 
-(defun ap-deathlink-received ((chosen-death symbol))
+(defun ap-deathlink-received! ((chosen-death symbol))
   ;; <note> if you're in onin's game, whack a metal, or the gun courses, retry/fail immediately. otherwise, kill jak or fail mission
-  )
+  (if (or (task-node-open? (game-task-node city-play-onin-game-resolution))
+          (task-node-open? (game-task-node city-whack-resolution))
+          (task-node-open? (game-task-node city-red-gun-training-resolution))
+          (task-node-open? (game-task-node city-yellow-gun-training-resolution)))
+          (restart-mission))        
+      (send-event *target* 'get-pickup (pickup-type health) -8.0)
+      (send-event *target* 'attack #f (static-attack-info ((deathlink-death #t) (mode chosen-death) (vector (new 'static 'vector :y (meters 1) :w 1.0)) (angle 'up) (control 1.0))))#t)
+  
 
 (defun ap-trap-received! ((trap symbol))
   (when (> (-> *ap-info-jak2* trap-duration) 0.0)
