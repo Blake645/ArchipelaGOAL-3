@@ -511,8 +511,20 @@
         )
       :forbid-when (lambda () (task-node-closed? (game-task-node stadium-race-class1-resolution)))
       )
-    )
+    (static-taskable-menu-entry
+      :task-node (game-task-node city-defend-stadium-introduction)
+      :event-idx 0
+      :continue "stadium-blimp-intro"
+      :text-id (text-id progress-missions-city-defend-stadium)
+      :allow-when (lambda  ()
+      (or (task-node-open? (game-task-node city-defend-stadium-pre-intro))
+          (task-node-open? (game-task-node city-defend-stadium-introduction))
+          )
+      )
+      :forbid-when (lambda () (task-node-closed? (game-task-node city-defend-stadium-resolution)))
+      )
   )
+)
 
 (define *tess-menu-list*
   (new 'static 'boxed-array :type taskable-menu-entry
