@@ -1098,6 +1098,7 @@
     )
   )
 
+;; <ap:note> original scene function
 (scene-method-16 (new 'static 'scene
                    :name "krew-delivery-res"
                    :extra #f
@@ -1190,6 +1191,193 @@
                      (10000
                        ;; (unless (task-closed? "city-krew-delivery-resolution") (talker-spawn "miss011")) ;; <ap:preserve-this> removed talker spawn.
                        (task-close! "city-krew-delivery-resolution")
+                       )
+                     )
+                   :cut-list '(61 246 316 366 431 528 591 801 1166 1306 1421 1583 1788 1881 2077 2281 2350 2416 2601)
+                   :wait-ground-time (seconds 1)
+                   :draw-target #f
+                   :abort #t
+                   :actor (new 'static 'boxed-array :type scene-actor
+                     (new 'static 'scene-actor
+                       :name "scenecamera"
+                       :level #f
+                       :art-group "skel-scenecamera"
+                       :prefix ""
+                       :draw-frames '((min max))
+                       :scissor-frames '()
+                       :camera 4
+                       :shadow-flags -1
+                       :shadow-volume-joint #f
+                       )
+                     (new 'static 'scene-actor
+                       :name "sidekick-highres"
+                       :level 'hiphog
+                       :art-group "skel-sidekick-highres"
+                       :prefix ""
+                       :draw-frames '((min 1421) (1583 max))
+                       :scissor-frames '()
+                       :light-index #xa
+                       :flags #x1
+                       :shadow-flags -1
+                       :shadow-volume-joint #f
+                       )
+                     (new 'static 'scene-actor
+                       :name "jak-highres"
+                       :level 'hiphog
+                       :art-group "skel-jak-highres"
+                       :prefix ""
+                       :draw-frames '((min max))
+                       :scissor-frames '()
+                       :light-index #xa
+                       :flags #x1
+                       :shadow-flags -1
+                       :shadow-volume-joint #f
+                       )
+                     (new 'static 'scene-actor
+                       :name "gun"
+                       :level #f
+                       :art-group "skel-gun"
+                       :prefix ""
+                       :draw-frames '((min max))
+                       :scissor-frames '()
+                       :light-index #xa
+                       :flags #x1
+                       :shadow-flags -1
+                       :shadow-volume-joint #f
+                       :no-draw-seg #x4
+                       )
+                     (new 'static 'scene-actor
+                       :name "krew-highres"
+                       :level 'lguard
+                       :art-group "skel-krew-highres"
+                       :prefix ""
+                       :draw-frames '((min 1583) (1788 1881) (2077 max))
+                       :scissor-frames '()
+                       :light-index #xa
+                       :flags #x1
+                       :shadow-flags -1
+                       :shadow-volume-joint #f
+                       )
+                     (new 'static 'scene-actor
+                       :name "sig-highres"
+                       :level 'lguard
+                       :art-group "skel-sig-highres"
+                       :prefix ""
+                       :draw-frames '((min 61) (246 366) (431 801) (1166 2416) (2601 max))
+                       :scissor-frames '()
+                       :light-index #xa
+                       :flags #x1
+                       :shadow-flags -1
+                       :shadow-volume-joint #f
+                       )
+                     )
+                   :load-point-obj "hiphog-movie"
+                   :end-point-obj "hiphog-movie"
+                   :borrow '((hiphog 0 lguard special))
+                   :sfx-volume -1.0
+                   :ambient-volume -1.0
+                   :music-volume -1.0
+                   :blackout-end #t
+                   :peaceful #t
+                   :music-delay 1500.0
+                   :save #t
+                   :scene-task #x19
+                   )
+                 )
+
+;; <ap:note> duplicate we've lightly modified
+(scene-method-16 (new 'static 'scene
+                   :name "gun-red-int"
+                   :extra #f
+                   :info #f
+                   :mask-to-clear (process-mask movie enemy platform projectile)
+                   :entity "scene-stage-24"
+                   :art-group "scenecamera"
+                   :anim "krew-delivery-res"
+                   :parts 23
+                   :command-list '((0 (kill "krew-highres-1") (fadein (seconds (new 'static 'bfloat :data 0.166))))
+                     (247
+                       (part-tracker
+                         "group-hiphog-sig-gun-glow"
+                         entity
+                         "sig-highres"
+                         joint
+                         "blast"
+                         track
+                         #t
+                         duration
+                         (frame-range 247 366)
+                         )
+                       )
+                     (366
+                       (part-tracker
+                         "group-hiphog-krew-light"
+                         entity
+                         "krew-highres"
+                         joint
+                         "lightEnd"
+                         track
+                         #t
+                         duration
+                         (frame-range 366 1583)
+                         )
+                       )
+                     (432
+                       (part-tracker
+                         "group-hiphog-sig-gun-glow"
+                         entity
+                         "sig-highres"
+                         joint
+                         "blast"
+                         track
+                         #t
+                         duration
+                         (frame-range 432 801)
+                         )
+                       )
+                     (1167
+                       (part-tracker
+                         "group-hiphog-sig-gun-glow"
+                         entity
+                         "sig-highres"
+                         joint
+                         "blast"
+                         track
+                         #t
+                         duration
+                         (frame-range 1167 2416)
+                         )
+                       )
+                     (1789
+                       (part-tracker
+                         "group-hiphog-krew-light"
+                         entity
+                         "krew-highres"
+                         joint
+                         "lightEnd"
+                         track
+                         #t
+                         duration
+                         (frame-range 1789 1881)
+                         )
+                       )
+                     (2078
+                       (part-tracker
+                         "group-hiphog-krew-light"
+                         entity
+                         "krew-highres"
+                         joint
+                         "lightEnd"
+                         track
+                         #t
+                         duration
+                         (frame-range 2078 2700)
+                         )
+                       )
+                     (2695 (fadeout (seconds (new 'static 'bfloat :data 0.166))))
+                     (10000
+                       ;; (unless (task-closed? "city-krew-delivery-resolution") (talker-spawn "miss011")) ;; <ap:preserve-this> removed talker spawn.
+                       ;; (task-close! "city-krew-delivery-resolution") ;; <ap:note> duplicate, we might not need this?
                        )
                      )
                    :cut-list '(61 246 316 366 431 528 591 801 1166 1306 1421 1583 1788 1881 2077 2281 2350 2416 2601)
