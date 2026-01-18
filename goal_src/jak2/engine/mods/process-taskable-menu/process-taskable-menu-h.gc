@@ -629,18 +629,6 @@
 (define *kor-menu-list*
   (new 'static 'boxed-array :type taskable-menu-entry
     (static-taskable-menu-entry
-      :task-node (game-task-node city-help-kid-introduction)
-      :event-idx 0
-      :continue "cityslumb-fort"
-      :text-id (text-id progress-missions-city-save-kid)
-      :allow-when (lambda () 
-        (or (task-node-open? (game-task-node city-help-kid-introduction))
-            (task-node-open? (game-task-node city-help-kid-battle))
-            )
-        )
-      :forbid-when (lambda () (task-node-closed? (game-task-node city-help-kid-resolution)))
-      )
-    (static-taskable-menu-entry
       :task-node (game-task-node dig-knock-down-introduction)
       :event-idx 0
       :continue "vinroom-start"
