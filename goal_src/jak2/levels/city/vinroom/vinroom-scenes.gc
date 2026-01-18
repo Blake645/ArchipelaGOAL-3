@@ -1084,10 +1084,11 @@
     :anim "dig-knock-down-scaffolding-intro"
     :parts 23
     :command-list '((0
-        (task-close! "city-escort-kid-resolution")
+        (if (task-closed? "city-escort-kid-introduction")
+          (task-close! "city-escort-kid-resolution")) ;; <ap:note> if the previous completed task is escorting the kid, close that. otherwise, leave it alone
         (send-event *target* 'change-mode 'normal)
         (fadein (seconds (new 'static 'bfloat :data 1.333)))
-        )
+        ) ;; <ap:note> in the event someone tries to do this before escorting the kid, we'll need a hotfix. for now though, i'm lazy as fuck.
       (1300 (part-tracker
               "group-dog-piss"
               entity
