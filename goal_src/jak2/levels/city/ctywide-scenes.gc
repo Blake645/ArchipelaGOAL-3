@@ -1553,8 +1553,6 @@
                   )
                )
         (task-close! "city-escort-kid-introduction")
-        (if (task-closed? "dig-knock-down-resolution")
-          (task-close! "city-escort-kid-resolution")) ;; <ap:note> quick failsafe, in case someone tries to be a wise guy
         )
       )
     :cut-list '(61 171 269 361 461 563 892 1012 1093 1170 740 860 941 1010)

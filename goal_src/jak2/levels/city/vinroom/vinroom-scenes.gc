@@ -1075,6 +1075,162 @@
 
 (scene-method-16
   (new 'static 'scene
+    :name "city-escort-kid-res"
+    :extra #f
+    :info #f
+    :mask-to-clear (process-mask movie enemy platform projectile)
+    :entity "scene-stage-42"
+    :art-group "scenecamera"
+    :anim "dig-knock-down-scaffolding-intro"
+    :parts 23
+    :command-list '((0
+        (task-close! "city-escort-kid-resolution")
+        (send-event *target* 'change-mode 'normal)
+        (fadein (seconds (new 'static 'bfloat :data 1.333)))
+        )
+      (1300 (part-tracker
+              "group-dog-piss"
+              entity
+              "particleman"
+              joint
+              "particleA"
+              track
+              #t
+              duration
+              (frame-range (new 'static 'bfloat :data 1300.0) (new 'static 'bfloat :data 1400.0))
+              )
+            )
+      (1330 (part-tracker
+              "group-dog-piss-puddle"
+              entity
+              "particleman"
+              joint
+              "particleA"
+              track
+              #t
+              duration
+              (frame-range (new 'static 'bfloat :data 1330.0) (new 'static 'bfloat :data 1330.0))
+              )
+            )
+      (1846 (send-event "jak-highres" 'shadow #f))
+      (1985 (fadeout (frame-time-30 15)))
+      (9000 (send-event "jak-highres" 'shadow #t))
+      ;; (10000 (task-close! "dig-knock-down-introduction")) ;; <ap:note> isolate dig-knock-down from city-escort-kid
+      )
+    :cut-list '(51 91 131 249 277 320 408 542 615 652 841 910 1045 1164 1333 1479 1592 1713 1846)
+    :wait-ground-time (seconds 1)
+    :draw-target #f
+    :abort #t
+    :actor (new 'static 'boxed-array :type scene-actor
+      (new 'static 'scene-actor
+        :name "scenecamera"
+        :level #f
+        :art-group "skel-scenecamera"
+        :prefix ""
+        :draw-frames '((min max))
+        :scissor-frames '()
+        :camera 4
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "particleman"
+        :level 'vinroom
+        :art-group "skel-particleman"
+        :prefix ""
+        :draw-frames '((min max))
+        :scissor-frames '()
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "sidekick-highres"
+        :level 'vinroom
+        :art-group "skel-sidekick-highres"
+        :prefix ""
+        :draw-frames '((min max))
+        :scissor-frames '()
+        :light-index #xa
+        :flags #x1
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "jak-highres"
+        :level 'vinroom
+        :art-group "skel-jak-highres"
+        :prefix ""
+        :draw-frames '((min 841) (910 max))
+        :scissor-frames '()
+        :light-index #xa
+        :flags #x1
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "kor-highres"
+        :level 'vinroom
+        :art-group "skel-kor-highres"
+        :prefix ""
+        :draw-frames '((min 320) (408 max))
+        :scissor-frames '((1713 1740))
+        :light-index #xa
+        :flags #x1
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "kid-highres"
+        :level 'vinroom
+        :art-group "skel-kid-highres"
+        :prefix ""
+        :draw-frames '((min max))
+        :scissor-frames '()
+        :light-index #xa
+        :flags #x1
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "crocadog-highres"
+        :level 'vinroom
+        :art-group "skel-crocadog-highres"
+        :prefix ""
+        :draw-frames '((min max))
+        :scissor-frames '()
+        :light-index #xa
+        :flags #x1
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      (new 'static 'scene-actor
+        :name "palmpilot"
+        :level 'vinroom
+        :art-group "skel-palmpilot"
+        :prefix ""
+        :draw-frames '((min max))
+        :scissor-frames '()
+        :light-index #xa
+        :flags #x1
+        :shadow-flags -1
+        :shadow-volume-joint #f
+        )
+      )
+    :load-point-obj "vinroom-start"
+    :end-point-obj "vinroom-face-door"
+    :borrow '()
+    :sfx-volume -1.0
+    :ambient-volume -1.0
+    :music-volume -1.0
+    :blackout-end #t
+    :peaceful #t
+    :music-delay 1500.0
+    :save #t
+    )
+  )
+
+(scene-method-16
+  (new 'static 'scene
     :name "dig-knock-down-scaffolding-intro"
     :extra #f
     :info #f
@@ -1084,11 +1240,10 @@
     :anim "dig-knock-down-scaffolding-intro"
     :parts 23
     :command-list '((0
-        (if (task-closed? "city-escort-kid-introduction")
-          (task-close! "city-escort-kid-resolution")) ;; <ap:note> if the previous completed task is escorting the kid, close that. otherwise, leave it alone
+        ;; (task-close! "city-escort-kid-resolution") ;; <ap:note> isolate dig-knock-down from city-escort-kid
         (send-event *target* 'change-mode 'normal)
         (fadein (seconds (new 'static 'bfloat :data 1.333)))
-        ) ;; <ap:note> in the event someone tries to do this before escorting the kid, we'll need a hotfix. for now though, i'm lazy as fuck.
+        )
       (1300 (part-tracker
               "group-dog-piss"
               entity

@@ -1704,7 +1704,7 @@
                           )
                         (when (and (time-elapsed? (-> arg1 waypoint-time0) (seconds 3))
                                    (not (channel-active? arg1 (gui-channel none)))
-                                   (scene-play arg1 "dig-knock-down-scaffolding-intro" #t)
+                                   (scene-play arg1 "city-escort-kid-res" #t)
                                    )
                           (remove-setting! 'entity-name)
                           (go-to-waypoint! arg1 27 #f)
