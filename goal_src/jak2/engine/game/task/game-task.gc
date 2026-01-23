@@ -4856,7 +4856,7 @@
                 :actor (game-task-actor youngsamos-alley)
                 :action (game-task-action idle)
                 :tex (game-task-icon gaticon-01)
-                :scene #f
+                :scene "city-escort-kid-res"
                 )
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)

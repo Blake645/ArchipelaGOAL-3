@@ -477,7 +477,7 @@
               (logxor! (-> *game-info* secrets) (the-as uint (/ 16 8)))
               )
           ))
-        ;; <ap:todo> ammoless trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
+        ;; <ap:todo> ammo trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
         ;; jak 2 ap traps
         (('five-star) ;; high alert trap
           (process-spawn-function process
@@ -487,7 +487,7 @@
               (send-event *traffic-manager* 'set-alert-level 5)
               (suspend-for (seconds (-> *ap-info-jak2* trap-duration)))
               (send-event *traffic-manager* 'set-alert-level 0))))
-        (('russian-roulette) ;; ammoless trap
+        (('russian-roulette) ;; ammo trap
           (process-spawn-function process
             (lambda :behavior process ()
               (stack-size-set! (-> self main-thread) 1024)
@@ -513,7 +513,7 @@
                 (suspend)
               )
               (send-event *target* 'change-mode 'normal))))
-        (('sonic-speed) ;; fast speed trap
+        (('sonic-speed) ;; speed trap
           (process-spawn-function process
             (lambda :behavior process ()
               (update-rates! (-> *display* entity-clock) (* 60.0 (-> *display* entity-clock clock-ratio)))
@@ -522,7 +522,7 @@
               (update-rates! (-> *display* entity-clock) (/ 60.0 (-> *display* entity-clock clock-ratio)))
               (update-rates! (-> *display* target-clock) (/ 2.0 (-> *display* target-clock clock-ratio)))
               )))
-        (('la-traffic) ;; slow speed trap
+        (('la-traffic) ;; slow trap
           (process-spawn-function process
             (lambda :behavior process ()
               (update-rates! (-> *display* entity-clock) (* 0.3 (-> *display* entity-clock clock-ratio)))

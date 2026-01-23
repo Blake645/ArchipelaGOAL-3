@@ -1609,7 +1609,7 @@
             arg0
             (gui-channel art-load)
             (gui-action queue)
-            "dig-knock-down-scaffolding-intro"
+            "city-escort-kid-res"
             -99.0
             0
             )
