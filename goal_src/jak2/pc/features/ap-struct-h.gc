@@ -24,6 +24,7 @@
   (
     (slot-name            string)
     (slot-seed            string)
+    (trap-duration        float)
     (completion-type      uint8)
     (completion-value     uint8)
     ))
@@ -41,6 +42,8 @@
 
     ;; Connection Status
     (connection-status               ap-connection-status)
+    (slot-name                       uint8 16)
+    (slot-seed                       uint8 8)
 
     ;; Completion Information
     (completion-goal-type            ap-completion-type)
