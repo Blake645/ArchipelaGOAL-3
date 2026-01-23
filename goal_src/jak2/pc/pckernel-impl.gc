@@ -117,9 +117,15 @@
     )
   )
 
+(deftype ap-save-slot-info (basic)
+  ((name string)
+   (seed string)))
+
 (deftype ap-settings (basic)
   ((version              uint64)
-   (deathlink?           symbol))
+   (deathlink?           symbol)
+   (trap-duration        float)
+   (completion-goal      uint8))
   (:methods
    (new (symbol type) _type_)
    (reset (_type_) none)

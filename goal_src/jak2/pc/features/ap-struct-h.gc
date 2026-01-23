@@ -46,6 +46,7 @@
     (slot-seed                       uint8 8)
 
     ;; Completion Information
+    (completion-goal                 uint8)
     (completion-goal-type            ap-completion-type)
     (completion-goal-value           uint32)
     (completed                       uint8)

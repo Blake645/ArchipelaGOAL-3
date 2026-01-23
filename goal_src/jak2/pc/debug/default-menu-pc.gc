@@ -898,7 +898,6 @@
             (flag "uk-english" (the binteger (pc-language uk-english)) dm-text-language)
             (flag "finnish" (the binteger (pc-language finnish)) dm-text-language)
             )
-         (flag "Archipelago Deathlink" #f ,(dm-lambda-boolean-flag (-> *ap-settings* deathlink?)))
          (flag "Discord RPC" #t ,(dm-lambda-boolean-flag (-> *pc-settings* discord-rpc?)))
          (flag "Speedrunner Mode" #t ,(dm-lambda-boolean-flag (-> *pc-settings* speedrunner-mode?)))
   ;;        (flag "Speedrunner Mode" #t ,(dm-lambda-boolean-flag (-> *pc-settings* speedrunner-mode?)))

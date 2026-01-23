@@ -680,12 +680,12 @@ This gives us more freedom to write code how we want.
 (defmacro archipelagoal-ii-deathlink ()
   '(new 'static 'menu-generic-boolean-option
     :name (text-id progress-menu-deathlink)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* deathlink?)))
+    :truthy-text (text-id progress-on)
+    :falsey-text (text-id progress-off)
+    :get-value-fn (lambda () (-> *ap-settings* deathlink?))
     :on-confirm (lambda ((val symbol))
       (set! (-> *ap-settings* deathlink?) val)
-      (ap-settings-save))))
+      (ap-settings-update))))
 
 (defmacro misc-options-pc-discord-rpc ()
   `(new 'static 'menu-generic-boolean-option
