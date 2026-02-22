@@ -327,6 +327,8 @@
   #t
   )
 
+;; <ap:todo> deathlink will come later, leave this out for now
+#|
 (defun ap-deathlink-received! ((chosen-death symbol))
   ;; <note> if you're in onin's game, whack a metal, the gun courses, or a special mission (mech, turret, races, etc) retry/fail immediately. otherwise, kill jak or fail mission
   (if (or (task-node-open? (game-task-node city-play-onin-game-resolution))
@@ -355,7 +357,7 @@
           (restart-mission))        
       (send-event *target* 'get-pickup (pickup-type health) -8.0)
       (send-event *target* 'attack #f (static-attack-info ((deathlink-death #t) (mode chosen-death) (vector (new 'static 'vector :y (meters 1) :w 1.0)) (angle 'up) (control 1.0))))#t)
-  
+|# 
 
 (defun ap-trap-received! ((trap symbol))
   (when (> (-> *ap-info-jak2* trap-duration) 0.0)
@@ -593,12 +595,14 @@
   (set! (-> *ap-info-jak2* completion-goal-type) (the-as ap-completion-type (-> options completion-type)))
   (set! (-> *ap-info-jak2* completion-goal-value) (-> options completion-value))
   (set! (-> *ap-info-jak2* trap-duration) (-> options trap-duration))
-  (charp<-string (-> *ap-info-jak2* slot-name) (-> options slot-name))
-  (charp<-string (-> *ap-info-jak2* slot-seed) (-> options slot-seed))
+  ;; <ap:todo> do this later
+  ;; (charp<-string (-> *ap-info-jak2* slot-name) (-> options slot-name))
+  ;; (charp<-string (-> *ap-info-jak2* slot-seed) (-> options slot-seed))
   #t)
 
 (defun ap-settings-update ()
-  (set! (-> *ap-info-jak2* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
+  ;; <ap:todo> deathlink will come later, leave it out for now
+  ;; (set! (-> *ap-info-jak2* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
   (set! (-> *ap-info-jak2* trap-duration) (-> *ap-settings* trap-duration))
   (set! (-> *ap-info-jak2* completion-goal) (-> *ap-settings* completion-goal))
   (none)

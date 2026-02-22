@@ -83,7 +83,8 @@
   (shield-damage 20) ;; hi16
   (knock        21) ;; hi 32
   (test         22) ;; hi 64
-  (deathlink-death 23)
+  ;; <ap:todo> deathlink will come later, leave out for now
+  ;; (deathlink-death 23)
   )
 
 ;; +++knocked-type
@@ -362,7 +363,8 @@
    (shield-damage      float)
    (knock              knocked-type)
    (test               symbol)
-   (deathlink-death    symbol)
+   ;; <ap:todo> deathlink will come later, leave out for now
+   ;; (deathlink-death    symbol)
    )
   (:methods
     (attack-info-method-9 (_type_ attack-info process-drawable process-drawable) none)
