@@ -536,13 +536,40 @@
                 (set! (-> sv-112 color) (font-color progress-old-selected))
                 (set! (-> sv-112 color) (font-color white))
                 )
-            (print-game-text
-              (lookup-text! *common-text* (the-as text-id (-> gp-1 s5-4)) #f)
+            (case (-> *ap-info-jak2* connection-status)
+            ((0) (print-game-text
+              (lookup-text! *common-text* (text-id ap-connect-and-start) #f)
               sv-112
               #f
               44
               (bucket-id progress)
               )
+            )
+            ((1) (print-game-text
+              (lookup-text! *common-text* (text-id ap-waiting-for-items) #f)
+              sv-112
+              #f
+              44
+              (bucket-id progress)
+              )
+            )
+            ((2) (print-game-text
+              (lookup-text! *common-text* (text-id ap-connection-failed) #f)
+              sv-112
+              #f
+              44
+              (bucket-id progress)
+              )
+            )
+            ((3) (print-game-text
+              (lookup-text! *common-text* (text-id ap-ready) #f)
+              sv-112
+              #f
+              44
+              (bucket-id progress)
+              )
+            )
+            )
             (+! (-> sv-112 origin y) 22.0)
             )
           )
