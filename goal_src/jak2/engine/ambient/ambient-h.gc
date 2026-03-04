@@ -1133,7 +1133,7 @@
       :speech #x7d
       :text-message (text-id gun-upgrade-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1144,7 +1144,7 @@
       :speech #x7e
       :text-message (text-id gun-upgrade-speed)
       :text-duration #x5dc ;; <ap:preserve-this> added text duration for ap items.
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1155,7 +1155,7 @@
       :speech #x7f
       :text-message (text-id gun-upgrade-ammo)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1166,7 +1166,7 @@
       :speech #x80
       :text-message (text-id gun-upgrade-damage)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1177,7 +1177,7 @@
       :speech #x81
       :text-message (text-id mission-complete)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1188,7 +1188,7 @@
       :speech #x82
       :text-message (text-id pass-red-acquired)
       :text-duration #x5dc ;; <ap:preserve-this> added text duration for ap items.
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1199,7 +1199,7 @@
       :speech #x83
       :text-message (text-id pass-green-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1210,7 +1210,7 @@
       :speech #x84
       :text-message (text-id pass-yellow-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1221,7 +1221,7 @@
       :speech #x85
       :text-message (text-id pass-palace-acquired)
       :text-duration #x5dc
-      :delay (seconds 3) ;; <ap:preserve-this> who wants to wait 10 seconds? honestly.
+      :delay (seconds 0) ;; <ap:preserve-this> who wants to wait 10 seconds? honestly.
       :neg #x1
       :on-close #f
       )
@@ -1232,7 +1232,7 @@
       :speech #x86
       :text-message (text-id pass-black-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1243,7 +1243,7 @@
       :speech #x87
       :text-message (text-id red-gun-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1254,7 +1254,7 @@
       :speech #x88
       :text-message (text-id yellow-gun-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1265,7 +1265,7 @@
       :speech #x89
       :text-message (text-id blue-gun-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -1276,7 +1276,7 @@
       :speech #x8a
       :text-message (text-id dark-gun-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3547,7 +3547,7 @@
       :speech #x1d1
       :text-message (text-id mountain-lens-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3558,7 +3558,7 @@
       :speech #x1d2
       :text-message (text-id mountain-gear-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3569,7 +3569,7 @@
       :speech #x1d3
       :text-message (text-id mountain-shard-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3580,7 +3580,7 @@
       :speech #x1d4
       :text-message (text-id ruby-key-acquired)
       :text-duration #x5dc
-      :delay (seconds 3) 
+      :delay (seconds 0) 
       :neg #x1
       :on-close #f
       )
@@ -3591,7 +3591,7 @@
       :speech #x1d5
       :text-message (text-id heart-of-mar-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3602,7 +3602,7 @@
       :speech #x1d6
       :text-message (text-id time-map-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3613,7 +3613,7 @@
       :speech #x1d7
       :text-message (text-id precursor-stone-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3624,7 +3624,7 @@
       :speech #x1d8
       :text-message (text-id life-seed-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3635,7 +3635,7 @@
       :speech #x1d9
       :text-message (text-id titan-suit-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3646,7 +3646,7 @@
       :speech #x1da
       :text-message (text-id gun-turret-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
       )
@@ -3657,7 +3657,7 @@
       :speech #x1db
       :text-message (text-id board-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3668,7 +3668,7 @@
       :speech #x1dc
       :text-message (text-id dark-jak-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3679,7 +3679,7 @@
       :speech #x1dd
       :text-message (text-id dark-bomb-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3690,7 +3690,7 @@
       :speech #x1de
       :text-message (text-id dark-blast-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3701,7 +3701,7 @@
       :speech #x1df
       :text-message (text-id dark-invinc-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3712,7 +3712,7 @@
       :speech #x1e0
       :text-message (text-id dark-giant-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3723,7 +3723,7 @@
       :speech #x1e1
       :text-message (text-id pass-air-train-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3734,7 +3734,7 @@
       :speech #x1e2
       :text-message (text-id seal-piece-1-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3745,7 +3745,7 @@
       :speech #x1e3
       :text-message (text-id seal-piece-2-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3756,7 +3756,7 @@
       :speech #x1e4
       :text-message (text-id seal-piece-3-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
@@ -3767,7 +3767,7 @@
       :speech #x1e5
       :text-message (text-id rift-rider-acquired)
       :text-duration #x5dc
-      :delay (seconds 3)
+      :delay (seconds 0)
       :neg #x1
       :on-close #f
     )
