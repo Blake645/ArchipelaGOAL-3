@@ -1,4 +1,8 @@
 # ArchipelaGOAL II - Jak 2 Archipelago Mod
+> You can read the original README for the OpenGOAL project [here](https://github.com/open-goal/jak-project/blob/master/README.md).
+
+# OpenGoal-Mod-Base
+Serves as a base template for openGOAL mods that will be supported via [OG-ModLauncher](https://github.com/OpenGOAL-Mods/OG-ModLauncher).
 
 This is a modded version of the OpenGOAL decompilation project for Jak 2, integrating **Archipelago multiworld randomizer** functionality. It implements comprehensive Archipelago support for randomizing and tracking Jak 2 missions and items.
 
