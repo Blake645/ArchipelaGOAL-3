@@ -125,7 +125,8 @@
   ((version              uint64)
    (deathlink?           symbol)
    (trap-duration        float)
-   (completion-goal      uint8))
+   (completion-value     uint8)
+   (completion-type      uint8))
   (:methods
    (new (symbol type) _type_)
    (reset (_type_) none)
