@@ -13,6 +13,7 @@ void pc_set_active_levels(u32 lev_list);
 u32 alloc_vagdir_names(u32 heap_sym);
 inline u64 bool_to_symbol(const bool val);
 void init_autosplit_struct();
+void init_archipelago_struct();
 void callback_fetch_external_speedrun_times(bool success,
                                             const std::string& cache_id,
                                             std::optional<std::string> result);
@@ -261,8 +262,12 @@ struct AutoSplitterBlock {
   const char marker[20] = "UnLiStEdStRaTs_JaK3";
   u64 pointer_to_symbol = 0;
 };
-
+struct ArchipelagoBlock {
+  const char marker[17] = "ArChIpElAgO_JaK3";
+  u64 pointer_to_symbol = 0;
+};
 extern AutoSplitterBlock g_auto_splitter_block_jak3;
+extern ArchipelagoBlock g_archipelago_block_jak3;
 
 struct SpeedrunPracticeEntryHistoryAttempt {
   std::optional<float> time;
