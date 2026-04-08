@@ -78,7 +78,6 @@
   "drawable-actor-h.o"
   "region-h.o"
   "traffic-h.o"
-  "ap-struct-h.o"
   "game-task-h.o"
   "task-control-h.o"
   "generic-h.o"
