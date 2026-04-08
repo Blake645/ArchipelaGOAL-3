@@ -1,0 +1,110 @@
+;;-*-Lisp-*-
+(in-package goal)
+
+;; Connection status enum for Archipelago
+(defenum ap-connection-status
+  :type uint32
+  (default 0)
+  (wait 1)
+  (failure 2)
+  (ready 3)
+  )
+
+;; Completion goal enum for Archipelago
+(defenum ap-completion-type
+  :type uint32
+  (default 0)
+  (specific-mission 1)
+  (mission-count 2)
+  )
+
+
+;; Holds what the user has chosen for their seed options.
+(deftype ap-seed-options (structure)
+  (
+    (slot-name            string)
+    (slot-seed            string)
+    (trap-duration        float)
+    (completion-type      uint8)
+    (completion-value     uint8)
+    ))
+
+(deftype ap-info-jak3 (structure)
+  (
+    ;; Memory Struct Version
+    (version              uint32)
+
+    ;; Mission/Side Mission Information
+    (next-mission-index              uint)
+    (next-side-mission-index         uint)
+    (missions-checked                uint32 75)
+    (side-missions-checked           uint32 35)
+
+    ;; Connection Status
+    (connection-status               ap-connection-status)
+    (slot-name                       uint8 16)
+    (slot-seed                       uint8 8)
+
+    ;; Completion Information
+    (completion-goal                 uint8)
+    (completion-goal-type            ap-completion-type)
+    (completion-goal-value           uint32)
+    (completed                       uint8)
+
+    ;; Deathlink Information
+    (death-count                     uint32)
+    (cause-of-death                  uint8)
+    (deathlink-enabled               uint8)
+
+    ;; Trap Information
+    (trap-duration                   float)
+
+    ;; End Marker
+    (end-marker           uint8 4)))
+
+(define-extern *ap-info-jak3* ap-info-jak3)
+
+(define-extern ap-mission-checked! (function uint uint))
+
+(define-extern ap-side-mission-checked! (function uint uint))
+
+(define-extern ap-verify-game-completed! (function uint symbol))
+
+(define-extern ap-item-received! (function symbol symbol))
+
+;; <ap:note> deathlink will come later, leave out for now
+;; (define-extern ap-deathlink-received! (function symbol symbol))
+
+(define-extern ap-trap-received! (function symbol symbol))
+
+(define-extern ap-set-connection-status! (function ap-connection-status ap-connection-status))
+
+(define-extern ap-draw-connection-status (function none))
+
+(define-extern ap-debug-test-connection-status (function none))
+
+(define-extern ap-debug-test-mission-completion (function none))
+
+(define-extern ap-debug-test-task-resolution (function none))
+
+(define-extern ap-debug-show-task-states (function none))
+
+;; (define-extern ap-route-slums-to-port? (function symbol))
+
+;; (define-extern ap-route-slums-to-stadium? (function symbol))
+
+;; (define-extern ap-route-slums-to-market? (function symbol))
+
+;; (define-extern ap-route-port-to-stadium? (function symbol))
+
+;; (define-extern ap-route-port-to-market? (function symbol))
+
+;; (define-extern ap-route-market-to-stadium? (function symbol))
+
+;; (define-extern ap-route-slums-to-landing? (function symbol))
+
+;; (define-extern ap-route-slums-to-nest? (function symbol))
+
+(define-extern ap-setup-options! (function ap-seed-options symbol))
+
+(define-extern ap-settings-update (function none))
