@@ -241,7 +241,7 @@ void init_autosplit_struct() {
 }
 void init_archipelago_struct() {
   g_archipelago_block_jak3.pointer_to_symbol =
-      (u64)g_ee_main_mem + (u64)intern_from_c("*archipelago-info-jak3*")->value();
+      (u64)g_ee_main_mem + (u64)intern_from_c(-1, 0, "*archipelago-info-jak3*")->value();
 }
 }  // namespace kmachine_extras
 // TODO - currently using a single mutex for all background task synchronization
