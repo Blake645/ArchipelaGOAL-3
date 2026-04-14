@@ -1448,9 +1448,7 @@
    )
   (:methods
     (get-idx-in-task-list (_type_) int)
-    (close! (_type_ symbol) int)
     (open! (_type_ symbol) int)
-    (open? (_type_) symbol)
     (game-task-node-info-method-11 (_type_ symbol) none)
     (game-task-node-info-method-12 (_type_) symbol)
     (eval-game-task-cmd! (_type_) none)
