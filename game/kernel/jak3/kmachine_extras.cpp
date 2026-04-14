@@ -970,6 +970,4 @@ void pc_sr_mode_dump_new_custom_category(u32 speedrun_custom_category_ptr) {
     file_util::write_text_file(file_path, data.dump(2));
   }
 }
-
 }  // namespace kmachine_extras
-}  // namespace jak3
