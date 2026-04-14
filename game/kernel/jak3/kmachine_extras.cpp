@@ -971,3 +971,4 @@ void pc_sr_mode_dump_new_custom_category(u32 speedrun_custom_category_ptr) {
   }
 }
 }  // namespace kmachine_extras
+}  // namespace jak3
