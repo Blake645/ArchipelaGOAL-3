@@ -1121,10 +1121,6 @@
     )
   )
 
-(defun game-task-node-info-method-12 ((this game-task-node-info))
-  (open? this)
-  )
-
 (defmethod close! ((this game-task-node-info) (arg0 symbol))
   (format 0 "~%~%========================================~%")
   (format 0 "TASK NODE CLOSE! METHOD CALLED~%")
