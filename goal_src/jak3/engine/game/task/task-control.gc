@@ -94,7 +94,8 @@
     ((or (= arg0 'debug) (= arg0 'level))
      )
     ((logtest? (-> *game-info* secrets) (game-secrets hero-mode))
-     (set! (-> *game-info* features) (game-feature
+      ;; <ap:preserve-this> comment out the setting of guns for hero mode trap
+     #| (set! (-> *game-info* features) (game-feature
                                        gun
                                        gun-red-1
                                        gun-red-2
@@ -138,13 +139,16 @@
      (set! (-> *game-info* vehicles) (game-vehicles v-turtle v-snake v-scorpion v-toad v-rhino))
      (set! (-> *game-info* light-crystal) 0.0)
      (set! (-> *game-info* dark-crystal) 0.0)
+     |#
      )
     (else
-      (set! (-> *game-info* features) (game-feature))
+      ;; <ap:preserve-this> comment out the clearing of game-features, we need persistence.
+      #| (set! (-> *game-info* features) (game-feature))
       (set! (-> *game-info* items) (game-items))
       (set! (-> *game-info* vehicles) (game-vehicles))
       (set! (-> *game-info* light-crystal) 0.0)
       (set! (-> *game-info* dark-crystal) 0.0)
+     |#
       )
     )
   (let ((s5-0 (-> *minimap* engine alive-list)))
@@ -1175,7 +1179,10 @@
          (begin
            (dotimes (a2-2 4)
              (let ((t0-0 (-> v1-1 parent-node a2-2)))
-               (when (and (nonzero? t0-0) (not (logtest? (-> a1-0 t0-0 flags) (game-task-node-flag closed))))
+             ;; <ap:preserve-this> when statement replaced to prevent percentage warping.
+               (when (and (nonzero? t0-0) 
+               (= (-> this task) (-> a1-0 t0-0 task))
+               (not (logtest? (-> a1-0 t0-0 flags) (game-task-node-flag closed))))
                  (set! a1-1 #f)
                  (goto cfg-12)
                  )
@@ -1214,8 +1221,15 @@
 (defun task-node-open! ((arg0 game-task-node) (arg1 symbol))
   (let ((s5-0 (-> *game-info* sub-task-list arg0)))
     (dotimes (s4-0 4)
-      (if (nonzero? (-> s5-0 parent-node s4-0))
-          (open! (-> *game-info* sub-task-list (-> s5-0 parent-node s4-0)) arg1)
+      ;; <ap:preserve-this> if statement replaced to prevent percentage warping.
+      ;; (if (nonzero? (-> s5-0 parent-node s4-0))
+      ;;    (open! (-> *game-info* sub-task-list (-> s5-0 parent-node s4-0)) arg1)
+      ;;    )
+      (let* ((v-1-15 (-> s5-0 parent-node s4-0))
+              (p (-> *game-info* sub-task-list v-1-15)))
+        (if (and (nonzero? v-1-15) (= (-> s5-0 task) (-> p task)))
+            (open! p arg1)
+            )
           )
       )
     (game-task-node-info-method-11 s5-0 arg1)
@@ -1578,9 +1592,10 @@
                    )
                )
               )
-            (if (logtest? (-> s3-0 flags) (game-task-node-flag closed))
-                (task-node-close-upwards s5-0 s4-0)
-                )
+              ;; <ap:preserve-this> i think this more code for precentage warping? doesn't match Jak 2's code.
+            ;; (if (logtest? (-> s3-0 flags) (game-task-node-flag closed))
+            ;;    (task-node-close-upwards s5-0 s4-0)
+            ;;    )
             )
           )
         )
