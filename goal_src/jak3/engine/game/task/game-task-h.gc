@@ -836,6 +836,9 @@
   (add-av-generator 70)
   (add-av-map 71)
   (add-jakc 72)
+  ;; <ap:preserve-this> added for archipelago
+  (add-pass-air-train 73)
+  (add-gun-turret 74)
   )
 ;; ---game-task-node-command
 

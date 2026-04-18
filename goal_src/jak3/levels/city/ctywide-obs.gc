@@ -340,7 +340,7 @@
     )
   :code (behavior ()
     (until #f
-      (when (and (logtest? (game-feature feature35) (-> *game-info* features))
+      (when (and (logtest? (game-feature pass-slumb-genb) (-> *game-info* features))
                  (= (pickup-type pass-slumb-genb) (-> self pass))
                  )
         (go-virtual idle-open)
@@ -521,7 +521,7 @@
   (set-vector! (-> this draw color-emissive) 1.0 1.0 1.0 1.0)
   (transform-post)
   (cond
-    ((logtest? (game-feature feature35) (-> *game-info* features))
+    ((logtest? (game-feature pass-slumb-genb) (-> *game-info* features))
      (= (pickup-type pass-slumb-genb) (-> this pass))
      (go (method-of-object this idle-open))
      )

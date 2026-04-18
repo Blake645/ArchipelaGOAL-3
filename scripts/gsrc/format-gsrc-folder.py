@@ -6,7 +6,7 @@ from colorama import just_fix_windows_console, Fore, Back, Style
 
 just_fix_windows_console()
 
-files = glob.glob("./goal_src/jak1/**/*.gc", recursive=True)
+files = glob.glob("./goal_src/jak3/**/*.gc", recursive=True)
 total_ms = 0
 for file in files:
     start_time = time.perf_counter()

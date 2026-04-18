@@ -1416,6 +1416,12 @@
     (((game-task-node-command add-lightjak))
      "add-lightjak"
      )
+    (((game-task-node-command add-pass-air-train))
+     "add-pass-air-train"
+     )
+    (((game-task-node-command add-gun-turret))
+     "add-gun-turret"
+     )
     (else
       "*unknown*"
       )

@@ -782,7 +782,7 @@
                                                           gun-upgrade-blue-ammo-2
                                                           gun-upgrade-dark-ammo-1
                                                           gun-upgrade-dark-ammo-2
-                                                          feature31
+                                                          pass-port-mh
                                                           )
                                                         (-> this features)
                                                         )

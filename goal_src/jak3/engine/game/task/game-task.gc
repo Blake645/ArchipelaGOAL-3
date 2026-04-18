@@ -2372,7 +2372,12 @@
             :on-open #f
             :manager #f
             :borrow '((desert-game alias desert copy destrack display) (wasdoors 0 lkleever special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -2639,7 +2644,12 @@
               :on-fail #f
               )
             :borrow '((desert-game alias desert copy destrack display) (wasdoors 0 lkleever special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -2831,7 +2841,12 @@
             :on-open #f
             :manager #f
             :borrow '((wasdoors 0 ldampeck special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -3150,7 +3165,12 @@
               :on-fail #f
               )
             :borrow '((wasdoors 0 lkleever special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -3489,7 +3509,12 @@
             :on-open #f
             :manager #f
             :borrow '((wasdoors 0 ldamklev display) (wasstada 0 wasstadc display))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -3587,7 +3612,11 @@
               :on-fail #f
               )
             :borrow '((wasdoors 0 ldamklev display))
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -3712,7 +3741,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
                (task-open! "temple-climb-introduction")
                )
@@ -4078,7 +4112,9 @@
             :on-open #f
             :manager #f
             :borrow '((waswide 0 lkleever special))
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (logtest? (-> *game-info* features) (game-feature gun-turret))
+          )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -4333,7 +4369,9 @@
               :on-fail #f
               )
             :borrow '((wasstada 0 wasstadc display))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info)) 
+              (logtest? (-> *game-info* features) (game-feature gun)))
             :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
                (task-open! "temple-climb-introduction")
                )
@@ -4538,7 +4576,12 @@
             :on-open #f
             :manager #f
             :borrow '((wasall 0 lwassig #f))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
                (task-open! "temple-climb-introduction")
                )
@@ -4850,7 +4893,12 @@
               :on-fail #f
               )
             :borrow '((wasall 0 lwassig special))
-            :open? (lambda () (not (kiosk?)))
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -4911,7 +4959,13 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3))
+               )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -5059,7 +5113,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature gun))
+               )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -5347,7 +5406,13 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature gun artifact-invis))
+               )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -5946,7 +6011,13 @@
               :on-fail #f
               )
             :borrow '((desert-game alias desert copy desoasis special) (wasall 0 lwassig special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle v-snake v-scorpion v-toad v-rhino v-mirage v-fox v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature gun))
+                )
+            )
             :on-close '(task-close! "nest-eggs-gas")
             :reset #f
             :suck-death-count #xa5
@@ -6124,7 +6195,13 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+              (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+                   (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+                   (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+                   )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -6632,7 +6709,13 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+              (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+                   (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+                   (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+                   )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -6781,7 +6864,19 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+               (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+               (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
+                   (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-1))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-2))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-3))
+                   )
+               )
+              )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -7007,7 +7102,19 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+               (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+               (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
+                   (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-1))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-2))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-3))
+                   )
+               )
+              )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -7185,7 +7292,19 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+               (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+               (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+               (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
+                   (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-1))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-2))
+                   (logtest? (-> *game-info* features) (game-feature gun-blue-3))
+                   )
+               )
+              )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -7280,7 +7399,9 @@
             :on-open #f
             :manager #f
             :borrow '((ctywide 4 lsamos special))
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature gun board)))
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -7425,7 +7546,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature gun pass-air-train))
+               )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -7522,7 +7648,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature pass-air-train))
+               )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -7821,7 +7951,15 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature pass-air-train))
+          (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
+              (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
+               )
+              )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8086,7 +8224,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda))
+               )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8188,7 +8331,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature gun board pass-air-train pass-port-inda))
+               )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8331,7 +8479,12 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature board pass-air-train pass-port-mh))
+                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8463,7 +8616,12 @@
               :on-fail #f
               )
             :borrow '((foresta 0 lforplnt display))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature board pass-air-train pass-port-mh))
+                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8648,7 +8806,13 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+                  (logtest? (-> *game-info* items) (game-items pass-front-gate)
+                 )
+              )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8742,7 +8906,12 @@
               (ctywide-ff-mh alias ctywide copy ctypesa auto ctypesb auto dummy auto)
               (ctywide-mh alias ctywide copy ctypesb special dummy auto dummy auto ctypepb special)
               )
-            :open? #f
+              ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb))
+                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8943,7 +9112,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train))
+                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 )
+              )
             :on-close '(when (and (task-closed? "city-hijack-vehicle-introduction") (not (task-closed? "city-hijack-vehicle-resolution")))
                (task-open! "city-hijack-vehicle-introduction")
                )
@@ -9153,7 +9327,15 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature pass-air-train))
+          (or (logtest? (-> *game-info* features) (game-feature gun-red-1))
+              (logtest? (-> *game-info* features) (game-feature gun-red-2))
+               )
+              )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -9389,7 +9571,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb))
+               )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -9509,7 +9696,12 @@
             :on-open #f
             :manager #f
             :borrow '((freehq 0 ltornsam special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -9636,7 +9828,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtesta? (-> *game-info* features) (game-feature gun board pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -10033,7 +10230,12 @@
             :on-open #f
             :manager #f
             :borrow '((wasdoors 0 lsig special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+                 )
+              ) 
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -10218,7 +10420,12 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -10458,7 +10665,12 @@
               :on-fail #f
               )
             :borrow '((wasdoors 0 lkleever special) (wasall 0 lwassig special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion))
+                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -10620,7 +10832,12 @@
             :on-open #f
             :manager #f
             :borrow '((wasall 0 lwassig special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -10834,7 +11051,13 @@
               :on-fail #f
               )
             :borrow '((desert-game alias desert copy deschase special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+            (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                 (logtest? (-> *game-info* features) (game-feature gun))
+             )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -11104,7 +11327,12 @@
               :on-fail #f
               )
             :borrow '((foresta 0 lforring display) (wasall 0 lwassig special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator))
+               (logtest? (-> *game-info* features) (game-feature board pass-air-train pass-port-mh))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -11655,7 +11883,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate cypher-gliph))
+                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -11939,7 +12172,12 @@
             :on-open #f
             :manager #f
             :borrow '((factorya 0 lfaccar #f) (factorya 1 lfacrm2 display))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate cypher-gliph))
+                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+          )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -12767,7 +13005,12 @@
             :on-open #f
             :manager #f
             :borrow '((factorya 0 lfaccar special) (factorya 1 lfacrm2 display))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate cypher-gliph))
+                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+          )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
