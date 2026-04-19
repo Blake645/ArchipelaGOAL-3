@@ -1422,6 +1422,9 @@
     (((game-task-node-command add-gun-turret))
      "add-gun-turret"
      )
+    (((game-task-node-command add-eco-sphere))
+     "add-eco-sphere"
+     )
     (else
       "*unknown*"
       )

@@ -1544,6 +1544,9 @@
       (((game-task-node-command add-gun-turret))
       (logior! (-> *game-info* features) (game-feature gun-turret))
     )
+      (((game-task-node-command add-eco-sphere))
+      (logior! (-> *game-info* items) (game-items eco-sphere))
+    )
     )    
     )
 
