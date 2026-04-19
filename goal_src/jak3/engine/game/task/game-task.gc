@@ -13139,6 +13139,7 @@
                (logtesta? (-> *game-info* features) (game-feature gun darkjak darkjak-smack lightjak lightjak-swoop))
                (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
           ) 
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
