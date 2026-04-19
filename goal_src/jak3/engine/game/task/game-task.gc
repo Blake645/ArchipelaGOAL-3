@@ -2552,7 +2552,12 @@
             :on-open #f
             :manager #f
             :borrow '((desert-game alias desert copy destrack display) (wasdoors 0 lkleever special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -13128,7 +13133,12 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature gun darkjak darkjak-smack lightjak lightjak-swoop))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+          ) 
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -13195,13 +13205,7 @@
               :on-fail #f
               )
             :borrow '()
-            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtesta? (-> *game-info* features) (game-feature gun darkjak darkjak-smack lightjak lightjak-swoop))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-          ) 
-            )               
+            :open? #f      
             :on-close #f
             :reset #f
             :suck-death-count #xa5
