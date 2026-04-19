@@ -13195,7 +13195,13 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature gun darkjak darkjak-smack lightjak lightjak-swoop))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
+          ) 
+            )               
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -13817,7 +13823,10 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* features) (game-feature gun-turret)))
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -13945,7 +13954,12 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
+                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14100,7 +14114,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
+                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14193,7 +14212,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-mh pass-port-inda pass-inda-indb pass-indb-sluma))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14526,7 +14550,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14631,7 +14660,12 @@
             :on-open #f
             :manager #f
             :borrow '((towerc 0 ltowcity #f) (towerc 1 lfacrm1 display) (stadiuma 0 lppatrol special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2))
+                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14752,7 +14786,13 @@
             :on-open #f
             :manager #f
             :borrow '((stadiuma 0 lpattack special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14838,7 +14878,13 @@
             :on-open #f
             :manager #f
             :borrow '((stadiuma 0 lpattack special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14919,7 +14965,15 @@
             :on-open #f
             :manager #f
             :borrow '((precura 0 lprenme copy))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2 eco-sphere 
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+                )
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -15107,7 +15161,15 @@
             :on-open #f
             :manager #f
             :borrow '((wasdoors 0 ldampeck special) (desert-game alias desert copy desboss1 special))
-            :open? #f
+            ;; <ap:preserve-this> added open hook to check for archipelago items and features.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2 eco-sphere 
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
