@@ -3302,7 +3302,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            ;; <ap:preserve-this> added open hook to for archipelago item checks.
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* features) (game-feature gun-red-2))))
             :on-close #f
             :reset #f
             :suck-death-count #xa5
