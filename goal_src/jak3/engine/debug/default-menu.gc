@@ -3935,6 +3935,9 @@
              (flag "rhino" 5 dm-game-vehicle-toggle-pick-func)
              (flag "mirage" 6 dm-game-vehicle-toggle-pick-func)
              (flag "x-ride" 7 dm-game-vehicle-toggle-pick-func)
+             ;; <ap:preserve-this> added features
+             (flag "pass-air-train" 58 dm-game-feature-toggle-pick-func)
+             (flag "gun-turret" 59 dm-game-feature-toggle-pick-func)
              )
            )
         )
