@@ -492,4 +492,5 @@
   "debris.o"
   "shield-sphere.o"
   "entity-debug.o" ;; added
+  "mod-custom-code.o" ;; added
  ))

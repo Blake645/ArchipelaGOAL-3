@@ -1,0 +1,199 @@
+    ;;-*-Lisp-*-
+    (in-package goal)
+
+    ;; name: mod-custom-code.gc
+    ;; name in dgo: mod-custom-code
+    ;; dgos: TODO
+
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; What is this file for.
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    #| This file contains function defenitions that are pre placed in the mod base,
+    so if you place custom code inside of these functions, it will exectue based on
+    the name of the function, for example, if you place (set! (-> *game-info* fuel) (+ (-> *game-info* fuel) 1))
+    to the function named runs-on-orb-pickup, then jaks powercell count will increase each time you collect
+    an orb |#
+
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Begin function defintions.
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    (defun runs-every-frame ()
+      ;; (increase-power-cell-by-one) This is a call to increase-power-cell-by-one defined in mod-common-functions.gc
+
+      ;; Sample code to turn jak pink whenever he's doing the jetboard hover glitch
+      ;; (when *target* 
+      ;;   (if (board-hovering?)
+      ;;     (draw-pink *target*)
+      ;;     (draw-normal *target*)
+      ;;     )
+      ;;   )
+        (let ((door (entity-by-name "vin-door-ctyinda-1")))
+    (when door
+      (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
+      )
+    )
+      (none)
+      )
+    
+    (defun runs-on-orb-pickup ((orb-id uint) (parent process-tree))
+      ;; Code here runs on any precursor orb pickup
+
+      (none)
+    )
+
+    (defun runs-on-gem-pickup ()
+      ;; Code here runs on any scout fly pickup
+
+      (none)
+      )
+
+    (defun runs-on-task-close ()
+    
+
+      (none)
+      )
+
+    (defun runs-on-eco-pickup ((eco-type pickup-type) (parent process-tree))
+      (let* ((from-vent? #f))
+        ;; Code here runs as soon as you pickup ANY eco
+
+        (case eco-type
+          (((pickup-type eco-yellow))      
+            ;; Code here runs as soon as you pickup yellow eco
+
+            )
+          (((pickup-type eco-red))      
+            ;; Code here runs as soon as you pickup red eco
+
+            )
+          (((pickup-type eco-blue))      
+            ;; Code here runs as soon as you pickup blue eco
+
+            )
+
+          (((pickup-type eco-green))      
+            ;; Code here runs as soon as you pickup big green eco 
+
+            )
+          )
+        
+        (when from-vent?
+          ;; Code here runs only if the eco was picked up from a vent
+
+          )
+        )
+
+      (none)
+      )
+
+    (defun runs-on-jak-spawn ()
+      ;; Code here runs every time jak spawns (loading a file new game or death)   
+
+      (none)
+      )
+
+    (defun runs-on-jak-death ((death-event symbol))
+      ;; <ap:todo> deathlink will come later, leave it out for now
+      #|
+      (when (-> *ap-settings* deathlink?)
+        (case death-event
+          (('dying)
+            ;; Code here runs immediately every time jak dies, before any death animation or death cutscene
+          )   
+          (('blackout)
+            ;; Code here runs after jak dies (and any death cutscene finishes), during the blackout before he spawns
+            )
+          (('bot)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 5))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('centipede)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 6))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('endlessfall)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 7))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('instant-death)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 8))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('lava)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 9))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('melt)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 10))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('explode)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 11))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('big-explosion)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 12))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('turret)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 13))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))    
+          )
+          (('smush)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 14))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('attack)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 15))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('shock)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 16))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('crush)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 17))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('death)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 18))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('grenade)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 19))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('drown-death)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 20))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('burn)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 21))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('burnup)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 22))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+          (('fail-continue)
+            (set! (-> *ap-info-jak2* cause-of-death) (the-as uint 23))
+            (+! (-> *ap-info-jak2* death-count) (the-as uint 1))
+          )
+        )
+      )
+      |#
+      
+      (none)
+      )
+
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; deprecated function defintions.
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    #| these are no longer recommended/supported however we include them anyways to not break anyones mods.
+    |#
