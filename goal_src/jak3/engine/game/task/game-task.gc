@@ -14963,7 +14963,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
-               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2 eco-sphere 
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2  
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
@@ -15160,7 +15160,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
-               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2 eco-sphere 
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))

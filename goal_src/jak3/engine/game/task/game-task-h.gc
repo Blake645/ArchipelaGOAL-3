@@ -839,7 +839,6 @@
   ;; <ap:preserve-this> added for archipelago
   (add-pass-air-train 73)
   (add-gun-turret 74)
-  (add-eco-sphere 75)
   )
 ;; ---game-task-node-command
 
