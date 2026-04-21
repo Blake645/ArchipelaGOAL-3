@@ -37,8 +37,8 @@
     ;; Mission/Side Mission Information
     (next-mission-index              uint)
     (next-side-mission-index         uint)
-    (missions-checked                uint32 75)
-    (side-missions-checked           uint32 35)
+    (missions-checked                uint32 60)
+    (side-missions-checked           uint32 56)
 
     ;; Connection Status
     (connection-status               ap-connection-status)
@@ -89,21 +89,21 @@
 
 (define-extern ap-debug-show-task-states (function none))
 
-;; (define-extern ap-route-slums-to-port? (function symbol))
+(define-extern ap-route-spargus-to-monk-temple? (function symbol))
 
-;; (define-extern ap-route-slums-to-stadium? (function symbol))
+(define-extern ap-route-spargus-to-nest? (function symbol))
 
-;; (define-extern ap-route-slums-to-market? (function symbol))
+(define-extern ap-route-spargus-to-port? (function symbol))
 
-;; (define-extern ap-route-port-to-stadium? (function symbol))
+(define-extern ap-route-port-to-metal-head-section? (function symbol))
 
-;; (define-extern ap-route-port-to-market? (function symbol))
+(define-extern ap-route-port-to-inda? (function symbol))
 
-;; (define-extern ap-route-market-to-stadium? (function symbol))
+(define-extern ap-route-port-to-indb? (function symbol))
 
-;; (define-extern ap-route-slums-to-landing? (function symbol))
+(define-extern ap-route-port-to-hq? (function symbol))
 
-;; (define-extern ap-route-slums-to-nest? (function symbol))
+(define-extern ap-route-port-to-ruins? (function symbol))
 
 (define-extern ap-setup-options! (function ap-seed-options symbol))
 

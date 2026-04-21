@@ -427,62 +427,57 @@
     (and (> (-> *ap-info-jak3* trap-duration) 0.0)
              (task-closed? "arena-fight-1")
              (zero? (-> *ap-info-jak3* completed))))
-
-(defun ap-route-spargus-to-desert? ()
-  (or (logtest? (-> *game-info* features) (game-feature pass-front-gate vehicle-turtle))    ;; each different car
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-snake))
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-scorpion))
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-toad))
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-fox))
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-rhino))
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-mirage))
-  (logtesta? (-> *game-info* features) (game-feature pass-front-gate vehicle-x-ride))
-      )
-  )
-
+|#
 (defun ap-route-spargus-to-monk-temple? ()
-  (or (logtest? (-> *game-info* features) (game-feature pass-front-gate vehicle-toad))       ;; direct route.
+  (and (logtest? (-> *game-info* items) (game-items pass-front-gate)) ;; direct route.
+        (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
       )
   )
 
-(defun ap-route-slums-to-port? ()
-  (or (logtesta? (-> *game-info* features) (game-feature pass-front-gate pass-air-train))            ;; direct route
+(defun ap-route-spargus-to-nest? ()
+  (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+       (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion)) ;; direct route.
       )
   )
 
-(defun ap-route-port-to-stadium? ()
-  (or (logtest? (-> *game-info* features) (game-feature pass-yellow))                        ;; direct route.
-      (logtesta? (-> *game-info* features) (game-feature pass-red pass-green))               ;; through slums.
-      (logtesta? (-> *game-info* features) (game-feature pass-air-train board pass-green))   ;; pumping station + green pass.
+(defun ap-route-spargus-to-port? ()
+  (and (logtest? (-> *game-info* items) (game-items pass-front-gate)) ;; direct route.
+       (logtest? (-> *game-info* features) (game-feature pass-air-train))
       )
   )
 
-(defun ap-route-port-to-market? ()
-  (logtest? (-> *game-info* features) (game-feature pass-yellow))  ;; there is no way into the market without yellow pass.
+(defun ap-route-port-to-metal-head-section? ()
+  (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-mh)) ;; direct route.
+        (logtest? (-> *game-info* items) (game-items pass-front-gate))
+        )  
   )
 
-(defun ap-route-market-to-stadium? ()
-  (logtest? (-> *game-info* features) (game-feature pass-yellow))  ;; there is no way OUT OF the market without yellow pass.
-  )
-
-(defun ap-route-slums-to-landing? ()
-  (or (logtest? (-> *game-info* features) (game-feature board))                                   ;; pumping station.
-      (logtesta? (-> *game-info* features) (game-feature pass-red pass-air-train))                ;; through port.
-      (logtesta? (-> *game-info* features) (game-feature pass-green pass-yellow pass-air-train))  ;; through stadium town and farms.
+(defun ap-route-port-to-inda? ()
+  (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda)) ;; direct route.
+        (logtest? (-> *game-info* items) (game-items pass-front-gate))
       )
   )
 
-(defun ap-route-slums-to-nest? ()
-  (or (logtesta? (-> *game-info* features) (game-feature board pass-air-train))                   ;; pumping station.
-      (logtesta? (-> *game-info* features) (game-feature pass-red pass-air-train))                ;; through port.
-      (logtesta? (-> *game-info* features) (game-feature pass-green pass-yellow pass-air-train))  ;; through stadium town and farms.
+(defun ap-route-port-to-indb? ()
+  (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb)) ;; direct route.
+       (logtest? (-> *game-info* items) (game-items pass-front-gate))
       )
   )
 
+(defun ap-route-port-to-hq? ()
+  (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma)) ;; direct route.
+       (logtest? (-> *game-info* items) (game-items pass-front-gate))
+      )
+  )
+(defun ap-route-port-to-ruins? ()
+  (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb)) ;; direct route.
+       (logtest? (-> *game-info* items) (game-items pass-front-gate))
+      )
+  )
 (defun ap-setup-options! ((options ap-seed-options))
   (set! (-> *ap-settings* completion-type) (-> options completion-type))
   (set! (-> *ap-settings* completion-value) (-> options completion-value))
-  (set! (-> *ap-settings* trap-duration) (-> options trap-duration))
+  ;; (set! (-> *ap-settings* trap-duration) (-> options trap-duration))
   ;; <ap:todo> do this later
   ;; (charp<-string (-> *ap-info-jak3* slot-name) (-> options slot-name))
   ;; (charp<-string (-> *ap-info-jak3* slot-seed) (-> options slot-seed))
@@ -491,9 +486,8 @@
 (defun ap-settings-update ()
   ;; <ap:todo> deathlink will come later, leave it out for now
   ;; (set! (-> *ap-info-jak3* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
-  (set! (-> *ap-info-jak3* trap-duration) (-> *ap-settings* trap-duration))
+  ;; (set! (-> *ap-info-jak3* trap-duration) (-> *ap-settings* trap-duration))
   (set! (-> *ap-info-jak3* completion-goal-type) (the-as ap-completion-type (-> *ap-settings* completion-type)))
   (set! (-> *ap-info-jak3* completion-goal-value) (-> *ap-settings* completion-value))
   (none)
 )
-|#

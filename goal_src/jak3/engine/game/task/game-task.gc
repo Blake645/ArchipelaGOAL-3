@@ -4585,9 +4585,7 @@
             :borrow '((wasall 0 lwassig #f))
             ;; <ap:preserve-this> added open hook to check for archipelago items.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+          (ap-route-spargus-to-nest?)
             )
             :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
                (task-open! "temple-climb-introduction")
@@ -4902,10 +4900,8 @@
             :borrow '((wasall 0 lwassig special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (ap-route-spargus-to-monk-temple?)
           )
-            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -4968,8 +4964,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-monk-temple?)
                (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3))
                )
             )
@@ -5121,8 +5116,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-monk-temple?)
                (logtest? (-> *game-info* features) (game-feature gun))
                )
             )
@@ -5415,8 +5409,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-monk-temple?)
                (logtesta? (-> *game-info* features) (game-feature gun artifact-invis))
                )
             )
@@ -6204,8 +6197,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-              (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-                   (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+              (and (ap-route-spargus-to-monk-temple?)
+                   (logtest? (-> *game-info* items) (game-items seal-of-mar))
                    (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
                    )
               )
@@ -6718,8 +6711,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-              (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-                   (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+              (and (ap-route-spargus-to-monk-temple?)
+                   (logtest? (-> *game-info* items) (game-items seal-of-mar))
                    (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
                    )
               )
@@ -6873,8 +6866,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+          (and (ap-route-spargus-to-monk-temple?)
+               (logtest? (-> *game-info* items) (game-items seal-of-mar))
                (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
                (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
@@ -7111,8 +7104,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+          (and (ap-route-spargus-to-monk-temple?)
+               (logtesta? (-> *game-info* items) (game-items seal-of-mar))
                (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
                (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
@@ -7301,8 +7294,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-               (logtesta? (-> *game-info* items) (game-items pass-front-gate seal-of-mar))
+          (and (ap-route-spargus-to-monk-temple?)
+               (logtest? (-> *game-info* items) (game-items seal-of-mar))
                (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
                (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
@@ -7407,7 +7400,8 @@
             :manager #f
             :borrow '((ctywide 4 lsamos special))
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature gun board)))
+            (and (ap-route-port-to-ruins?)
+            (logtesta? (-> *game-info* features) (game-feature gun board)))
             )
             :on-close #f
             :reset #f
@@ -7555,9 +7549,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtesta? (-> *game-info* features) (game-feature gun pass-air-train))
-               )
+          (ap-route-spargus-to-port?)
               )
             :on-close #f
             :reset #f
@@ -7656,9 +7648,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtest? (-> *game-info* features) (game-feature pass-air-train))
-               )
+            (ap-route-spargus-to-port?)
               )
             :on-close #f
             :reset #f
@@ -7960,8 +7950,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtest? (-> *game-info* features) (game-feature pass-air-train))
+          (and (ap-route-spargus-to-port?)
           (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
               (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
                )
@@ -8233,10 +8222,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda))
+          (ap-route-port-to-inda?)
                )
-              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8340,8 +8327,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtesta? (-> *game-info* features) (game-feature gun board pass-air-train pass-port-inda))
+          (and (ap-route-spargus-to-port?)
+               (logtesta? (-> *game-info* features) (game-feature gun board))
                )
               )
             :on-close #f
@@ -8488,8 +8475,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature board pass-air-train pass-port-mh))
-                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-port-to-metal-head-section?)
+                (logtest? (-> *game-info* features) (game-feature board darkjak darkjak-smack))
                  )
               )
             :on-close #f
@@ -8625,10 +8612,11 @@
             :borrow '((foresta 0 lforplnt display))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature board pass-air-train pass-port-mh))
-                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-port-to-metal-head-section?)
+                 (logtest? (-> *game-info* features) (game-feature board)
                  )
               )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8815,11 +8803,10 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
-                  (logtest? (-> *game-info* items) (game-items pass-front-gate)
+            (and (ap-route-port-to-metal-head-section?)
+                 (logtest? (-> *game-info* features) (game-feature gun))
                  )
               )
-            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8915,8 +8902,8 @@
               )
               ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb))
-                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-port-to-indb?)
+                (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3)) 
                  )
               )
             :on-close #f
@@ -9121,8 +9108,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train))
-                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-spargus-to-port?)
+                 (logtest? (-> *game-info* features) (game-feature gun))
                  )
               )
             :on-close '(when (and (task-closed? "city-hijack-vehicle-introduction") (not (task-closed? "city-hijack-vehicle-resolution")))
@@ -9336,10 +9323,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtest? (-> *game-info* features) (game-feature pass-air-train))
-          (or (logtest? (-> *game-info* features) (game-feature gun-red-1))
-              (logtest? (-> *game-info* features) (game-feature gun-red-2))
+          (and (ap-route-spargus-to-port?)
+                (logtest? (-> *game-info* features) (game-feature gun-red-1 gun-red-2)
                )
               )
             )
@@ -9580,9 +9565,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtest? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb))
-               )
+          (ap-route-port-to-indb?)
               )
             :on-close #f
             :reset #f
@@ -9705,8 +9688,8 @@
             :borrow '((freehq 0 ltornsam special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
-                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-port-to-hq?)
+                 (logtest? (-> *game-info* features) (game-feature gun))
                  )
               )
             :on-close #f
@@ -9837,8 +9820,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtesta? (-> *game-info* features) (game-feature gun board pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
-                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-port-to-hq?)
+                 (logtesta? (-> *game-info* features) (game-feature gun board))
                  )
               )
             :on-close #f
@@ -10429,9 +10412,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+          (ap-route-spargus-to-nest?)
               )
             :on-close #f
             :reset #f
@@ -10674,9 +10655,7 @@
             :borrow '((wasdoors 0 lkleever special) (wasall 0 lwassig special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtest? (-> *game-info* vehicles) (game-vehicles v-scorpion))
-                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
-            )
+          (ap-route-spargus-to-nest?)
               )
             :on-close #f
             :reset #f
@@ -11060,8 +11039,7 @@
             :borrow '((desert-game alias desert copy deschase special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
-                 (logtest? (-> *game-info* items) (game-items pass-front-gate))
+            (and (ap-route-spargus-to-monk-temple?)            
                  (logtest? (-> *game-info* features) (game-feature gun))
              )
             )
@@ -11336,8 +11314,9 @@
             :borrow '((foresta 0 lforring display) (wasall 0 lwassig special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator))
-               (logtest? (-> *game-info* features) (game-feature board pass-air-train pass-port-mh))
+          (and (ap-route-port-to-metal-head-section?)
+               (logtesta? (-> *game-info* items) (game-items artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator))
+               (logtest? (-> *game-info* features) (game-feature board))
           )
             )
             :on-close #f
@@ -11892,8 +11871,9 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate cypher-gliph))
-                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+          (and  (ap-route-port-to-hq?)
+                (logtest? (-> *game-info* items) (game-items cypher-gliph))
+                (logtest? (-> *game-info* features) (game-feature gun))
           )
             )
             :on-close #f
@@ -12181,8 +12161,9 @@
             :borrow '((factorya 0 lfaccar #f) (factorya 1 lfacrm2 display))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate cypher-gliph))
-                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+          (and  (ap-route-port-to-hq?)
+                (logtest? (-> *game-info* items) (game-items cypher-gliph))
+                (logtest? (-> *game-info* features) (game-feature gun))
           )
             )
             :on-close #f
@@ -13014,8 +12995,9 @@
             :borrow '((factorya 0 lfaccar special) (factorya 1 lfacrm2 display))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate cypher-gliph))
-                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma))
+          (and  (ap-route-port-to-hq?)
+                (logtest? (-> *game-info* items) (game-items cypher-gliph))
+                (logtest? (-> *game-info* features) (game-feature gun))
           )
             )
             :on-close #f
@@ -13137,9 +13119,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-monk-temple?)
                (logtesta? (-> *game-info* features) (game-feature gun darkjak darkjak-smack lightjak lightjak-swoop))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
           ) 
             )
             :on-close #f
@@ -13965,8 +13946,9 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
-                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+          (and (ap-route-port-to-metal-head-section?)
+                (logtesta? (-> *game-info* items) (game-items artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
+                (logtest? (-> *game-info* features) (game-feature gun))
                 )
               )
             :on-close #f
@@ -14125,8 +14107,9 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
-                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+          (and (ap-route-port-to-metal-head-section?)
+                (logtesta? (-> *game-info* items) (game-items artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
+                (logtest? (-> *game-info* features) (game-feature gun))
                 )
               )
             :on-close #f
@@ -14223,8 +14206,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-mh pass-port-inda pass-inda-indb pass-indb-sluma))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and  (ap-route-port-to-hq?)
+                (logtest? (-> *game-info* features) (game-feature pass-port-mh))
                 )
             )
             :on-close #f
@@ -14561,8 +14544,8 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-                (logtesta? (-> *game-info* features) (game-feature gun pass-air-train pass-port-mh))
+          (and (ap-route-port-to-metal-head-section?)
+                (logtest? (-> *game-info* features) (game-feature gun))
                 )
               )
             :on-close #f
@@ -14671,8 +14654,9 @@
             :borrow '((towerc 0 ltowcity #f) (towerc 1 lfacrm1 display) (stadiuma 0 lppatrol special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2))
-                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+          (and  (ap-route-port-to-ruins?)
+                (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2))
+                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                 )
               )
             :on-close #f
@@ -14797,8 +14781,9 @@
             :borrow '((stadiuma 0 lpattack special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2))
-               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+          (and (ap-route-port-to-ruins?)
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
                 )
               )
@@ -14889,8 +14874,9 @@
             :borrow '((stadiuma 0 lpattack special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2))
-               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+          (and (ap-route-port-to-ruins?)
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
                 )
               )
@@ -14976,10 +14962,11 @@
             :borrow '((precura 0 lprenme copy))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2 eco-sphere 
+          (and (ap-route-port-to-ruins?)
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2 eco-sphere 
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
-               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
                 )
               )
@@ -15172,10 +15159,11 @@
             :borrow '((wasdoors 0 ldampeck special) (desert-game alias desert copy desboss1 special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtesta? (-> *game-info* items) (game-items pass-front-gate amulet0 amulet1 amulet2 eco-sphere 
+          (and (ap-route-port-to-ruins?)
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2 eco-sphere 
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
-               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+               (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
                 )
             )
