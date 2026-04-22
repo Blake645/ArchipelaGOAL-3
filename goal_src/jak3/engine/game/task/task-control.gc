@@ -252,9 +252,10 @@
                 (('debug 'level)
                  )
                 (else
-                  (if (logtest? (-> s1-0 flags) (game-task-node-flag closed))
-                      (eval-game-task-cmd! s1-0)
-                      )
+                 ;;<ap:preserve-this> comment out to stop items being given to Jak. (i hate this) 
+                  ;; (if (logtest? (-> s1-0 flags) (game-task-node-flag closed))
+                  ;;    (eval-game-task-cmd! s1-0)
+                  ;;    )
                   )
                 )
               (when (game-task-node-info-method-12 s1-0)
