@@ -199,7 +199,14 @@
         )
       )
     )
-  (let ((s5-1
+  ;; <ap:preserve-this> prioritize earlier missions over later ones. this means:
+  ;; 1. run only the earliest task-managers on open nodes, and only those belonging to the same task.
+  ;; 2. load only the first open borrow-level on each borrow slot (2) for a given host level.
+  ;; 3. apply only the task-masks from the earliest open nodes.
+  ;; 4. load only the .mb geometry from the earliest open nodes.
+  (let ((earliest-task-man-node (the-as game-task-node-info #f))
+        (borrow-list '())
+        (s5-1
           (lambda ((arg0 pair))
             (let ((s4-0 (-> arg0 car)))
               (while (not (null? (the-as object arg0)))
@@ -239,8 +246,8 @@
               )
             #f
             )
-          )
         )
+      )
     (let ((s4-1 #f))
       (s5-1 (-> *game-info* sub-task-list (game-task-node city-start-start) borrow))
       (evaluate-faction-commands (-> *game-info* sub-task-list (game-task-node city-start-start) faction-commands))
@@ -252,12 +259,18 @@
                 (('debug 'level)
                  )
                 (else
-                 ;;<ap:preserve-this> comment out to stop items being given to Jak. (i hate this) 
+                 ;;<ap:preserve-this> comment out to stop items being given to Jak automatically. (i hate this) 
                   ;; (if (logtest? (-> s1-0 flags) (game-task-node-flag closed))
                   ;;    (eval-game-task-cmd! s1-0)
                   ;;    )
                   )
                 )
+                    (when (or (not earliest-task-man-node)
+                              (= (-> earliest-task-man-node task) (-> s1-0 task)))
+                          (script-eval '(task-manager) :key s1-0))
+                    (when (not earliest-task-man-node)
+                          (set! earliest-task-man-node s1-0))
+
               (when (game-task-node-info-method-12 s1-0)
                 (if (-> s1-0 on-open)
                     (script-eval (-> s1-0 on-open) :key s1-0)
@@ -302,7 +315,17 @@
                       )
                     )
                   )
-                (s5-1 (-> s1-0 borrow))
+                ;; (s5-1 (-> s1-0 borrow))
+                (when (nonzero? (length (-> s1-0 borrow)))
+                  (let  ((b-list (-> s1-0 borrow))
+                        (s4-0 (car (-> s1-0 borrow))))
+                        (while (not (null? b-list))
+                        (cons! borrow-list s4-0)
+                        (set! b-list (cdr b-list))
+                        (set! s4-0 (car b-list))
+                        )
+                  )
+                        )
                 (when (not (null? (-> s1-0 faction-commands)))
                   (set! s4-1 #t)
                   (evaluate-faction-commands (-> s1-0 faction-commands))
@@ -324,6 +347,7 @@
               (the-as game-feature (logior (game-feature darkjak-tracking) (-> *game-info* features)))
               )
         )
+    (s5-1 borrow-list)
     (logior! (-> *game-info* features) (-> *game-info* debug-features))
     (logior! (-> *game-info* items) (-> *game-info* debug-items))
     (logior! (-> *game-info* vehicles) (-> *game-info* debug-vehicles))
@@ -386,10 +410,16 @@
   (let ((v1-8 (-> this info taskname))
         (a0-4 (-> *game-info* sub-task-list))
         )
+    ;; <ap:preserve-this>
+    ;; In the vanilla game, later subtasks overlay/override earlier subtasks when setting level task-masks. 
+    ;; This means later missions can lock out earlier missions because some important actors, based on their task/kill-masks, 
+    ;; are not spawned in. What we do instead is stop applying task-masks once we find a task node in this level that is not closed.
+    ;; This prioritizes earlier missions over later ones and stabilizes the state of the game.
     (dotimes (a1-1 (-> a0-4 length))
       (when (nonzero? a1-1)
         (let ((a2-3 (-> a0-4 a1-1)))
-          (when (and (logtest? (-> a2-3 flags) (game-task-node-flag closed)) (= (-> a2-3 level) v1-8))
+        (when (= (-> a2-3 level) v1-8)
+          (when (and (logtest? (-> a2-3 flags) (game-task-node-flag closed)))
             (cond
               ((logtest? (-> a2-3 flags) (game-task-node-flag abs-task-mask))
                (set! (-> this task-mask) (-> a2-3 task-mask))
@@ -402,10 +432,16 @@
                )
               )
             )
+            (when (and (not (logtest? (-> a2-3 flags) (game-task-node-flag closed)))
+                        (game-task-node-info-method-12 a2-3))
+               (goto skip-mission-tree-lm22)
+            )
           )
         )
       )
     )
+  )
+  (label skip-mission-tree-lm22)
   (case (-> this name)
     (('foresta 'forestb)
      (prototypes-game-visible-set! '("gun-base-cylinder.mb" "gun-base-tubes.mb") #f this)

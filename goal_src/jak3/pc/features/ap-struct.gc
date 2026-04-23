@@ -156,31 +156,6 @@
         (eval-add dummy-node)
         ;; (script-eval '(talker-spawn "miss012")) ;; blaster mod
         ))
-    (('gun-red)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-red))))
-        (eval-add dummy-node)
-      ;;  (script-eval '(talker-spawn "miss011")) ;; scatter gun
-        ))
-    (('gun-blue)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-blue))))
-        (eval-add dummy-node)
-       ;; (script-eval '(talker-spawn "miss013")) ;; vulcan barrel
-        ))
-    (('gun-dark)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-dark))))
-        (eval-add dummy-node)
-      ;;  (script-eval '(talker-spawn "miss014")) ;; peace maker
-        ))
-    (('board)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-board))))
-        (eval-add dummy-node)
-       ;;  (script-eval '(talker-spawn "board001")) ;; jetboard
-      ))
-    (('darkjak)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-darkjak))))
-        (eval-add dummy-node)
-      ;;   (script-eval '(talker-spawn "dark001")) ;; dark jak
-        ))
     (('dark-eco-pill)
       (sound-play "pill-pickup") ;; dark eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 5.0)
