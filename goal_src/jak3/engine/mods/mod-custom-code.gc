@@ -31,7 +31,7 @@
 
     (let ((wascity-garage-door-front (entity-by-name "wascity-airlock-4")))
           (when wascity-garage-door-front
-            (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) #t) (else #f)))
+            (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
       (none)
     )
