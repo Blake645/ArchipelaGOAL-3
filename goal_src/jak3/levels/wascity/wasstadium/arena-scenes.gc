@@ -634,8 +634,6 @@
                             )
                      )
                 (1120 (fadeout (frame-time-30 30)))
-                ;; <ap:note> i thought this would fix the issue of arena-fight-1 not spawning but didn't seem to work :/
-                (9999 (task-close! "arena-training-1-resolution"))
                 (10000 (task-close! "arena-fight-1-introduction"))
                 )
               :cut-list '(31 111 171 226 295 359 390 443 518 610 709 734 786 895 942 1006 1077 1105)

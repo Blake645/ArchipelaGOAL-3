@@ -22,23 +22,20 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (defun runs-every-frame ()
-      ;; (increase-power-cell-by-one) This is a call to increase-power-cell-by-one defined in mod-common-functions.gc
-
-      ;; Sample code to turn jak pink whenever he's doing the jetboard hover glitch
-      ;; (when *target* 
-      ;;   (if (board-hovering?)
-      ;;     (draw-pink *target*)
-      ;;     (draw-normal *target*)
-      ;;     )
-      ;;   )
+      ;; <ap:preserve-this> allows vinroom to be open when jak is near
         (let ((door (entity-by-name "vin-door-ctyinda-1")))
     (when door
       (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
       )
     )
+
+    (let ((wascity-garage-door-front (entity-by-name "wascity-airlock-4")))
+          (when wascity-garage-door-front
+            (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) #t) (else #f)))
+            )
       (none)
-      )
-    
+    )
+    )
     (defun runs-on-orb-pickup ((orb-id uint) (parent process-tree))
       ;; Code here runs on any precursor orb pickup
 

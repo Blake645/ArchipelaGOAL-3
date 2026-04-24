@@ -4059,3 +4059,20 @@
           )
         )
   )
+
+(let ((v1-79 (-> *script-form* 107)))
+  (set! (-> v1-79 name) 'game-item?)
+  (set! (-> v1-79 spec) '((return macro (boolean)) (function macro (symbol)) (feature macro (symbol))))
+  (set! (-> v1-79 func)
+        (lambda ((arg0 script-context)) (case (-> arg0 param 1)
+                                          (('pass-front-gate)
+                                           (logtest? (-> *game-info* items) (game-items pass-front-gate))
+                                           )
+                                          (else
+                                            (format 0 "ERROR: SCRIPT: unknown feature type ~A~%" (-> arg0 param 1))
+                                            #f
+                                            )
+                                          )
+                )
+        )
+  )

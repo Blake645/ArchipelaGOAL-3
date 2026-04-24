@@ -9949,7 +9949,8 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-inda?))
             :on-close #f
             :reset #f
             :suck-death-count #xa5
