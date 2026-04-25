@@ -28,7 +28,7 @@
       (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
       )
     )
-
+    ;; <ap:preserve-this> allows wascity garage door to open when you have the pass for it
     (let ((wascity-garage-door-front (entity-by-name "wascity-airlock-4")))
           (when wascity-garage-door-front
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
