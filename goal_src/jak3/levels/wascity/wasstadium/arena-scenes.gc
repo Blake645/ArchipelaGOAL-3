@@ -924,7 +924,7 @@
     :music-delay 1500.0
     :scene-task #xd
     :on-running #f
-    :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup001"))
+    :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup001")) <ap:preserve-this> blaster mod text removed from mission
     )
   )
 
@@ -1178,7 +1178,7 @@
               :music-delay 1500.0
               :scene-task #x2b
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup003"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup003")) gun yellow 2 text removed from mission
               )
             )
 
@@ -1295,7 +1295,7 @@
               :music-delay 1500.0
               :scene-task #x3f
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup008"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup008")) <ap:preserve-this> blue gun 1 text removed from mission
               )
             )
 

@@ -118,7 +118,7 @@
               :music-delay 1500.0
               :scene-task #x29
               :on-running '(sound-play-loop "pal-movie-amb")
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup002"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup002")) <ap:preserve-this> gun red 2 text removed from mission
               )
             )
 

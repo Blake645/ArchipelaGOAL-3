@@ -637,7 +637,7 @@
         (while *scene-player*
           (suspend)
           )
-        (talker-spawn-func (-> *talker-speech* 113) *entity-pool* (target-pos 0) (the-as region #f))
+        ;; (talker-spawn-func (-> *talker-speech* 113) *entity-pool* (target-pos 0) (the-as region #f)) <ap:preserve-this> shoulder armor text removed
         )
       )
     (when (-> self actor-group)

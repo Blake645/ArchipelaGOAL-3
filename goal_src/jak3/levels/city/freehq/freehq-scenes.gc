@@ -899,7 +899,7 @@
               :sfx-volume -1.0
               :music-delay 1500.0
               :on-running '(begin (sound-play-loop "hq-amb-mov") (sound-play-loop "hq-amb-loop-mov"))
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup015"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup015")) <ap:preserve-this> dark gun 2 text removed
               )
             )
 

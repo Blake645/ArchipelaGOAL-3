@@ -249,7 +249,7 @@
               :ambient-volume -1.0
               :music-delay 1500.0
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup011"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup011")) <ap:preserve-this> yellow gun 3 text removed
               )
             )
 
@@ -451,7 +451,7 @@
               :ambient-volume -1.0
               :music-delay 1500.0
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup012"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup012")) <ap:preserve-this> red gun 3 text removed
               )
             )
 

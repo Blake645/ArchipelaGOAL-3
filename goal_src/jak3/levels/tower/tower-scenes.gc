@@ -598,7 +598,7 @@
     :music-delay 1500.0
     :scene-task #xff
     :on-running '(sound-play-loop "tower-amb-mov")
-    :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup027"))
+    :on-complete #f ;; '(unless (send-event self 'user-data) (talker-spawn "powup027")) <ap:preserve-this> dark eco crystal text removed
     )
   )
 

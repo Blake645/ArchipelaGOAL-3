@@ -2106,7 +2106,7 @@
               :music-delay 1500.0
               :scene-task #x62
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup013"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup013")) <ap:preserve-this> jet board text removed
               )
             )
 
@@ -2853,7 +2853,7 @@
               :ambient-volume -1.0
               :music-delay 1500.0
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup027"))
+              :on-complete #f ;; '(unless (send-event self 'user-data) (talker-spawn "powup027")) <ap:preserve-this> dark eco cyrstal text removed
               )
             )
 

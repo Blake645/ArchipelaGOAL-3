@@ -300,7 +300,7 @@
               :ambient-volume -1.0
               :music-delay 1500.0
               :on-running '(begin (sound-play-loop "was-wind-mov") (sound-play-loop "was-amb-mov"))
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup004"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup004")) <ap:preserve-this> armor0 text removed
               )
             )
 

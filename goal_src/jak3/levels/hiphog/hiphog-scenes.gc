@@ -690,7 +690,7 @@
               :music-volume -1.0
               :music-delay 1500.0
               :on-running '(sound-play-loop "hiphog-amb-mov")
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup014"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup014")) <ap:preserve-this> peacemaker text removed
               )
             )
 

@@ -696,7 +696,7 @@
     :music-volume -1.0
     :music-delay 1500.0
     :on-running #f
-    :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup010"))
+    :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup010")) <ap:preserve-this> blue gun 3 text removed
     )
   )
 
@@ -998,7 +998,7 @@
               :on-complete '(unless
                  (send-event self 'user-data)
                  (send-event *target* 'get-pickup (int 18) (float (new 'static 'bfloat :data 15.0)))
-                 (talker-spawn "powup016")
+                 ;; (talker-spawn "powup016") <ap:preserve-this> supernova text removed
                  )
               )
             )

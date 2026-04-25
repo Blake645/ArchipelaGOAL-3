@@ -769,7 +769,7 @@
               :music-delay 1500.0
               :scene-task #x72
               :on-running '(sound-play-loop "mine-amb-mov")
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup005"))
+              :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup005")) <ap:preserve-this> armor1 text removed
               )
             )
 

@@ -1290,7 +1290,7 @@
     :ambient-volume -1.0
     :music-delay 1500.0
     :on-running '(begin (sound-play-loop "was-wind-mov") (sound-play-loop "was-ocean-mov") (sound-play-loop "was-amb-mov"))
-    :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup026"))
+    :on-complete #f ;;'(unless (send-event self 'user-data) (talker-spawn "powup026")) <ap:preserve-this> light eco crystal text removed
     )
   )
 
@@ -1639,7 +1639,7 @@
     :ambient-volume -1.0
     :music-delay 1500.0
     :on-running '(begin (sound-play-loop "was-wind-mov") (sound-play-loop "was-ocean-mov") (sound-play-loop "was-amb-mov"))
-    :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup007"))
+    :on-complete #f  ;; '(unless (send-event self 'user-data) (talker-spawn "powup007")) <ap:preserve-this> armor text removed
     )
   )
 

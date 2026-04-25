@@ -1432,7 +1432,7 @@
               :music-delay 1500.0
               :scene-task #xe7
               :on-running '(sound-play-loop "factory-amb-mov")
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup026"))
+              :on-complete #f ;; '(unless (send-event self 'user-data) (talker-spawn "powup026")) <ap:preserve-this> light eco cyrstal text removed
               )
             )
 
