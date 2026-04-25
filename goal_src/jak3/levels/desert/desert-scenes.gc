@@ -2556,7 +2556,7 @@
               :ambient-volume -1.0
               :music-delay 1500.0
               :on-running #f
-              :on-complete '(unless (send-event self 'user-data) (talker-spawn "powup099"))
+              :on-complete #f ;; '(unless (send-event self 'user-data) (talker-spawn "powup099")) dark eco crystal text removed
               )
             )
 

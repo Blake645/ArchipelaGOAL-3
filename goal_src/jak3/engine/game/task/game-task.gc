@@ -5961,7 +5961,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'templea
-              :type-to-spawn 'task-manager-lightjak-training
+              :type-to-spawn #f ;;'task-manager-lightjak-training <ap:preserve-this> remove light jak text
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -6401,7 +6401,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'templea
-              :type-to-spawn 'task-manager-lightjak-training-freeze
+              :type-to-spawn #f ;; 'task-manager-lightjak-training-freeze <ap:preserve-this> light jak text removed
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -6796,7 +6796,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'comba
-              :type-to-spawn 'task-manager-lightjak-training-shield
+              :type-to-spawn #f ;; 'task-manager-lightjak-training-shield <ap:preserve-this> light jak text remove
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -13650,7 +13650,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'templea
-              :type-to-spawn 'task-manager-lightjak-training-swoop
+              :type-to-spawn #f ;;'task-manager-lightjak-training-swoop <ap:preserve-this> light jak text remove
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
