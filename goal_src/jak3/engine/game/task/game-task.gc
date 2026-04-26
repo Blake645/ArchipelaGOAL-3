@@ -1983,7 +1983,7 @@
                 :scene #f
                 )
               )
-            :flags (game-task-node-flag close-task act1)
+            :flags (game-task-node-flag close-task exclusive act1)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node wascity-chase-introduction)
               (game-task-node none)
@@ -4425,7 +4425,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'wasstadc
-              :type-to-spawn 'task-manager-arena-gun-training-blue
+              :type-to-spawn #f ;;'task-manager-arena-gun-training-blue <ap:preserve-this> removed gun tutorial
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -4488,7 +4488,7 @@
               :level 'wasstadc
               :type-to-spawn 'task-manager-arena-fight-3
               :intro-scene #f
-              :resolution-scene '("arena-fight-3-res" "nest-eggs-intro")
+              :resolution-scene '("arena-fight-3-res") ;; "nest-eggs-intro" <ap:preserve-this> hope this works... it didn't :(
               :resolution-scene-continue "wasstada-fight-2"
               :final-node (game-task-node arena-fight-3-resolution)
               :vehicle-type #x1b
@@ -4770,7 +4770,7 @@
             :manager #f
             :borrow '((nstb 0 lnstoba display) (wasall 0 lwassig special))
             :open? #f
-            :on-close #f
+            :on-close '(task-close! "nest-eggs-gas") ;; <ap:preserve-this> this should hopefully close so you can easily return back.
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
                 :message (resetter-message mission-retry)
@@ -6018,7 +6018,7 @@
                (logtest? (-> *game-info* features) (game-feature gun))
                 )
             )
-            :on-close '(task-close! "nest-eggs-gas")
+            :on-close #f ;;'(task-close! "nest-eggs-gas") <ap:preserve-this> stop the game from auto closing nest-eggs when called.
             :reset #f
             :suck-death-count #xa5
             :command-index #x1f

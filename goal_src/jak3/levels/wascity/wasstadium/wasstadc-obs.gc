@@ -2009,10 +2009,11 @@
           (send-event (-> v1-10 extra process) 'on)
           )
       )
-    (until (process-grab? *target* #f)
+      ;;<ap:preserve-this> this should fix jak being stuck after completing arena-fight-1
+    #| (until (process-grab? *target* #f)
       (suspend)
       )
-    #| (let ((gp-1 (-> *game-info* gun-type)))
+     (let ((gp-1 (-> *game-info* gun-type)))
       (set-setting! 'change-gun #t 0.0 0)
       (suspend-for (seconds 5)
         )
@@ -2023,13 +2024,13 @@
         (print-text self (-> self text-id))
         (suspend)
         )
-      )|#
+      )
     (send-event *target* 'end-mode 'grab)
     (let ((v1-33 (entity-by-name "wstd-blocker-1")))
       (if v1-33
           (send-event (-> v1-33 extra process) 'off)
           )
-      )
+      )|#
     (suspend-for (seconds 2)
       (print-text self (-> self text-id))
       )
