@@ -1656,7 +1656,7 @@
               :command-list '((300 (setting-reset part-bounds-check mode #f))
                 (1230 (fadeout (frame-time-30 10)))
                 (10000
-                  (task-close! "nest-eggs-introduction")
+                  ;; (task-close! "nest-eggs-introduction") <ap:preserve-this> part removing force close of nest-eggs-introduction after arena-fight-3
                   (send-event "waspala-elevator-2" 'jump-to 'top)
                   (apply ,(lambda :behavior scene-player
                             ()

@@ -1312,9 +1312,9 @@
     :parts 10
     :command-list '((1114 (fadeout (frame-time-30 10))) (10000 (apply ,(lambda :behavior scene-player
                                                            ()
-                                                           (if (-> self aborted?)
-                                                               (task-close! "nest-eggs-introduction")
-                                                               )
+                                                           ;;(if (-> self aborted?)
+                                                           ;;    (task-close! "nest-eggs-introduction") <ap:preserve-this> part removing force close of nest-eggs-introduction after arena-fight-3
+                                                          ;;     )
                                                            (none)
                                                            )
                                                         )

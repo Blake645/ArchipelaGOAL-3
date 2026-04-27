@@ -12472,7 +12472,7 @@
                       :camera-trans (new 'static 'vector :x 8161024.0 :y 1017452.56 :z -1803327.9 :w 1.0)
                       :quat (new 'static 'vector4h :data (new 'static 'array int16 4 6 -9925 -22 -31226))
                       :camera-rot (new 'static 'array int16 9 #x5cd5 0 -22553 #xb67 #x7ee8 #xc04 #x575b -4240 #x5c0e)
-                      :on-goto '(task-close! "nest-eggs-introduction")
+                      :on-goto #f ;;'(task-close! "nest-eggs-introduction") <ap:preserve-this> part removing force close of nest-eggs-introduction after arena-fight-3
                       :vis-nick 'waspala
                       :vehicle-type #x1b
                       :want-count 4
