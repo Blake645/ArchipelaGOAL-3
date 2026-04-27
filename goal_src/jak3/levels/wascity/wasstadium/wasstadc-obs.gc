@@ -1995,7 +1995,8 @@
           (t9-0)
           )
       )
-    (remove-setting! 'change-gun)
+    ;; <ap:preserve-this> removes invisible wall.
+    ;; (remove-setting! 'change-gun)
     )
   :code (behavior ()
     (let ((gp-0 (entity-by-name "wstd-arena-plat-10")))
@@ -2004,13 +2005,13 @@
         (send-event (-> gp-0 extra process) 'go-pos 0)
         )
       )
-    (let ((v1-10 (entity-by-name "wstd-blocker-1")))
+      ;;<ap:preserve-this> this should fix jak being stuck after completing arena-fight-1
+    #| (let ((v1-10 (entity-by-name "wstd-blocker-1")))
       (if v1-10
           (send-event (-> v1-10 extra process) 'on)
           )
       )
-      ;;<ap:preserve-this> this should fix jak being stuck after completing arena-fight-1
-    #| (until (process-grab? *target* #f)
+     (until (process-grab? *target* #f)
       (suspend)
       )
      (let ((gp-1 (-> *game-info* gun-type)))
