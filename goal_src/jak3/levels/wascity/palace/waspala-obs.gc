@@ -188,15 +188,16 @@
           (t9-0)
           )
       )
+    ;;<ap:preserve-this> removed the forced gun training.
     (remove-setting! 'minimap)
-    (remove-setting! 'change-gun)
+    ;; (remove-setting! 'change-gun)
     )
   :code (behavior ()
     (local-vars (v1-29 symbol))
-    (adjust-player-ammo 500.0 (pickup-type ammo-red))
+    ;; (adjust-player-ammo 500.0 (pickup-type ammo-red))
     (set-setting! 'minimap 'clear 0.0 (minimap-flag minimap))
     (set! (-> *game-info* gun-type) (pickup-type none))
-    (until (process-grab? *target* #f)
+    #|(until (process-grab? *target* #f)
       (suspend)
       )
     (let ((gp-0 27))
@@ -225,7 +226,7 @@
                   )
                 )
             )
-      )
+      )|#
     (send-event *target* 'end-mode 'grab)
     (task-node-close! (game-task-node arena-fight-2-gun-training) 'event)
     (until #f
