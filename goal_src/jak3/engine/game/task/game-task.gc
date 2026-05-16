@@ -15486,7 +15486,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -15609,7 +15613,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -15733,7 +15741,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -15857,7 +15869,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -15981,7 +15997,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16105,7 +16125,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16229,7 +16253,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16353,7 +16381,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16477,7 +16509,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16601,7 +16637,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16725,7 +16765,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16849,7 +16893,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature board))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -16973,7 +17022,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature board))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -17097,7 +17151,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* features) (game-feature board))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18213,7 +18272,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma pass-slumb-genb))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18336,7 +18400,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-ruins?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18460,7 +18528,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-ruins?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18584,7 +18654,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-ruins?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18708,7 +18782,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-ruins?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18832,7 +18910,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-hq?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -18956,7 +19036,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-hq?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19080,7 +19162,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-hq?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19204,7 +19290,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-hq?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19328,7 +19416,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-hq?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19452,7 +19542,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-indb?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19576,7 +19668,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-indb?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19700,7 +19796,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-inda?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19824,7 +19924,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-inda?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -19948,7 +20052,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-port-to-inda?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -20072,7 +20178,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (ap-route-spargus-to-port?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -20196,7 +20304,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-spargus-to-port?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -20320,7 +20432,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-spargus-to-port?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -20444,7 +20560,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-spargus-to-port?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -20568,7 +20688,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-desert?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -20692,7 +20814,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-desert?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21067,7 +21191,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-port-to-hq?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21194,7 +21320,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-inda?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21319,7 +21449,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (ap-route-spargus-to-desert?)
+               (logtest? (-> *game-info* features) (game-feature gun))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21443,7 +21577,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-desert?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21691,7 +21827,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-port-to-hq?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21816,7 +21954,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-desert?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -22061,7 +22201,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(begin
                (task-open! "desert-bbush-total-air-time-introduction")
                (task-open! "desert-bbush-jump-distance-introduction")
@@ -22189,7 +22333,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-jump-distance-introduction")
@@ -22317,7 +22465,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-total-air-time-introduction")
@@ -22445,7 +22597,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-total-air-time-introduction")
@@ -22573,7 +22729,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-total-air-time-introduction")
@@ -22701,7 +22861,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-desert?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -22817,7 +22979,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-desert?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -22933,7 +23097,9 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (ap-route-spargus-to-port?)
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -23108,7 +23274,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -23207,7 +23377,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and  (ap-route-spargus-to-port?)
+                (logtest? (-> *game-info* features) (game-feature gun))
+          )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -23434,7 +23608,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+            (and  (ap-route-port-to-inda?)
+                (logtest? (-> *game-info* features) (game-feature board))
+                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -23558,7 +23736,11 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? #f
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-scorpion v-toad v-mirage v-fox v-x-ride v-rhino))
+            )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5

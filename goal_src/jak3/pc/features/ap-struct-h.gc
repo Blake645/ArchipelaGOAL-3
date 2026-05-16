@@ -89,6 +89,8 @@
 
 (define-extern ap-debug-show-task-states (function none))
 
+(define-extern ap-route-spargus-to-desert? (function symbol))
+
 (define-extern ap-route-spargus-to-monk-temple? (function symbol))
 
 (define-extern ap-route-spargus-to-nest? (function symbol))

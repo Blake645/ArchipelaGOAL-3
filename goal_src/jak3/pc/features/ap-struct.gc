@@ -403,6 +403,11 @@
              (task-closed? "arena-fight-1")
              (zero? (-> *ap-info-jak3* completed))))
 |#
+(defun ap-route-spargus-to-desert? ()
+  (and (logtest? (-> *game-info* items) (game-items pass-front-gate)) ;; direct route.
+        (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle v-snake v-fox v-mirage v-rhino v-scorpion v-x-ride v-toad))
+      )
+  )
 (defun ap-route-spargus-to-monk-temple? ()
   (and (logtest? (-> *game-info* items) (game-items pass-front-gate)) ;; direct route.
         (logtest? (-> *game-info* vehicles) (game-vehicles v-toad))
