@@ -1173,39 +1173,6 @@
   (set! (-> this root pause-adjust-distance) 368640.0)
   (set! (-> this hover-sound) (sound-play "air-train"))
   (none)
-  ;; <ap:preserve-this> have the air train spawn from the start. need to fix it allowing Jak to use it even if he doesn't have the air train pass
-    (cond
-    ((string= (-> this name) "air-train-1")
-      (set! (-> this on-notice) 
-      '(cond
-        (lambda () (logtest? (-> *game-info* features) (game-feature pass-air-train))
-          '("desert-warp" (scene-play 
-          '("city-air-train-in-desert" "desert-air-train-out"))
-          #f
-          (want-anim "city-air-train-in-desert")
-          )
-        )
-       )
-    )
-    )
-    ((string= (-> this name) "air-train-5")
-      (set! (-> this on-notice) 
-      '(cond
-        (lambda () (logtest? (-> *game-info* features) (game-feature pass-air-train))
-          '("ctyport-warp" (scene-play 
-          '("desert-air-train-in" "city-air-train-out"))
-          #f
-          (want-anim "desert-air-train-in")
-          )
-        )
-       )
-    )
-    )
-    (else
-      (set! (-> this on-notice) (res-lump-struct (-> this entity) 'on-notice pair))
-    )
-  )
-  (none)
   )
 
 (defstate idle (air-train)
