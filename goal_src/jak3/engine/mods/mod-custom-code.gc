@@ -20,12 +20,32 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Begin function defintions.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(defun set-region-data! ((id int) (event-name string) (data pair))
+  (let ((region (region-lookup-by-id id)))
+    (when region
+      (cond
+        ((string= event-name "on-enter")
+          (set! (-> region on-enter) data)
+          )
+        ((string= event-name "on-inside")
+          (set! (-> region on-inside) data)
+          )
+        ((string= event-name "on-exit")
+          (set! (-> region on-exit) data)
+          )
+        (else
+          (format 0 "ERROR: invalid event-name!~%")
+          )
+        )
+      )
+    )
+  (none)
+  )
     (defun runs-every-frame ()
       ;; <ap:preserve-this> allows vinroom to be open when jak is near
-        (let ((door (entity-by-name "vin-door-ctyinda-1")))
-    (when door
-      (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
+    (let ((door (entity-by-name "vin-door-ctyinda-1")))
+      (when door
+        (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
       )
     )
     ;; <ap:preserve-this> allows wascity garage door to open when you have the pass for it
@@ -33,8 +53,11 @@
           (when wascity-garage-door-front
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
-      (none)
     )
+    (set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
+(set-region-data! 101 "on-enter" '(want-display 'ctyslumb 'ctygenb))
+(set-region-data! 101 "on-exit" '(want-display 'ctyslumb #f 'ctygenb #f))
+    (none)
     )
     (defun runs-on-orb-pickup ((orb-id uint) (parent process-tree))
       ;; Code here runs on any precursor orb pickup
