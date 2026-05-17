@@ -515,6 +515,7 @@
     (send-event (handle->process (-> self hud-timer)) 'hide-and-die)
     (set! (-> self start-time) 0)
     (task-node-close! (game-task-node desert-course-race-restrict-to-turtle) 'event)
+    (task-node-close! (game-task-node desert-turtle-training-resolution) 'event) ;;<ap:note> closes turtle training after the last tutorial
     (let ((t9-62 (-> (the-as (state task-manager) (find-parent-state)) code)))
       (if t9-62
           ((the-as (function none) t9-62))
