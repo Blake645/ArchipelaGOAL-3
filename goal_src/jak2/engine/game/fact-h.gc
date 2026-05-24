@@ -359,7 +359,6 @@
 
 ;; WARN: Return type mismatch object vs fact-info.
 (defmethod new fact-info ((allocation symbol) (type-to-make type) (arg0 process) (arg1 pickup-type) (arg2 float))
-<<<<<<< HEAD
   (local-vars (sv-16 fact-info) (sv-20 res-lump) (sv-24 task-mask))
   (set! sv-16 (object-new allocation type-to-make (the-as int (-> type-to-make size))))
   (set! sv-20 (the-as res-lump (-> arg0 entity)))
@@ -396,7 +395,6 @@
                                                      arg2
                                                      )
                         )
-=======
   (let ((sv-16 (object-new allocation type-to-make (the-as int (-> type-to-make size)))))
     (let ((sv-20 (the-as res-lump (-> arg0 entity))))
       (let ((sv-24 (process-task-mask arg0)))
@@ -411,7 +409,6 @@
           (when (>= (the-as int s4-1) 0)
             (let ((s3-0 (the-as int s4-1))
                   (s2-0 (-> sv-20 tag s4-1))
->>>>>>> remotes/Modbase/main
                   )
               0
               (while (= (-> s2-0 name) (-> sv-20 tag s4-1 name))

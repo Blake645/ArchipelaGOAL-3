@@ -236,7 +236,6 @@
   "1339": "Display",
   "133a": "<FLAG_FINLAND> Suomi",
   "133b": "Hint Subtitles",
-<<<<<<< HEAD
   "133c": "Português",
   "133d": "Svenska ",
   "133e": "Dansk",
@@ -261,7 +260,6 @@
   "136c": "Locked",
 
   
-=======
   "133c": "<FLAG_PORTUGUAL> Português",
   "133d": "<FLAG_SWEDEN> Svenska",
   "133e": "<FLAG_DENMARK> Dansk",
@@ -276,7 +274,6 @@
   "1347": "<FLAG_CZECH> Čeština",
   "1348": "<FLAG_CROATIA> Hrvatski",
   "1349": "<FLAG_GALICIA> Galego",
->>>>>>> remotes/Modbase/main
   "134a": "Pressure Sensitivity",
   "134b": "Swap R1 and R2",
   "134c": "Trigger Effects"
