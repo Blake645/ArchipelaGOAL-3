@@ -496,6 +496,7 @@
 ;; WARN: Return type mismatch int vs object.
 ;; WARN: new jak 2 until loop case, check carefully
 (defbehavior title-menu title-control ()
+  (local-vars (sv-112 font-context))
   (sound-play "dmenu-hit")
   (let ((gp-1 (new 'static 'boxed-array :type uint32 #x132)))
     (until #f
@@ -519,33 +520,29 @@
            )
           )
         (when (< (mod (current-time) 300) 210)
-          (let ((sv-112
-                  (new 'stack 'font-context *font-default-matrix* 64 312 0.0 (font-color default) (font-flags shadow kerning))
-                  )
+          (set! sv-112
+                (new 'stack 'font-context *font-default-matrix* 64 312 0.0 (font-color default) (font-flags shadow kerning))
                 )
-            (set-width! sv-112 384)
-            (set-height! sv-112 50)
-            (set! (-> sv-112 flags) (font-flags shadow kerning middle middle-vert large))
-            (set! (-> sv-112 scale) 0.7)
-            (dotimes (s5-4 (-> gp-1 length))
-              (if (= (-> self selected) s5-4)
-                  (set! (-> sv-112 color) (font-color progress-old-selected))
-                  (set! (-> sv-112 color) (font-color white))
-                  )
-              (print-game-text
-                (lookup-text! *common-text* (the-as text-id (-> gp-1 s5-4)) #f)
-                sv-112
-                #f
-                44
-                (bucket-id progress)
+          (let ((v1-35 sv-112))
+            (set! (-> v1-35 width) (the float 384))
+            )
+          (let ((v1-36 sv-112))
+            (set! (-> v1-36 height) (the float 50))
+            )
+          (set! (-> sv-112 flags) (font-flags shadow kerning middle middle-vert large))
+          (set! (-> sv-112 scale) 0.7)
+          (dotimes (s5-4 (-> gp-1 length))
+            (if (= (-> self selected) s5-4)
+                (set! (-> sv-112 color) (font-color progress-old-selected))
+                (set! (-> sv-112 color) (font-color white))
                 )
             (case (-> *ap-info-jak2* connection-status)
               ((0) (print-game-text (lookup-text! *common-text* (text-id ap-connect-and-start) #f) sv-112 #f 44 (bucket-id progress)))
               ((1) (print-game-text (lookup-text! *common-text* (text-id ap-waiting-for-items) #f) sv-112 #f 44 (bucket-id progress)))
               ((2) (print-game-text (lookup-text! *common-text* (text-id ap-connection-failed) #f) sv-112 #f 44 (bucket-id progress)))
               ((3) (print-game-text (lookup-text! *common-text* (text-id ap-ready) #f) sv-112 #f 44 (bucket-id progress)))
-              (+! (-> sv-112 origin y) 22.0)
               )
+            (+! (-> sv-112 origin y) 22.0)
             )
           )
         )
