@@ -434,7 +434,7 @@
       (("keira-npc-1" "keira-npc-2") *keira-menu-list*)
       (("tess-npc-1" "tess-npc-3") *tess-menu-list*)
       (("brutter-npc-1") *brutter-menu-list*)
-      (("youngsamos-npc-1" "youngsamos-npc-2" "youngsamos-npc-3" "youngsamos-npc-4" "youngsamos-npc-5" "youngsamos-npc-7" "youngsamos-npc-9") *youngsamos-menu-list*)
+      (("youngsamos-npc-1" "youngsamos-npc-2" "youngsamos-npc-3" "youngsamos-npc-4" "youngsamos-npc-5" "youngsamos-npc-6" "youngsamos-npc-7" "youngsamos-npc-9") *youngsamos-menu-list*)
       (("baron-npc-1") *baron-menu-list*)
       (("kor-npc-1") *kor-menu-list*)
       (else *empty-taskable-menu-list*)

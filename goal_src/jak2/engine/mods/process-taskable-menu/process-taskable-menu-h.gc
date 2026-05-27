@@ -567,6 +567,25 @@
 (define *youngsamos-menu-list*
   (new 'static 'boxed-array :type taskable-menu-entry
     (static-taskable-menu-entry
+      :task-node (game-task-node tomb-poles-introduction)
+      :event-idx 0
+      :continue "tomb-poles-switch"
+      :text-id (text-id progress-missions-tomb-face-tests)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node tomb-poles-introduction))
+            (task-node-open? (game-task-node tomb-poles-boulder))
+            (task-node-open? (game-task-node tomb-poles-block))
+            (task-node-open? (game-task-node tomb-poles-poles))
+            (task-node-open? (game-task-node tomb-poles-poles2))
+            (task-node-open? (game-task-node tomb-poles-resolution))
+            (task-node-open? (game-task-node tomb-water-vibe))
+            (task-node-open? (game-task-node tomb-water-resolution))
+            (task-node-open? (game-task-node tomb-boss-introduction))
+            )
+          )
+      :forbid-when (lambda () (task-node-closed? (game-task-node tomb-boss-resolution)))
+      )
+    (static-taskable-menu-entry
       :task-node (game-task-node forest-scouts-pre-intro)
       :event-idx 0
       :continue "hideout-start"
