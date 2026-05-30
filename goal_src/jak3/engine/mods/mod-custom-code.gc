@@ -54,7 +54,7 @@
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
     )
-    (set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
+(set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
 (set-region-data! 101 "on-enter" '(want-display 'ctyslumb 'ctygenb))
 (set-region-data! 101 "on-exit" '(want-display 'ctyslumb #f 'ctygenb #f))
     (none)
