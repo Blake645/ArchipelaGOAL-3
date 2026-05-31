@@ -6011,7 +6011,7 @@
             :borrow '((desert-game alias desert copy desoasis special) (wasall 0 lwassig special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle v-snake v-scorpion v-toad v-rhino v-mirage v-fox v-x-ride))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-turtle v-snake v-toad))
                (logtest? (-> *game-info* items) (game-items pass-front-gate))
                (logtest? (-> *game-info* features) (game-feature gun))
                 )
