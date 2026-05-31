@@ -115,7 +115,7 @@
   )
 
 (defun string->talker-speech ((arg0 string))
-  (dotimes (s5-0 365)
+  (dotimes (s5-0 1000)
     (let ((s4-0 (-> *talker-speech* s5-0)))
       (if (string= arg0 (-> s4-0 name))
           (return s4-0)
@@ -221,6 +221,16 @@
 
 (defbehavior talker-init talker ((arg0 talker-speech-class) (arg1 vector) (arg2 region))
   (vector-copy! (-> self trans) arg1)
+  (let ((name (-> arg0 name)))
+    (case-str name
+      (("car001" "car002" "car003" "car004"
+        "car005" "car006" "car007" "car008"
+        "red001" "turret001" "dark001"
+        "dark002" "dark003" "dark004" "shine001"
+        "amulet001" "amulet002" "amulet003" "gate001"
+        "train001" "pass001" "pass002" "pass003"
+        "pass004" "pass005" "item001")
+       (set! name "miss001")))
   (let ((v1-2 (shr (the-as int (-> arg0 channel)) 4)))
     (when (not (or (or (= v1-2 4) (= v1-2 5))
                    (or (not (-> *setting-control* user-current play-hints))
@@ -263,6 +273,7 @@
             )
       )
     )
+  )
   (set! (-> self message) arg0)
   (set! (-> self region) arg2)
   (set! (-> self total-time) 0)
