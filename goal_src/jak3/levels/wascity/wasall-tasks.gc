@@ -449,7 +449,7 @@
 ;; WARN: Return type mismatch connection vs none.
 (defmethod set-time-limit ((this oasis-defense-intro-manager))
   ((method-of-type task-manager set-time-limit) this)
-  (let ((t1-0 11))
+  (let ((t1-0 255))
     (set-setting! 'vehicles 'set (shr t1-0 32) t1-0)
     )
   (none)
