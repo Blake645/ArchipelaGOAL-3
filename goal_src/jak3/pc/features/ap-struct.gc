@@ -146,18 +146,14 @@
 
  (defun ap-item-received! ((item symbol))
   (case item
-    (('gun-yellow-1)
+    #| (('gun-yellow-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-1))))
         (script-eval '(talker-spawn "powup001")) ;; blaster mod
         ))
     (('vehicle-turtle)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-turtle))))
-        (script-eval '(talker-spawn "car001")) ;; blaster mod
-        ))
-    ;;(('gun-yellow-2)
-      ;;(let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-yellow-2))))
-        ;; (script-eval '(talker-spawn "miss012")) ;; blaster mod
-        ;;))
+        (script-eval '(talker-spawn "car001"))
+        ))|#
     (('dark-eco-pill)
       (sound-play "pill-pickup") ;; dark eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 5.0)
