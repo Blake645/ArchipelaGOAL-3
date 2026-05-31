@@ -839,6 +839,9 @@
   ;; <ap:preserve-this> added for archipelago
   (add-pass-air-train 73)
   (add-gun-turret 74)
+  (add-vehicle-fox 75)
+  (add-vehicle-mirage 76)
+  (add-vehicle-x-ride 77)
   )
 ;; ---game-task-node-command
 

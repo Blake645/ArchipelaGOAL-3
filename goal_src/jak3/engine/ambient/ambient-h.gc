@@ -1190,7 +1190,7 @@ and neg-state is greater than or equal to neg.
                             :on-close #f
                             :camera #f
                             )
-                            ;; <ap:note> i believe this the first armor piece.
+                            ;; <ap:note> Forearm Armor
                           (new 'static 'talker-speech-class
                             :name "powup004"
                             :channel (gui-channel alert)
@@ -1229,7 +1229,7 @@ and neg-state is greater than or equal to neg.
                             :on-close #f
                             :camera #f
                             )
-                            ;; <ap:note> shoulder armor
+                            ;; <ap:note> chest armor
                           (new 'static 'talker-speech-class
                             :name "powup007"
                             :channel (gui-channel alert)
@@ -3576,7 +3576,7 @@ and neg-state is greater than or equal to neg.
                             :camera #f)
                                                         
                             (new 'static 'talker-speech-class
-                            :name "dark002"
+                            :name "dark003"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x17c
@@ -3588,7 +3588,7 @@ and neg-state is greater than or equal to neg.
                             :camera #f)
                                                         
                             (new 'static 'talker-speech-class
-                            :name "dark003"
+                            :name "dark004"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x17d
@@ -3600,7 +3600,7 @@ and neg-state is greater than or equal to neg.
                             :camera #f)
                                                         
                             (new 'static 'talker-speech-class
-                            :name "dark004"
+                            :name "dark005"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x17e

@@ -1422,6 +1422,15 @@
     (((game-task-node-command add-gun-turret))
      "add-gun-turret"
      )
+    (((game-task-node-command add-vehicle-fox))
+     "add-vehicle-fox"
+     )
+    (((game-task-node-command add-vehicle-mirage))
+     "add-vehicle-mirage"
+     )
+    (((game-task-node-command add-vehicle-x-ride))
+     "add-vehicle-x-ride"
+     )
     (else
       "*unknown*"
       )
