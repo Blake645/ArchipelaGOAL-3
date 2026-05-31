@@ -4768,7 +4768,7 @@
             :manager #f
             :borrow '((nstb 0 lnstoba display) (wasall 0 lwassig special))
             :open? #f
-            :on-close '(task-close! "nest-eggs-gas") ;; <ap:preserve-this> this should hopefully close so you can easily return back.
+            :on-close '(task-close! "nest-eggs-gas") ;; <ap:preserve-this> close so you can easily return back.
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
                 :message (resetter-message mission-retry)

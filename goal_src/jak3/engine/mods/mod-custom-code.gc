@@ -54,9 +54,29 @@
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
     )
+    ;; genb 
 (set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
 (set-region-data! 101 "on-enter" '(want-display 'ctyslumb 'ctygenb))
 (set-region-data! 101 "on-exit" '(want-display 'ctyslumb #f 'ctygenb #f))
+
+;; monk temple
+      (let ((region-1691 (region-lookup-by-id 1691)))
+        (when region-1691
+          (set! (-> region-1691 on-enter) 
+            '(begin 
+              (when (task-closed? "temple-climb-introduction") (task-close! "temple-climb-resolution"))
+              (when (task-open? "desert-glide-introduction") (scene-play "temple-climb-res")))
+            )
+          )
+        )
+        (let ((region-1528 (region-lookup-by-id 1528)))
+        (when region-1528
+          (set! (-> region-1528 on-enter) 
+            '(begin 
+              (when (task-open? "temple-climb-introduction") (scene-play "temple-climb-intro")) (want-sound wasall1 temple1 temple6))
+            )
+          )
+        )
     (none)
     )
     (defun runs-on-orb-pickup ((orb-id uint) (parent process-tree))

@@ -86,9 +86,9 @@ and neg-state is greater than or equal to neg.
     (draw-text (_type_) none)
     )
   )
+(defconstant talker-speech-length 1000) ;; <ap:preserve-this> bump length for new talkers.
 
-
-(define *talker-speech* (new 'static 'inline-array talker-speech-class 365
+(define *talker-speech* (new 'static 'inline-array talker-speech-class talker-speech-length ;; <ap:preserve-this> use length from constant.
                           (new 'static 'talker-speech-class :name "none")
                           (new 'static 'talker-speech-class
                             :name "DSbop002"
@@ -1151,324 +1151,351 @@ and neg-state is greater than or equal to neg.
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> blaster mod
                           (new 'static 'talker-speech-class
                             :name "powup001"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x6c
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-056b)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> wave concussor 
                           (new 'static 'talker-speech-class
                             :name "powup002"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x6d
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-056c)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Beam Reflexor
                           (new 'static 'talker-speech-class
                             :name "powup003"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x6e
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-056d)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> i believe this the first armor piece.
                           (new 'static 'talker-speech-class
                             :name "powup004"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x6f
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0579)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> leg armor
                           (new 'static 'talker-speech-class
                             :name "powup005"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x70
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-057a)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> shoulder armor
                           (new 'static 'talker-speech-class
                             :name "powup006"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x71
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0576)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> shoulder armor
                           (new 'static 'talker-speech-class
                             :name "powup007"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x72
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-057b)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> vulcan fury
                           (new 'static 'talker-speech-class
                             :name "powup008"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x73
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0577)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Arc Wielder
                           (new 'static 'talker-speech-class
                             :name "powup009"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x74
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-057c)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Needle Lazer
                           (new 'static 'talker-speech-class
                             :name "powup010"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x75
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-057d)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Gyro Burster
                           (new 'static 'talker-speech-class
                             :name "powup011"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x76
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0578)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Plasmite RPG
                           (new 'static 'talker-speech-class
                             :name "powup012"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x77
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-057e)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> JetBoard
                           (new 'static 'talker-speech-class
                             :name "powup013"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x78
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-057f)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Peace Maker
                           (new 'static 'talker-speech-class
                             :name "powup014"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x79
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0580)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Mass Inverter
                           (new 'static 'talker-speech-class
                             :name "powup015"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x7a
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0581)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Super Nova
                           (new 'static 'talker-speech-class
                             :name "powup016"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x7b
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0582)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Light Jak Regen
                           (new 'static 'talker-speech-class
                             :name "powup017"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x7c
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-05f2)
                             :on-close #f
                             :camera #f
                             )
+                            ;; Light Jak Flash Freeze
                           (new 'static 'talker-speech-class
                             :name "powup018"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x7d
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-05f3)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Light Jak Shield
                           (new 'static 'talker-speech-class
                             :name "powup019"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x7e
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0614)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Light Jak Flight
                           (new 'static 'talker-speech-class
                             :name "powup020"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x7f
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-05f5)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Beam Generator
                           (new 'static 'talker-speech-class
                             :name "powup021"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x80
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0615)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Holo Cube
                           (new 'static 'talker-speech-class
                             :name "powup022"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x81
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0616)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Prism
                           (new 'static 'talker-speech-class
                             :name "powup023"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x82
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0617)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Reflector
                           (new 'static 'talker-speech-class
                             :name "powup024"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x83
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0618)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Time Map
                           (new 'static 'talker-speech-class
                             :name "powup025"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x84
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-0619)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Light Eco Crystal
                           (new 'static 'talker-speech-class
                             :name "powup026"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x85
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-061a)
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:note> Dark Eco Crystal
                           (new 'static 'talker-speech-class
                             :name "powup099"
                             :channel (gui-channel alert)
                             :speech #x86
                             :text-duration (seconds 5)
-                            :delay (seconds 1)
+                            :delay (seconds 3)
                             :neg #x1
                             :text-message (text-id text-061b)
                             :on-close #f
@@ -3403,5 +3430,329 @@ and neg-state is greater than or equal to neg.
                             :on-close #f
                             :camera #f
                             )
+                            ;; <ap:preserve-this> added the following for archipelago
+                            (new 'static 'talker-speech-class
+                            :name "car001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x170
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id tough-puppy-acquired)
+                            :on-close #f
+                            :camera #f)
+
+                            (new 'static 'talker-speech-class
+                            :name "car002"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x171
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id sand-shark-acquired)
+                            :on-close #f
+                            :camera #f)
+
+                            (new 'static 'talker-speech-class
+                            :name "car003"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x172
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dune-hopper-acquired)
+                            :on-close #f
+                            :camera #f)
+
+                            (new 'static 'talker-speech-class
+                            :name "car004"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x173
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id gila-stomper-acquired)
+                            :on-close #f
+                            :camera #f)
+
+                            (new 'static 'talker-speech-class
+                            :name "car005"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x174
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id slam-dozer-acquired)
+                            :on-close #f
+                            :camera #f)
+                            
+                            (new 'static 'talker-speech-class
+                            :name "car006"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x175
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id heat-seeker-acquired)
+                            :on-close #f
+                            :camera #f)
+                            
+                            (new 'static 'talker-speech-class
+                            :name "car007"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x176
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dust-demon-acquired)
+                            :on-close #f
+                            :camera #f)
+                            
+                            (new 'static 'talker-speech-class
+                            :name "car008"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x177
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id desert-screamer-acquired)
+                            :on-close #f
+                            :camera #f)
+                            
+                            (new 'static 'talker-speech-class
+                            :name "gun001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x178
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id scatter-gun-acquired)
+                            :on-close #f
+                            :camera #f)
+                            
+                            (new 'static 'talker-speech-class
+                            :name "turret001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x179
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id gun-turret-acquired)
+                            :on-close #f
+                            :camera #f)
+                            
+                            (new 'static 'talker-speech-class
+                            :name "dark001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x17a
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dark-jak-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "dark002"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x17b
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dark-bomb-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "dark002"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x17c
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dark-blast-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "dark003"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x17d
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dark-invisiblity-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "dark004"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x17e
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id dark-strike-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "light001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x17f
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id light-jak-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "amulet001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x180
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id war-amulet-1-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "amulet002"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x181
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id war-amulet-2-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "amulet003"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x182
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id war-amulet-3-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "gate001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x183
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id gate-pass-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "train001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x184
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id pass-air-train-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "pass001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x185
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id pass-port-mha-acquired)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "pass002"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x170
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id pass-port-inda-acquried)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "pass003"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x186
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id pass-inda-indb-acquried)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "pass004"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x187
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id pass-indb-sluma-acquried)
+                            :on-close #f
+                            :camera #f)
+                                                        
+                            (new 'static 'talker-speech-class
+                            :name "pass005"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x188
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id pass-slumb-genb-acquried)
+                            :on-close #f
+                            :camera #f)
+                                                                                    
+                            (new 'static 'talker-speech-class
+                            :name "item001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x189
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id cypher-glyph-acquried)
+                            :on-close #f
+                            :camera #f)
                           )
         )

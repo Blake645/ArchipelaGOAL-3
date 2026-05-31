@@ -144,18 +144,20 @@
   #t
   )
 
-#| (defun ap-item-received! ((item symbol))
+ (defun ap-item-received! ((item symbol))
   (case item
     (('gun-yellow-1)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-yellow-1))))
-        (eval-add dummy-node)
-        ;; (script-eval '(talker-spawn "miss012")) ;; blaster mod
+      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-1))))
+        (script-eval '(talker-spawn "powup001")) ;; blaster mod
         ))
-    (('gun-yellow-2)
-      (let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-yellow-2))))
-        (eval-add dummy-node)
-        ;; (script-eval '(talker-spawn "miss012")) ;; blaster mod
+    (('vehicle-turtle)
+      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-turtle))))
+        (script-eval '(talker-spawn "car001")) ;; blaster mod
         ))
+    ;;(('gun-yellow-2)
+      ;;(let ((dummy-node (new 'static 'game-task-node-info :add (game-task-node-command add-gun-yellow-2))))
+        ;; (script-eval '(talker-spawn "miss012")) ;; blaster mod
+        ;;))
     (('dark-eco-pill)
       (sound-play "pill-pickup") ;; dark eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 5.0)
@@ -184,7 +186,6 @@
   ;; (auto-save-command 'save 0 0 *default-pool* #f) ;; <ap:todo> Fails compilation because ap-struct declared too early. Any way to fix this?
   #t
   )
-|#
 ;; <ap:todo> deathlink will come later, leave this out for now
 #|
 (defun ap-deathlink-received! ((chosen-death symbol))
