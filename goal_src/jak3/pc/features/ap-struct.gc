@@ -303,11 +303,11 @@
         ))
     (('vehicle-scorpion)
        (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-scorpion))))
-        (script-eval '(talker-spawn "car003")) ;; gila stomper
+        (script-eval '(talker-spawn "car004")) ;; gila stomper
         ))
     (('vehicle-toad)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-toad))))
-        (script-eval '(talker-spawn "car004")) ;; dune hopper
+        (script-eval '(talker-spawn "car003")) ;; dune hopper
         ))
     (('vehicle-rhino)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-rhino))))

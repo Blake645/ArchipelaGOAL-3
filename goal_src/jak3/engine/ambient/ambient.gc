@@ -225,11 +225,11 @@
     (case-str name
       (("car001" "car002" "car003" "car004"
         "car005" "car006" "car007" "car008"
-        "red001" "turret001" "dark001"
-        "dark002" "dark003" "dark004" "shine001"
+        "red001" "turret001" "dark001" "dark002" 
+        "dark003" "dark004" "dark005""shine001"
         "amulet001" "amulet002" "amulet003" "gate001"
         "train001" "pass001" "pass002" "pass003"
-        "pass004" "pass005" "item001" "seal001")
+        "pass004" "pass005" "item001" "seal001" "powup099")
        (set! name "miss001")))
   (let ((v1-2 (shr (the-as int (-> arg0 channel)) 4)))
     (when (not (or (or (= v1-2 4) (= v1-2 5))
