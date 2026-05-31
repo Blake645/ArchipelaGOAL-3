@@ -3528,7 +3528,7 @@ and neg-state is greater than or equal to neg.
                             :camera #f)
                             
                             (new 'static 'talker-speech-class
-                            :name "gun001"
+                            :name "red001"
                             :channel (gui-channel alert)
                             :flags (talker-flags reduce-volume slide-in)
                             :speech #x178
