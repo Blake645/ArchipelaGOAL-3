@@ -77,6 +77,16 @@
             )
           )
         )
+  ;; nest
+        (let ((region-1155 (region-lookup-by-id 1155)))
+        (when region-1155
+          (set! (-> region-1155 on-enter) 
+            '(begin 
+              (when (task-closed? "nest-eggs-wall") (task-close! "nest-eggs-tunnel"))
+            )
+          )
+        )
+        )
     (none)
     )
     (defun runs-on-orb-pickup ((orb-id uint) (parent process-tree))
