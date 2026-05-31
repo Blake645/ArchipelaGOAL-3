@@ -229,7 +229,7 @@
         "dark002" "dark003" "dark004" "shine001"
         "amulet001" "amulet002" "amulet003" "gate001"
         "train001" "pass001" "pass002" "pass003"
-        "pass004" "pass005" "item001")
+        "pass004" "pass005" "item001" "seal001")
        (set! name "miss001")))
   (let ((v1-2 (shr (the-as int (-> arg0 channel)) 4)))
     (when (not (or (or (= v1-2 4) (= v1-2 5))
@@ -239,7 +239,7 @@
                    )
                )
       (set! (-> self voice-id)
-            (add-process *gui-control* self (-> arg0 channel) (gui-action queue) (-> arg0 name) 81920.0 0)
+            (add-process *gui-control* self (-> arg0 channel) (gui-action queue) name 81920.0 0)
             )
       (sound-params-set!
         *gui-control*

@@ -3754,5 +3754,17 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id cypher-glyph-acquried)
                             :on-close #f
                             :camera #f)
+
+                            (new 'static 'talker-speech-class
+                            :name "seal001"
+                            :channel (gui-channel alert)
+                            :flags (talker-flags reduce-volume slide-in)
+                            :speech #x18b
+                            :text-duration (seconds 5)
+                            :delay (seconds 3)
+                            :neg #x1
+                            :text-message (text-id seal-of-mar-acquired)
+                            :on-close #f
+                            :camera #f)
                           )
         )
