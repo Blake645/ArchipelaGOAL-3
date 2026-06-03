@@ -51,12 +51,13 @@
     (let ((platform (entity-by-name "wstd-arena-plat-10")))
       (when platform
         (set! (cdr (res-lump-struct platform 'on-activate pair))  '(
-        ((or ;;(task-open? "desert-catch-lizards-introduction")  
+        ((or (task-open? "desert-catch-lizards-introduction")  
         ;;(task-open? "wascity-chase-introduction") 
         ;;(task-open? "wascity-chase-resolution") 
         (task-open? "arena-fight-2-resolution") 
         (task-open? "arena-fight-3-introduction")) 'wait) 
-        ((or (task-open? "arena-fight-2-fight") (task-open? "arena-training-1-collect")) 'wait-end) 
+        ((or (task-open? "arena-fight-2-fight")) 'wait-end)
+        ((or (task-open? "arena-training-1-collect")) 'wait-show)
         (else #f))))
       )
     ;; <ap:preserve-this> allows wascity garage door to open when you have the pass for it
