@@ -319,7 +319,6 @@
                 ;; only consider tasks starting from arena-training-1
                 (when (and (nonzero? (length (-> s1-0 borrow)))  
                            (>= (-> s1-0 task) (game-task arena-training-1)))
-                  ;; (format 0 "adding to borrow-list for ~A, ~A~%" s1-0 (-> s1-0 borrow))
                   (let ((b-list (-> s1-0 borrow))
                         (s4-0 (car (-> s1-0 borrow))))
                     (while (not (null? b-list))
