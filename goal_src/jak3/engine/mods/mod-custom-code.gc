@@ -94,14 +94,17 @@
                          (= (-> subtask level) lvlname))
                 (case lvlname
                   (('city)
-                    (when (not (logtest? (-> subtask flags) (game-task-node-flag closed)))
+                    (if (game-task-node-info-method-12 subtask)
                       (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name))))
                   (else
                     (cond
                       ((logtest? (-> subtask flags) (game-task-node-flag closed))
                         (format *stdcon0* "  ~15L~S~0L~%" (-> subtask name)))
+                      ((game-task-node-info-method-12 subtask)
+                        (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name)))
                       (else
-                        (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name))))))))))))
+                        (format *stdcon0* "  ~19L~S~0L~%" (-> subtask name)))))))))))
+      )
     )
   )
       ;; <ap:preserve-this> allows vinroom to be open when jak is near
