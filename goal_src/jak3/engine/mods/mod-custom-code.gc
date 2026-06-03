@@ -60,6 +60,20 @@
       *temp-string*
       )
     )
+  (format *stdcon0* "~4Lgame items:~0L ~S~%"
+    (begin
+      (clear *temp-string*)
+      (bit-enum->string game-items (-> *game-info* items) *temp-string*)
+      *temp-string*
+      )
+    )
+  (format *stdcon0* "~4Lgame vehicles:~0L ~S~%"
+    (begin
+      (clear *temp-string*)
+      (bit-enum->string game-vehicles (-> *game-info* vehicles) *temp-string*)
+      *temp-string*
+      )
+    )
   (format *stdcon0* "~4Lcurrent level:~0L ~S~%~4Ltask masks:~0L    ~S~%"
     (current-level-name)
     (begin
