@@ -93,7 +93,7 @@
               (when (and (= (-> subtask type) game-task-node-info)
                          (= (-> subtask level) lvlname))
                 (case lvlname
-                  (('city)
+                  (('city 'desert)
                     (if (game-task-node-info-method-12 subtask)
                       (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name))))
                   (else

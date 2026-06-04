@@ -454,6 +454,7 @@
     :options (new 'static 'boxed-array :type menu-option
       (new 'static 'menu-restart-mission-qr-option :name (text-id progress-restart-mission) :offset-y 0.4)
       (new 'static 'menu-quit-qr-option :name (text-id progress-quit-game) :offset-y 0.65)
+      (new 'static 'menu-go-home-qr-option :name (text-id progress-go-home) :offset-y 0.82)
       )
     )
   )
