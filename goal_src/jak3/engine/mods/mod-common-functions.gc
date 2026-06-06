@@ -142,7 +142,7 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
 (defun draw-debug-sphere-on-actor ((actorName string)(radius float))
   (when *debug-segment*
     (when (process-by-ename actorName)
-      (add-debug-sphere #t (bucket-id bucket0)  (-> (the-as process-drawable (process-by-ename actorName)) root trans) (meters radius) (static-rgba 0 #xff 0 #x40))
+      (add-debug-sphere #t (bucket-id debug)  (-> (the-as process-drawable (process-by-ename actorName)) root trans) (meters radius) (static-rgba 0 #xff 0 #x40))
     )
   )
   (none)
