@@ -537,9 +537,9 @@
   (set! (-> this distance) (res-lump-float (-> this entity) 'distance :default 20480.0))
   (set! (-> this wmenu-list) ;; added - sets the current warp-gate menu list. Add more cases as needed.
     (case-str (-> this name)
-      (("warp-gate-21") ;; vinroom warp-gate
-        *warp-gate-21-menu-list*
-        )
+      ;;(("warp-gate-21") ;; vinroom warp-gate
+        ;;*warp-gate-21-menu-list*
+        ;;)
       (("warp-gate-31") ;; templex warp-gate
         *warp-gate-31-menu-list*
         )

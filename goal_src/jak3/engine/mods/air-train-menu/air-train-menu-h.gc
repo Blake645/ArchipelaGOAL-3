@@ -65,6 +65,14 @@
                   :forbid-when #f
                   :on-activate '(scene-play '("city-air-train-in-desert" "desert-air-train-out"))
                   )
+                (static-air-train-menu-entry
+                  :level-name 'genb
+                  :continue-name "ctygenb-start"
+                  :text-id (text-id genb-name) ;"Outside Palace Ruins"
+                  :allow-when (lambda () (task-open? "sewer-met-hum-introduction"))
+                  :forbid-when #f
+                  :on-activate #f
+                  )
                 )
               )
   )

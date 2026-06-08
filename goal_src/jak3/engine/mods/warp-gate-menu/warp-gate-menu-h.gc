@@ -47,12 +47,12 @@
 (define *empty-warp-gate-menu-list* (new 'static 'boxed-array :type warp-gate-menu-entry))
 
 ;; vinroom warp-gate
-(define *warp-gate-21-menu-list* (new 'static 'boxed-array :type warp-gate-menu-entry
+#|(define *warp-gate-21-menu-list* (new 'static 'boxed-array :type warp-gate-menu-entry
               (static-warp-gate-menu-entry 
                 :level-name 'volcanox
                 :continue-name "volcanox-warp"
                 :text-id (text-id volcano-name) ;"Volcano"
-                :allow-when (lambda () (task-closed? "volcano-darkeco-resolution")) ;; volcano mission required
+                :allow-when (lambda () (task-closed? "volcano-darkeco-introduction")) ;; volcano mission required
                 :forbid-when #f
                 :on-activate #f
                 )
@@ -81,7 +81,7 @@
                 :on-activate #f
                 )
               )
-  )
+  )|#
 
 ;; templex warp-gate
 (define *warp-gate-31-menu-list* (new 'static 'boxed-array :type warp-gate-menu-entry
@@ -89,18 +89,26 @@
                 :level-name 'volcanox
                 :continue-name "volcanox-warp"
                 :text-id (text-id volcano-name) ;"Volcano"
-                :allow-when (lambda () (task-closed? "volcano-darkeco-resolution")) ;; volcano mission required
+                :allow-when (lambda () (task-open? "volcano-darkeco-introduction")) ;; volcano mission required
                 :forbid-when #f
                 :on-activate #f
                 )
-              (static-warp-gate-menu-entry
-                :level-name 'vinroom
-                :continue-name "vinroom-warp"
-                :text-id (text-id vinroom-name) ;"Power Station"
-                :allow-when (lambda () (task-closed? "city-power-game-resolution"))  ;; power game mission required
+              (static-warp-gate-menu-entry 
+                :level-name 'minec
+                :continue-name "minec-start"
+                :text-id (text-id mine-name) ;"Eco Mines"
+                :allow-when (lambda () (task-open? "mine-explore-introduction")) ;; mine mission required
                 :forbid-when #f
                 :on-activate #f
                 )
+              ;;(static-warp-gate-menu-entry
+              ;;  :level-name 'vinroom
+              ;;  :continue-name "vinroom-warp"
+              ;;  :text-id (text-id vinroom-name) ;"Power Station"
+              ;;  :allow-when (lambda () (task-closed? "city-power-game-resolution"))  ;; power game mission required
+              ;;  :forbid-when #f
+              ;;  :on-activate #f
+              ;;  )
               (static-warp-gate-menu-entry 
                 :level-name 'templeb
                 :continue-name "templeb-warp"
@@ -138,14 +146,14 @@
                 :forbid-when #f
                 :on-activate #f
                 )
-              (static-warp-gate-menu-entry
-                :level-name 'vinroom
-                :continue-name "vinroom-warp"
-                :text-id (text-id vinroom-name) ;"Power Station"
-                :allow-when (lambda () (task-closed? "temple-defend-resolution"))  ;; third temple mission required
-                :forbid-when #f
-                :on-activate #f
-                )
+              ;;(static-warp-gate-menu-entry
+              ;;  :level-name 'vinroom
+              ;;  :continue-name "vinroom-warp"
+              ;;  :text-id (text-id vinroom-name) ;"Power Station"
+              ;;  :allow-when (lambda () (task-closed? "temple-defend-resolution"))  ;; third temple mission required
+              ;;  :forbid-when #f
+              ;;  :on-activate #f
+              ;;  )
               (static-warp-gate-menu-entry
                 :level-name 'templex
                 :continue-name "templex-warp"
@@ -183,14 +191,14 @@
                 :forbid-when #f
                 :on-activate #f
                 )
-              (static-warp-gate-menu-entry
-                :level-name 'vinroom
-                :continue-name "vinroom-warp"
-                :text-id (text-id vinroom-name) ;"Power Station"
-                :allow-when (lambda () (task-closed? "wascity-defend-resolution"))  ;; spargus defend mission required
-                :forbid-when #f
-                :on-activate #f
-                )
+              ;;(static-warp-gate-menu-entry
+              ;;  :level-name 'vinroom
+              ;;  :continue-name "vinroom-warp"
+              ;;  :text-id (text-id vinroom-name) ;"Power Station"
+              ;;  :allow-when (lambda () (task-closed? "wascity-defend-resolution"))  ;; spargus defend mission required
+              ;;  :forbid-when #f
+              ;;  :on-activate #f
+              ;;  )
               (static-warp-gate-menu-entry 
                 :level-name 'templeb
                 :continue-name "templeb-warp"
@@ -216,7 +224,7 @@
                 :level-name 'templex
                 :continue-name "templex-warp"
                 :text-id (text-id temple-name-entry) ;"Temple (Entrance)"
-                :allow-when (lambda () (task-closed? "volcano-darkeco-resolution"))  ;; volcano mission required
+                :allow-when (lambda () (task-closed? "volcano-darkeco-introduction"))  ;; volcano mission required
                 :forbid-when #f
                 :on-activate #f
                 )

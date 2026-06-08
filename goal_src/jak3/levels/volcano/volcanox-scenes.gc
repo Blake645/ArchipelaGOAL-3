@@ -102,7 +102,7 @@
                        (frame-range 199 201)
                        )
                      )
-                (10000 (task-close! "desert-glide-resolution") (task-close! "volcano-darkeco-introduction"))
+                (10000 (task-close! "desert-glide-resolution")) ;;(task-close! "volcano-darkeco-introduction"))
                 )
               :cut-list '(58 94 219 336)
               :wait-ground-time (seconds 1)

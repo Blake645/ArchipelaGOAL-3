@@ -132,9 +132,9 @@
             )
     )
     ;; genb 
-(set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
-(set-region-data! 101 "on-enter" '(want-display 'ctyslumb 'ctygenb))
-(set-region-data! 101 "on-exit" '(want-display 'ctyslumb #f 'ctygenb #f))
+;;(set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
+;;(set-region-data! 101 "on-enter" '(want-display 'ctyslumb 'ctygenb))
+;;(set-region-data! 101 "on-exit" '(want-display 'ctyslumb #f 'ctygenb #f))
 
 ;; monk temple
       (let ((region-1691 (region-lookup-by-id 1691)))
@@ -160,6 +160,15 @@
           (set! (-> region-1155 on-enter) 
             '(begin 
               (when (task-closed? "nest-eggs-wall") (task-close! "nest-eggs-tunnel"))
+            )
+          )
+        )
+        )
+        (let ((region-1852 (region-lookup-by-id 1852)))
+        (when region-1852
+          (set! (-> region-1852 on-enter) 
+            '(begin 
+              (when (task-open? "mine-explore-introduction") (scene-play "catacombs-travel-res"))
             )
           )
         )
