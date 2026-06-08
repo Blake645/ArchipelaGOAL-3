@@ -44,16 +44,14 @@
 
 (defun ap-draw-connection-status ()
   "Draw the current Archipelago connection status on screen every frame"
-  ;; Safety check: only draw if both required globals are initialized
   (when (and *ap-info-jak3* *common-text*)
     (case (-> *ap-info-jak3* connection-status)
       (((ap-connection-status default))
-       (format *stdcon0* "~%~4LArchipelaGOAL: Not Connected...~0L~%"))
+       (format *stdcon* "~%~4LArchipelaGOAL: Not Connected...~0L~%"))
       (((ap-connection-status wait))
-       (format *stdcon0* "~%~4LArchipelaGOAL: Waiting for Items...~0L~%"))
+       (format *stdcon* "~%~4LArchipelaGOAL: Waiting for Items...~0L~%"))
       (((ap-connection-status failure))
-       (format *stdcon0* "~%~4LArchipelaGOAL: Connection Failed!~0L~%"))
-      ;; No message for ready status - connection is successful
+       (format *stdcon* "~%~4LArchipelaGOAL: Connection Failed!~0L~%"))
       ))
   (none))
 

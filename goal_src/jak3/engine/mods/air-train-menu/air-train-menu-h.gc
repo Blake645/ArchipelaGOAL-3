@@ -61,7 +61,7 @@
                   :level-name 'desertb
                   :continue-name "desert-warp"
                   :text-id (text-id desert-name) ;"Desert Wasteland"
-                  :allow-when (lambda () (task-closed? "city-destroy-grid-resolution")) ;; jinx's mission required
+                  :allow-when (lambda () (logtest? (-> *game-info* features) (game-feature pass-air-train)))
                   :forbid-when #f
                   :on-activate '(scene-play '("city-air-train-in-desert" "desert-air-train-out"))
                   )
@@ -71,13 +71,13 @@
 
 ;; desert air-train
 (define *air-train-5-menu-data* (static-air-train-menu-data
-              :visible-when (lambda () (task-closed? "city-destroy-grid-resolution")) ;; air-train will be invisible until jinx's mission is completed
+              :visible-when #f
               :menu-list (
                 (static-air-train-menu-entry
                   :level-name 'ctyport
                   :continue-name "ctyport-warp"
                   :text-id (text-id ctyport-name) ;"Haven City Port"
-                  :allow-when #f
+                  :allow-when (lambda () (logtest? (-> *game-info* features) (game-feature pass-air-train)))
                   :forbid-when #f
                   :on-activate '(scene-play '("desert-air-train-in" "city-air-train-out"))
                   )

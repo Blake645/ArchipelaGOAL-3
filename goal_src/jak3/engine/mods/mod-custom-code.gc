@@ -317,17 +317,6 @@
         )
       )
       |#
-      (case death-event
-        (('dying)
-          ;; Code here runs immediately every time jak dies, before any death animation or death cutscene
-          
-          )
-        (('blackout)
-          ;; Code here runs after jak dies (and any death cutscene finishes), during the blackout before he spawns
-
-          )
-        )
-      
       (none)
       )
 

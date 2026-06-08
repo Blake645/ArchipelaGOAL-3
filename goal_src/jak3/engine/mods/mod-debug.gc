@@ -11,7 +11,23 @@
 (defun-debug debug-menu-make-modding-tools-menu ((ctx debug-menu-context))
   (let ((modding-tools-menu (new 'debug 'debug-menu ctx "Modding Tools")))
     
-    ;; ArchipelaGOAL submenu
+    
+
+    ;; orb-placer menu
+    (let ((orb-placer-menu (new 'debug 'debug-menu ctx "Orb Placer")))
+      (debug-menu-append-item orb-placer-menu (new-dm-bool "Edit Mode?" *orb-placer-enabled?* dm-boolean-toggle-pick-func))
+      (debug-menu-append-item orb-placer-menu (new-dm-func "Add Orb" #f orb-placer-add))
+      (let ((select-orb-menu (new 'debug 'debug-menu ctx "Select Orb")))
+        (set! *orb-placer-select-menu* select-orb-menu)
+        ;; populated on orb add
+        (debug-menu-append-item orb-placer-menu (new-dm-submenu "Select Orb" select-orb-menu))
+        )
+      (debug-menu-append-item orb-placer-menu (new-dm-func "Print Selected Orb Position" #f orb-placer-print-selected))
+      (debug-menu-append-item orb-placer-menu (new-dm-func "Print All Orb Positions" #f orb-placer-print-all))
+
+      (debug-menu-append-item modding-tools-menu (new-dm-submenu "Orb Placer" orb-placer-menu))
+      )
+      ;; ArchipelaGOAL submenu
     (let ((archipelagoal-menu (new 'debug 'debug-menu ctx "ArchipelaGOAL")))
       (debug-menu-append-item archipelagoal-menu (new-dm-bool "Show Test Build Info" *show-test-build-info* dm-boolean-toggle-pick-func))
       
@@ -42,22 +58,6 @@
       (debug-menu-append-item archipelagoal-menu (new-dm-func "Force Mission Complete (for testing)" #f ap-debug-test-task-resolution))
       
       (debug-menu-append-item modding-tools-menu (new-dm-submenu "ArchipelaGOAL" archipelagoal-menu))
-      )
-    
-
-    ;; orb-placer menu
-    (let ((orb-placer-menu (new 'debug 'debug-menu ctx "Orb Placer")))
-      (debug-menu-append-item orb-placer-menu (new-dm-bool "Edit Mode?" *orb-placer-enabled?* dm-boolean-toggle-pick-func))
-      (debug-menu-append-item orb-placer-menu (new-dm-func "Add Orb" #f orb-placer-add))
-      (let ((select-orb-menu (new 'debug 'debug-menu ctx "Select Orb")))
-        (set! *orb-placer-select-menu* select-orb-menu)
-        ;; populated on orb add
-        (debug-menu-append-item orb-placer-menu (new-dm-submenu "Select Orb" select-orb-menu))
-        )
-      (debug-menu-append-item orb-placer-menu (new-dm-func "Print Selected Orb Position" #f orb-placer-print-selected))
-      (debug-menu-append-item orb-placer-menu (new-dm-func "Print All Orb Positions" #f orb-placer-print-all))
-
-      (debug-menu-append-item modding-tools-menu (new-dm-submenu "Orb Placer" orb-placer-menu))
       )
     (new-dm-submenu "Modding Tools" modding-tools-menu)
     )
