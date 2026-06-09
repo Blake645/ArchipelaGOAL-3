@@ -483,6 +483,10 @@
   "joint-exploder.o"
   "simple-nav-sphere.o"
   "process-taskable.o"
+  ;;"process-taskable-menu-h.o" ;; added - (commented out by default)
+  ;;"process-taskable-menu-data-h.o" ;; added - (commented out by default)
+  ;;"process-taskable-menu.o" ;; added - (commented out by default)
+  ;;"process-taskable-menu-data.o" ;; added - (commented out by default)
   "scene-actor.o"
   ;"warp-gate.o" ;; original warp-gate logic - be sure to comment this out if using the menu system logic below
   "warp-gate-menu-h.o" ;; added - warp-gate menu definitions file (commented out by default)

@@ -173,6 +173,26 @@
           )
         )
         )
+        ;; ruins
+        (let ((region-1500 (region-lookup-by-id 1500)))
+        (when region-1500
+          (set! (-> region-1500 on-enter) 
+            '(begin 
+              (when (task-open? "palace-ruins-patrol-introduction") (scene-play "palace-ruins-patrol-intro"))
+            )
+          )
+        )
+        )
+        (let ((region-1391 (region-lookup-by-id 1391)))
+        (when region-1391
+          (set! (-> region-1391 on-enter) 
+            '(begin 
+              (when (task-closed? "palace-ruins-patrol-stadium") (task-close! "palace-ruins-patrol-resolution")
+                    (task-open? "palace-ruins-attack-introduction") (scene-play "palace-ruins-attack-intro"))
+            )
+          )
+        )
+        )
       (if *show-input-display* 
         (input-display-on)
         (input-display-off)

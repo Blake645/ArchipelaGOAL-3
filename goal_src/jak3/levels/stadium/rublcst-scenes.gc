@@ -421,6 +421,7 @@
           )
         )
       (10000
+        (task-close! "palace-ruins-attack-resolution")
         (task-close! "comb-wild-ride-introduction")
         (send-event
           "darkjak-highres"

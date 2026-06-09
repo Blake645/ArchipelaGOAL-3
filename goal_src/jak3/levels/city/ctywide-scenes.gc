@@ -811,6 +811,7 @@
                          )
                   (kill "mhcity-tower-door-2")
                   (send-event self 'user-data-set! (task-closed? "tower-destroy-introduction"))
+                  (task-close! "city-blow-tower-resolution")
                   (task-close! "tower-destroy-introduction")
                   )
                 )
