@@ -131,10 +131,29 @@
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
     )
+    ;; work on this later.
+    (let ((wall-8 (entity-by-name "krimson-wall-8")))
+      (when wall-8
+        (set! (cdr (res-lump-struct wall-8 'on-notice pair)) '(((game-feature? "pass-port-inda") 'kill) (else #f)))
+        )
+    )
+        (let ((wall-9 (entity-by-name "krimson-wall-9")))
+      (when wall-9
+        (set! (cdr (res-lump-struct wall-9 'on-notice pair)) '(((game-feature? "pass-port-inda") 'kill) (else #f)))
+        )
+    )
+        (let ((wall-10 (entity-by-name "krimson-wall-10")))
+      (when wall-10
+        (set! (cdr (res-lump-struct wall-10 'on-notice pair)) '(((game-feature? "pass-port-inda") 'kill) (else #f)))
+        )
+    )
+    (let ((dark-eco-door (entity-by-name "mhcity-dark-eco-door")))
+      (when dark-eco-door
+        (set! (cdr (res-lump-struct dark-eco-door 'on-notice pair)) '(((game-feature? "pass-port-mh") 'break) (else #f)))
+        )
+    )
     ;; genb 
-;;(set-region-data! 102 "on-enter" '(want-load 'ctyslumb 'ctygenb 'ctywide-ff))
-;;(set-region-data! 101 "on-enter" '(want-display 'ctyslumb 'ctygenb))
-;;(set-region-data! 101 "on-exit" '(want-display 'ctyslumb #f 'ctygenb #f))
+
 
 ;; monk temple
       (let ((region-1691 (region-lookup-by-id 1691)))

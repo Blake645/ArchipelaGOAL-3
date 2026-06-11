@@ -1735,6 +1735,7 @@
   (no-menu-data #x100001)
   (next-page #x100002)
   (previous-page #x100003)
+  (select-mission #x100004)
 
   )
 ;; ---text-id

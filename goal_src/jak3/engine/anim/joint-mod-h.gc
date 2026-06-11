@@ -652,3 +652,8 @@ Then, apply the normal parented transform."
     (get-start-blend! (_type_) float)
     )
   )
+  ;; og:preserve-this added macro
+(defmacro target-look-at-me! (&key trans &key (message 'nothing-special))
+  "make target look at a trans in self. PC PORT NOTE : added check to see if lods have been set"
+  `(if (and (not (logtest? (-> self draw status) (draw-control-status uninited no-draw-temp))) *target*)
+      (look-at! (-> *target* neck) ,trans ,message self)))
