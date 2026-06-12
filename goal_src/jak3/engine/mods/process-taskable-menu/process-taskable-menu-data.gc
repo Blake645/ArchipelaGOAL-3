@@ -17,7 +17,7 @@
 
 (defbehavior process-taskable-anim-loop process-taskable ((arg0 (function process-taskable object)))
   (while (arg0 self)
-    (let ((s5-0 (get-art-elem self)))
+    (let ((s5-0 (get-art-element self)))
       (when (!= (ja-group) s5-0)
         (ja-channel-push! 1 0)
         (set! (-> self skel root-channel 0 frame-group) (the-as art-joint-anim s5-0))
