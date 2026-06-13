@@ -3617,11 +3617,7 @@
               :on-fail #f
               )
             :borrow '((wasdoors 0 ldamklev display))
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
-            )
+            :open? #f
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
@@ -3752,9 +3748,7 @@
                (logtest? (-> *game-info* items) (game-items pass-front-gate))
           )
             )
-            :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
-               (task-open! "temple-climb-introduction")
-               )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x17
@@ -4377,9 +4371,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items.
             :open? (lambda ((arg0 game-task-node-info)) 
               (logtest? (-> *game-info* features) (game-feature gun)))
-            :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
-               (task-open! "temple-climb-introduction")
-               )
+            :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
                 :flags (resetter-flag auto-reset text-message no-audio)
@@ -4486,7 +4478,7 @@
               :level 'wasstadc
               :type-to-spawn 'task-manager-arena-fight-3
               :intro-scene #f
-              :resolution-scene '("arena-fight-3-res") ;; "nest-eggs-intro" <ap:preserve-this> hope this works... it didn't :(
+              :resolution-scene '("arena-fight-3-res") ;; "nest-eggs-intro" <ap:preserve-this> part of removing nest-eggs from starting
               :resolution-scene-continue "wasstada-fight-2"
               :final-node (game-task-node arena-fight-3-resolution)
               :vehicle-type #x1b
@@ -14782,9 +14774,11 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
-               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2))
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
               )
             :on-close #f
@@ -14875,9 +14869,11 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
-               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2))
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
               )
             :on-close #f
