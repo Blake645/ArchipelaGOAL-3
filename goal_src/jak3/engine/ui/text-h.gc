@@ -1712,6 +1712,8 @@
   (progress-menu-traps-speed #x2187)
   (progress-menu-traps-slow #x2188)
   (progress-menu-traps-hero #x2189)
+
+  (talk-to-torn #x2190)
   
   ;; mod text
   (pad-triangle #x2000)

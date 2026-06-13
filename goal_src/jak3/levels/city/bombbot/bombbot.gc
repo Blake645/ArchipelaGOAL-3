@@ -3956,7 +3956,7 @@
     (remove-setting! 'entity-name)
     )
   :trans (behavior ()
-    (let ((gp-0 (entity-by-name "krimson-wall-6")))
+    #|(let ((gp-0 (entity-by-name "krimson-wall-6")))
       (when gp-0
         (if (not (-> self wall-h))
             (set! (-> self wall-h)
@@ -3966,7 +3966,7 @@
                   )
             )
         )
-      )
+      )|#
     (if (and (zero? (-> self done?)) (not (handle->process (-> self bombbot-h))))
         (send-event self 'fail)
         )
@@ -3998,12 +3998,12 @@
       (let ((v1-48 (handle->process (-> self bombbot-h))))
         (when (and v1-48 (-> v1-48 next-state) (= (-> v1-48 next-state name) 'explode))
           (set! (-> self done?) 2)
-          (let ((v1-55 (entity-by-name "krimson-wall-6")))
+          #|(let ((v1-55 (entity-by-name "krimson-wall-6")))
             (if v1-55
                 (send-event (-> v1-55 extra process) 'break)
                 )
             )
-          (send-event (handle->process (-> self wall-h)) 'break)
+          (send-event (handle->process (-> self wall-h)) 'break)|#
           )
         )
       )

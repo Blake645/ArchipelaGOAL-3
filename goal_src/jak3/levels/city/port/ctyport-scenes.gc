@@ -53,9 +53,9 @@
               :parts 7
               :command-list '((0
                   (kill "tpl-glider-broken-1")
-                  (send-event "krimson-wall-8" 'kill)
-                  (send-event "krimson-wall-9" 'kill)
-                  (send-event "krimson-wall-10" 'kill)
+                  ;;(send-event "krimson-wall-8" 'kill)
+                  ;;(send-event "krimson-wall-9" 'kill)
+                  ;;(send-event "krimson-wall-10" 'kill)
                   (part-tracker
                     "group-fma-missile-thruster-fire"
                     entity

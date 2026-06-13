@@ -7538,7 +7538,9 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-spargus-to-port?)
+            (and (ap-route-spargus-to-port?)
+                 (logtest? (-> *game-info* features) (game-feature gun))
+                 )
               )
             :on-close #f
             :reset #f

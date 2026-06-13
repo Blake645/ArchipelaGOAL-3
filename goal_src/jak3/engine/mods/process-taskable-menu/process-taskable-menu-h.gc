@@ -225,3 +225,144 @@
        )
   )
 )
+(define *ashelin-menu-list*
+  (new 'static 'boxed-array :type taskable-menu-entry
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-oasis-defense-introduction)
+      :event-idx 0
+      :continue "desert-ashelin"
+      :text-id (text-id progress-missions-desert-oasis-defense)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-oasis-defense-introduction))
+            (task-node-open? (game-task-node desert-oasis-defense-meeting))
+            (task-node-open? (game-task-node desert-oasis-defense-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-oasis-defense-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node city-protect-hq-introduction)
+      :event-idx 0
+      :continue "ctyslumc-freehq-exit"
+      :text-id (text-id progress-missions-city-protect-hq)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node city-protect-hq-introduction))
+            (task-node-open? (game-task-node city-protect-hq-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node city-protect-hq-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node sewer-hum-kg-introduction)
+      :event-idx 0
+      :continue #f
+      :text-id (text-id progress-missions-sewer-hum-kg)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node sewer-hum-kg-introduction))
+            (task-node-open? (game-task-node sewer-hum-kg-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node sewer-hum-kg-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node city-blow-tower-introduction)
+      :event-idx 0
+      :continue "cty-blow-tower-mission"
+      :text-id (text-id progress-missions-city-blow-tower)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node city-blow-tower-introduction))
+            (task-node-open? (game-task-node city-blow-tower-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node city-blow-tower-resolution)))
+       )
+    )
+  )
+  (define *torn-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-port-fight-introduction)
+        :event-idx 0
+        :continue "hiphog-start"
+        :text-id (text-id progress-missions-city-port-fight)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-port-fight-introduction))
+              (task-node-open? (game-task-node city-port-fight-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-port-fight-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-port-attack-introduction)
+        :event-idx 0
+        :continue "hiphog-start"
+        :text-id (text-id progress-missions-city-port-attack)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-port-attack-introduction))
+              (task-node-open? (game-task-node city-port-attack-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-port-attack-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-sniper-fight-introduction)
+        :event-idx 0
+        :continue "hiphog-start"
+        :text-id (text-id progress-missions-city-sniper-fight)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-sniper-fight-introduction))
+              (task-node-open? (game-task-node city-sniper-fight-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-sniper-fight-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node sewer-kg-met-introduction)
+        :event-idx 0
+        :continue "hiphog-start"
+        :text-id (text-id progress-missions-sewer-kg-met)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node sewer-kg-met-introduction))
+              (task-node-open? (game-task-node sewer-kg-met-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node sewer-kg-met-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-port-assault-introduction)
+        :event-idx 0
+        :continue "hiphog-start"
+        :text-id (text-id progress-missions-city-port-assault)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-port-assault-introduction))
+              (task-node-open? (game-task-node city-port-assault-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-port-assault-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-blow-barricade-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-city-blow-barricade)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-blow-barricade-introduction))
+              (task-node-open? (game-task-node city-blow-barricade-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-blow-barricade-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node factory-sky-battle-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-factory-sky-battle)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node factory-sky-battle-introduction))
+              (task-node-open? (game-task-node factory-sky-battle-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node factory-sky-battle-resolution)))
+         )
+    )
+  )

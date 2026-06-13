@@ -2177,7 +2177,7 @@
       (set! (-> gp-1 from) (process->ppointer self))
       (set! (-> gp-1 num-params) 0)
       (set! (-> gp-1 message) 'kill)
-      (let ((s5-0 send-event-function)
+      #|(let ((s5-0 send-event-function)
             (v1-7 (entity-by-name "krimson-wall-8"))
             )
         (s5-0
@@ -2186,13 +2186,13 @@
               )
           gp-1
           )
-        )
+        )|#
       )
     (let ((gp-2 (new 'stack-no-clear 'event-message-block)))
       (set! (-> gp-2 from) (process->ppointer self))
       (set! (-> gp-2 num-params) 0)
       (set! (-> gp-2 message) 'kill)
-      (let ((s5-1 send-event-function)
+      #|(let ((s5-1 send-event-function)
             (v1-12 (entity-by-name "krimson-wall-9"))
             )
         (s5-1
@@ -2201,13 +2201,13 @@
               )
           gp-2
           )
-        )
+        )|#
       )
     (let ((gp-3 (new 'stack-no-clear 'event-message-block)))
       (set! (-> gp-3 from) (process->ppointer self))
       (set! (-> gp-3 num-params) 0)
       (set! (-> gp-3 message) 'kill)
-      (let ((s5-2 send-event-function)
+      #|(let ((s5-2 send-event-function)
             (v1-17 (entity-by-name "krimson-wall-10"))
             )
         (s5-2
@@ -2216,7 +2216,7 @@
               )
           gp-3
           )
-        )
+        )|#
       )
     (suspend)
     (until #f

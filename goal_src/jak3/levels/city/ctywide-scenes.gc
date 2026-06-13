@@ -475,7 +475,7 @@
     :art-group "scenecamera"
     :anim "city-destroy-grid-res"
     :parts 9
-    :command-list '((-30 (kill "krimson-wall-4") (kill "krimson-wall-5") (kill "krimson-wall-7") (fadein (frame-time-30 10)))
+    :command-list '((-30  (fadein (frame-time-30 10)))
       (1 (part-tracker
            "group-fma-city-barrier-explosion-big"
            entity
