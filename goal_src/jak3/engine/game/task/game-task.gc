@@ -5408,7 +5408,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtesta? (-> *game-info* features) (game-feature gun artifact-invis))
+               (logtesta? (-> *game-info* features) (game-feature gun-red-2 artifact-invis))
                )
             )
             :on-close #f
