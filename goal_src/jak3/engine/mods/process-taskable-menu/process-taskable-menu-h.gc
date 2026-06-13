@@ -59,5 +59,169 @@
         )
       :forbid-when (lambda () (task-node-closed? (game-task-node wascity-chase-resolution)))
       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-turtle-training-introduction)
+      :event-idx 0
+      :continue "wasdoors-city"
+      :text-id (text-id progress-missions-desert-turtle-training)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-turtle-training-introduction))
+            (task-node-open? (game-task-node desert-turtle-training-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-turtle-training-resolution)))
+      )
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-hover-introduction)
+      :event-idx 0
+      :continue "wasdoors-city"
+      :text-id (text-id progress-missions-desert-hover)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-hover-introduction))
+            (task-node-open? (game-task-node desert-hover-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-hover-resolution)))
+      )
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-catch-lizards-introduction)
+      :event-idx 0
+      :continue "wasdoors-city"
+      :text-id (text-id progress-missions-desert-catch-lizards)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-catch-lizards-introduction))
+            (task-node-open? (game-task-node desert-catch-lizards-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-catch-lizards-resolution)))
+      )
+    (static-taskable-menu-entry
+      :task-node (game-task-node wascity-gungame-introduction)
+      :event-idx 0
+      :continue "wascityb-gungame"
+      :text-id (text-id progress-missions-wascity-gungame)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node wascity-gungame-introduction))
+            (task-node-open? (game-task-node wascity-gungame-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node wascity-gungame-resolution)))
+      )
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-beast-battle-introduction)
+      :event-idx 0
+      :continue #f
+      :text-id (text-id progress-missions-desert-beast-battle)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-beast-battle-introduction))
+            (task-node-open? (game-task-node desert-beast-battle-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-beast-battle-resolution)))
+      )
+  )
+)
+(define *damus-menu-list*
+  (new 'static 'boxed-array :type taskable-menu-entry
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-artifact-race-1-introduction)
+      :event-idx 0
+      :continue "wasdoors-city"
+      :text-id (text-id progress-missions-desert-artiface-race-1)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-artifact-race-1-introduction))
+            (task-node-open? (game-task-node desert-artifact-race-1-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-artifact-race-1-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node arena-fight-2-introduction)
+      :event-idx 0
+      :continue "waspala-gun-training"
+      :text-id (text-id progress-missions-arena-fight-2)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node arena-fight-2-introduction))
+            (task-node-open? (game-task-node arena-fight-2-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node arena-fight-2-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-rescue-introduction)
+      :event-idx 0
+      :continue "waspala-start"
+      :text-id (text-id progress-missions-desert-rescue)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-rescue-introduction))
+            (task-node-open? (game-task-node desert-rescue-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-rescue-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node arena-fight-3-introduction)
+      :event-idx 0
+      :continue "wasstada-pre-fight-1"
+      :text-id (text-id progress-missions-arena-fight-3)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node arena-fight-3-introduction))
+            (task-node-open? (game-task-node arena-fight-3-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node arena-fight-3-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node nest-eggs-introduction)
+      :event-idx 0
+      :continue "waspala-nest"
+      :text-id (text-id progress-missions-nest-eggs)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node nest-eggs-introduction))
+            (task-node-open? (game-task-node nest-eggs-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node nest-eggs-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node desert-jump-mission-introduction)
+      :event-idx 0
+      :continue "waspala-start"
+      :text-id (text-id progress-missions-desert-jump-mission)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node desert-jump-mission-introduction))
+            (task-node-open? (game-task-node desert-jump-mission-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node desert-jump-mission-resolution)))
+       )
+    )
+  )
+(define *seem-menu-list*
+  (new 'static 'boxed-array :type taskable-menu-entry
+    (static-taskable-menu-entry
+      :task-node (game-task-node wascity-pre-game-introduction)
+      :event-idx 0
+      :continue "wascityb-game"
+      :text-id (text-id progress-missions-wascityb-game)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node wascity-pre-game-introduction))
+            (task-node-open? (game-task-node wascity-pre-game-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node wascity-pre-game-resolution)))
+       )
+    (static-taskable-menu-entry
+      :task-node (game-task-node wascity-leaper-race-introduction)
+      :event-idx 0
+      :continue #f
+      :text-id (text-id progress-missions-wascity-leaper-race)
+      :allow-when (lambda ()
+        (or (task-node-open? (game-task-node wascity-leaper-race-introduction))
+            (task-node-open? (game-task-node wascity-leaper-race-resolution))
+            )
+        )
+      :forbid-when (lambda () (task-node-closed? (game-task-node wascity-leaper-race-resolution)))
+       )
   )
 )
