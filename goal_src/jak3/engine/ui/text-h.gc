@@ -1714,6 +1714,7 @@
   (progress-menu-traps-hero #x2189)
 
   (talk-to-torn #x2190)
+  (talk-to-onin #x2191)
   
   ;; mod text
   (pad-triangle #x2000)

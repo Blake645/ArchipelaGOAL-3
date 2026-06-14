@@ -366,3 +366,92 @@
          )
     )
   )
+  (define *tess-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-gun-course-1-introduction)
+        :event-idx 0
+        :continue "gungame-1-start"
+        :text-id (text-id progress-missions-city-gun-course-1)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-gun-course-1-introduction))
+              (task-node-open? (game-task-node city-gun-course-1-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-gun-course-1-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-gun-course-2-introduction)
+        :event-idx 0
+        :continue "gungame-2-start"
+        :text-id (text-id progress-missions-city-gun-course-2)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-gun-course-2-introduction))
+              (task-node-open? (game-task-node city-gun-course-2-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-gun-course-2-resolution)))
+         )
+    )
+  )
+  (define *sig-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node desert-artifact-race-2-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-desert-artifact-race-2)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node desert-artifact-race-2-introduction))
+              (task-node-open? (game-task-node desert-artifact-race-2-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node desert-artifact-race-2-resolution)))
+         )
+      (static-taskable-menu-entry
+        :task-node (game-task-node nest-hunt-introduction)
+        :event-idx 0
+        :continue "nstb-hunt"
+        :text-id (text-id progress-missions-nest-hunt)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node nest-hunt-introduction))
+              (task-node-open? (game-task-node nest-hunt-sig))
+              (task-node-open? (game-task-node nest-hunt-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node nest-hunt-resolution)))
+         )
+    )
+  )
+  (define *onin-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node palace-ruins-patrol-introduction)
+        :event-idx 0
+        :continue "onintent-end"
+        :text-id (text-id progress-missions-palace-ruins-patrol)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node palace-ruins-patrol-introduction))
+              (task-node-open? (game-task-node palace-ruins-patrol-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node palace-ruins-patrol-resolution)))
+         )
+    )
+  )
+  (define *samos-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node sewer-met-hum-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-sewer-met-hum)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node sewer-met-hum-introduction))
+              (task-node-open? (game-task-node sewer-met-hum-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node sewer-met-hum-resolution)))
+         )
+    )
+  )

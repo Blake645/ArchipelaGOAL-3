@@ -295,6 +295,7 @@
   "0614": "You received ~%<COLOR_CYAN> Light Shield",
   "05f5": "You received ~%<COLOR_CYAN>Light Flight",
   "0579": "You received Forearm Armor",
+  "0639": "Talk to Tess",
 
   "2128": "Go to Spargus",
 
@@ -367,6 +368,7 @@
   "2188": "Slow Trap",
   "2189": "Hero Trap",
   "2190": "Talk to Torn",
+  "2191": "Talk to Onin",
 
   "2000": "<PAD_TRIANGLE>",
   "2001": "<PAD_CIRCLE>",

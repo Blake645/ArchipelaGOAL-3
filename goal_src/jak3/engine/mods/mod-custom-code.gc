@@ -131,9 +131,6 @@
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
     )
-    ;; genb 
-
-
 ;; monk temple
       (let ((region-1691 (region-lookup-by-id 1691)))
         (when region-1691
