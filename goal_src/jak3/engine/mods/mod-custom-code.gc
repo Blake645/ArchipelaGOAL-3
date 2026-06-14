@@ -169,6 +169,34 @@
           )
         )
         )
+  ;; genb
+        (let ((region-102 (region-lookup-by-id 102)))
+        (when region-102
+          (set! (-> region-102 on-enter) 
+            '(begin 
+              (if (task-open? "sewer-met-hum-introduction") (want-load 'slumbset 'ctygenb 'ctywide-ff) (want-load 'ctyslumb 'ctygenb 'ctywide-ff))
+            )
+          )
+        )
+        )
+        (let ((region-101 (region-lookup-by-id 101)))
+        (when region-101
+          (set! (-> region-101 on-enter) 
+            '(begin 
+              (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset 'display) (want-display 'ctyslumb 'display))
+            )
+          )
+        )
+        )
+        (let ((region (region-lookup-by-id 101)))
+        (when region
+          (set! (-> region on-exit) 
+            '(begin 
+              (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset #f) (want-display 'ctyslumb #f))
+            )
+          )
+        )
+        )
         ;; ruins
         (let ((region-1500 (region-lookup-by-id 1500)))
         (when region-1500
@@ -189,10 +217,6 @@
           )
         )
         )
-            (when (logtest? (-> *game-info* features) (game-feature pass-port-mh))
-            (awhen (process-by-ename "mhcity-dark-eco-door-1")
-              (send-event it 'crack))
-      )
       (if *show-input-display* 
         (input-display-on)
         (input-display-off)

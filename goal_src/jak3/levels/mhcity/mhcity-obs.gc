@@ -907,9 +907,9 @@
       ; (ja-no-eval :group! mhcity-dark-eco-door-idle-ja :num! (loop!) :frame-num (the-as float start))
       (ja-no-eval :group! mhcity-dark-eco-door-idle-ja :num! (loop!) :frame-num 0.0)
       (until #f
-        ;;(if (or (-> self should-break?) (task-node-closed? (game-task-node city-destroy-darkeco-orbs)))
-            ;;(goto cfg-9)
-            ;;)
+        (if (or (-> self should-break?) (logtest? (-> *game-info* features) (game-feature pass-port-mh)))
+            (goto cfg-9)
+            )
         (ja :num! (loop!))
         (suspend)
         )
