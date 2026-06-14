@@ -14780,7 +14780,7 @@
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
+               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
                 )
               )
             :on-close #f
@@ -14875,7 +14875,6 @@
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
               )
             :on-close #f
