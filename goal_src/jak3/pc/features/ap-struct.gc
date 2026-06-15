@@ -403,6 +403,10 @@
       (sound-play "pill-pickup") ;; light eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-light) 5.0)
      )
+    (('gem)
+      (sound-play "gem-pickup") ;; skull gem filler item
+      (send-event *target* 'get-pickup (pickup-type gem) 20.0)
+     )
     (('health-pack)
       (sound-play "get-green-eco") ;; health filler item
       (send-event *target* 'get-pickup (pickup-type health) 2.0)
