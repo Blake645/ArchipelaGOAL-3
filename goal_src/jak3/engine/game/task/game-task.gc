@@ -13808,7 +13808,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (logtest? (-> *game-info* features) (game-feature gun-turret))
-               (logtest? (-> *game-info* items) (game-items amulet0 amulet1))
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1))
                )
             )
             :on-close #f
@@ -14539,7 +14539,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-metal-head-section?)
-                (logtest? (-> *game-info* features) (game-feature gun))
+                (logtesta? (-> *game-info* features) (game-feature lightjak lightjak-swoop gun))
                 )
               )
             :on-close #f
@@ -14780,7 +14780,7 @@
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-rhino))
+               (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
               )
             :on-close #f
@@ -14875,6 +14875,7 @@
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
+               (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
               )
             :on-close #f
@@ -14964,7 +14965,7 @@
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
               )
             :on-close #f
@@ -15161,7 +15162,7 @@
                                                   dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
+               (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
                 )
             )
             :on-close #f
@@ -15485,9 +15486,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -15612,9 +15611,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -15740,9 +15737,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -15868,9 +15863,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -15996,9 +15989,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16124,9 +16115,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16252,9 +16241,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16380,9 +16367,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16508,9 +16493,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16636,9 +16619,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16764,9 +16745,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
+            (ap-route-spargus-to-desert?)
             )
             :on-close #f
             :reset #f
@@ -16892,8 +16871,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-desert?)
                (logtest? (-> *game-info* features) (game-feature board))
           )
             )
@@ -17021,8 +16999,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-desert?)
                (logtest? (-> *game-info* features) (game-feature board))
           )
             )
@@ -17150,8 +17127,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-scorpion v-mirage v-rhino v-toad v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          (and (ap-route-spargus-to-desert?)
                (logtest? (-> *game-info* features) (game-feature board))
           )
             )
