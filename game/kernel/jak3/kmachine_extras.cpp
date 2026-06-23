@@ -242,7 +242,7 @@ void init_autosplit_struct() {
 }
 void init_archipelago_struct() {
   g_archipelago_block_jak3.pointer_to_symbol =
-      (u64)g_ee_main_mem + (u64)intern_from_c(-1, 0, "*archipelago-info-jak3*")->value();
+      (u64)g_ee_main_mem + (u64)intern_from_c(-1, 0, "*ap-info-jak3*")->value();
 }
 // TODO - currently using a single mutex for all background task synchronization
 std::mutex background_task_lock;
