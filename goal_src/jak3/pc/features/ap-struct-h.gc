@@ -37,8 +37,8 @@
     ;; Mission/Side Mission Information
     (next-mission-index              uint)
     (next-side-mission-index         uint)
-    (missions-checked                uint32 60)
-    (side-missions-checked           uint32 56)
+    (missions-checked                uint32 75)
+    (side-missions-checked           uint32 75)
 
     ;; Connection Status
     (connection-status               ap-connection-status)
