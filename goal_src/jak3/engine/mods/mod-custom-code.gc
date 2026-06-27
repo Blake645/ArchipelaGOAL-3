@@ -202,7 +202,7 @@
         (when region-1500
           (set! (-> region-1500 on-enter) 
             '(begin 
-              (when (task-open? "palace-ruins-patrol-introduction") (scene-play "palace-ruins-patrol-intro"))
+              (when (task-open? "palace-ruins-patrol-stadium") (scene-play "palace-ruins-patrol-intro"))
             )
           )
         )

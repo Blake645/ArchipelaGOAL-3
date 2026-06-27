@@ -6643,6 +6643,7 @@
                          (disable *screen-filter*)
                          (set-blackout-frames (seconds 0.2))
                          (remove-setting! 'allow-blackout)
+                         (task-close! "desert-final-boss-resolution")
                          (task-close! "city-win-introduction")
                          )
                        (none)

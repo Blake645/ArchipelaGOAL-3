@@ -368,6 +368,7 @@
       (2485 (fadeout (frame-time-30 15)))
       (10000
       (task-close! "city-start-introduction")
+      (task-close! "city-start-resolution")
         (apply ,(lambda :behavior scene-player
                   ()
                   (let ((gp-0 (level-get *level* 'ljkfeet)))

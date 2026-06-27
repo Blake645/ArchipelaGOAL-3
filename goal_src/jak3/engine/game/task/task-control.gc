@@ -572,7 +572,7 @@
           "city-cable-grindable-collision-01.mb"
           "city-cable-grindable-collision.mb"
           )
-       (task-node-closed? (game-task-node tower-destroy-resolution))
+       (task-node-closed? (game-task-node city-start-resolution))
        this
        )
      )

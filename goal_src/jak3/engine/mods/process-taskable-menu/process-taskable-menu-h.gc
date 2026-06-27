@@ -455,3 +455,19 @@
          )
     )
   )
+  (define *vin-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node city-power-game-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-city-power-game)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node city-power-game-introduction))
+              (task-node-open? (game-task-node city-power-game-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node city-power-game-resolution)))
+         )
+    )
+  )

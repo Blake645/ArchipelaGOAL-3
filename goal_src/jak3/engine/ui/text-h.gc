@@ -1715,6 +1715,7 @@
 
   (talk-to-torn #x2190)
   (talk-to-onin #x2191)
+  (talk-to-vin #x2192)
   
   ;; mod text
   (pad-triangle #x2000)
