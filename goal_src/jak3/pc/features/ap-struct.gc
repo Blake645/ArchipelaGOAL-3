@@ -152,19 +152,13 @@
         ))
     (('gun-red-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-2))))
+        (eval-single-cmd! (game-task-node-command add-gun-red-ammo-1))
         (script-eval '(talker-spawn "powup002")) ;; wave concussor
-        ))
-        ;; <ap:note> make sure this gets added with gun-red-2
-    (('gun-red-ammo-1)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-ammo-1))))
         ))
     (('gun-red-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-3))))
+        (eval-single-cmd! (game-task-node-command add-gun-red-ammo-2))
         (script-eval '(talker-spawn "powup012")) ;; plasmite RPG
-        ))
-      ;; <ap:note> make sure this gets added with gun-red-3
-    (('gun-red-ammo-2)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-ammo-2))))
         ))
     (('gun-yellow-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-1))))
@@ -172,19 +166,13 @@
         ))
     (('gun-yellow-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-2))))
+        (eval-single-cmd! (game-task-node-command add-gun-yellow-ammo-1))
         (script-eval '(talker-spawn "powup003")) ;; beam reflexor
-        ))
-      ;; <ap:note> make sure this gets added with gun-yellow-2
-    (('gun-yellow-ammo-1)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-ammo-1))))
         ))
     (('gun-yellow-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-3))))
+        (eval-single-cmd! (game-task-node-command add-gun-yellow-ammo-2))
         (script-eval '(talker-spawn "powup011")) ;; gyro bruster
-        ))
-      ;; <ap:note> make sure this gets added with gun-yellow-3
-    (('gun-yellow-ammo-2)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-ammo-2))))
         ))
     (('gun-blue-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-1))))
@@ -192,19 +180,13 @@
         ))
     (('gun-blue-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-2))))
+        (eval-single-cmd! (game-task-node-command add-gun-blue-ammo-1))
         (script-eval '(talker-spawn "powup009")) ;; arc wielder
-        ))
-        ;; <ap:note> make sure this gets added with gun-blue-2
-    (('gun-blue-ammo-1)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-ammo-1))))
         ))
     (('gun-blue-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-3))))
+        (eval-single-cmd! (game-task-node-command add-gun-blue-ammo-2))
         (script-eval '(talker-spawn "powup010")) ;; needle lazer
-        ))
-      ;; <ap:note> make sure this gets added with gun-blue-3
-    (('gun-blue-ammo-2)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-ammo-2))))
         ))
     (('gun-dark-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-1))))
@@ -212,22 +194,17 @@
         ))
     (('gun-dark-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-2))))
+        (eval-single-cmd! (game-task-node-command add-gun-dark-ammo-1))
         (script-eval '(talker-spawn "powup015")) ;; mass inverter
-        ))
-        ;; <ap:note> make sure this gets added with gun-dark-2
-    (('gun-dark-ammo-1)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-ammo-1))))
         ))
     (('gun-dark-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-3))))
+        (eval-single-cmd! (game-task-node-command add-gun-dark-ammo-2))
         (script-eval '(talker-spawn "powup016")) ;; super nova
-        ))
-        ;; <ap:note> make sure this gets added with gun-dark-3
-    (('gun-dark-ammo-2)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-ammo-2))))
         ))
     (('darkjak)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-darkjak))))
+        (eval-single-cmd! (game-task-node-command add-darkeco))
         (script-eval '(talker-spawn "dark001"))
         ))
     (('darkjak-bomb0)
@@ -248,6 +225,7 @@
         ))
     (('lightjak)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-lightjak))))
+        (eval-single-cmd! (game-task-node-command add-lighteco))
         (script-eval '(talker-spawn "shine001"))
         ))
     (('lightjak-regen)
@@ -268,10 +246,8 @@
         ))
     (('board)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-board))))
+        (eval-single-cmd! (game-task-node-command add-board-launch))
         (script-eval '(talker-spawn "powup013")) ;; jetboard
-        ))
-    (('board-launch)
-      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-board-launch))))
         ))
     (('av-generator)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-av-generator))))

@@ -458,7 +458,7 @@
     (('game 'boot)
      (+! (-> this task-counter) 1)
      (reset! (-> *display* total-game-clock))
-     (set! (-> this features) (game-feature jakc sidekick darkeco lighteco board-launch board-zap board-trail))
+     (set! (-> this features) (game-feature jakc sidekick board-zap board-trail))
      (set! (-> this debug-features) (game-feature))
      (set! (-> this old-features) (game-feature))
      (set! (-> this items) (game-items))
