@@ -27,6 +27,7 @@
     (trap-duration        float)
     (completion-type      uint8)
     (completion-value     uint8)
+    (jak-is-jak2          uint8)
     ))
 
 (deftype ap-info-jak3 (structure)

@@ -677,19 +677,26 @@
       )
   )
 (defun ap-setup-options! ((options ap-seed-options))
+  (when (not *ap-settings*)
+    (set! *ap-settings* (new 'global 'ap-settings)))
   (set! (-> *ap-settings* completion-type) (-> options completion-type))
   (set! (-> *ap-settings* completion-value) (-> options completion-value))
   (set! (-> *ap-settings* trap-duration) (-> options trap-duration))
+  (set! (-> *ap-settings* jak-is-jak2) (-> options jak-is-jak2))
+  (when (nonzero? (-> options jak-is-jak2))
+    (logior! (-> *game-info* secrets) (game-secrets jak-is-jak2))
+  (when *target*
+    (send-event *target* 'loading)))
   ;; <ap:todo> do this later
   ;; (charp<-string (-> *ap-info-jak3* slot-name) (-> options slot-name))
   ;; (charp<-string (-> *ap-info-jak3* slot-seed) (-> options slot-seed))
   #t)
 
 (defun ap-settings-update ()
-  ;; <ap:todo> deathlink will come later, leave it out for now
-  ;; (set! (-> *ap-info-jak3* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
-  (set! (-> *ap-info-jak3* trap-duration) (-> *ap-settings* trap-duration))
-  (set! (-> *ap-info-jak3* completion-goal-type) (the-as ap-completion-type (-> *ap-settings* completion-type)))
-  (set! (-> *ap-info-jak3* completion-goal-value) (-> *ap-settings* completion-value))
-  (none)
-)
+  (when *ap-settings*
+    (set! (-> *ap-info-jak3* trap-duration) (-> *ap-settings* trap-duration))
+    (set! (-> *ap-info-jak3* completion-goal-type) (the-as ap-completion-type (-> *ap-settings* completion-type)))
+    (set! (-> *ap-info-jak3* completion-goal-value) (-> *ap-settings* completion-value))
+    (when (nonzero? (-> *ap-settings* jak-is-jak2))
+      (logior! (-> *game-info* secrets) (game-secrets jak-is-jak2))))
+  (none))
