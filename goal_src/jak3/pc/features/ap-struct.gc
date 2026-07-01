@@ -373,6 +373,10 @@
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-armor-3))))
         (script-eval '(talker-spawn "powup007")) ;; chest armor
         ))
+    (('seal-of-mar)
+      (let ((dummy-node (eval-single-cmd! (game-task-node-command add-seal))))
+        (script-eval '(talker-spawn "seal001")) ;; seal of mar
+        ))
     (('dark-eco-pill)
       (sound-play "pill-pickup") ;; dark eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 5.0)
@@ -525,8 +529,11 @@
             (lambda :behavior process ()
               (suspend-for (seconds 1))
               (while (movie?) (suspend-for (seconds 1)))
-              (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "wasdoors-city"))
-              (initialize! *game-info* 'game (the-as game-save #f) "wasdoors-city" (the-as resetter-spec #f)))))
+              (let ((target-continue (get-continue-by-name *game-info* "wasdoors-city")))
+                  (when target-continue
+                  (set! (-> *game-info* current-continue) target-continue)
+                  (send-event *target* 'loading)
+                  (initialize! *game-info* 'dead (the-as game-save #f) "wasdoors-city" (the-as resetter-spec #f)))))))
         ;; <ap:note> despair trap is much harder to do than i initially throught, come back later when you can figure out the sound     
         (('personal-bubble) ;; pacifism trap
           (process-spawn-function process
@@ -545,9 +552,9 @@
           (process-spawn-function process
             (lambda :behavior process ()
               (let ((curr-health (-> *target* fact health)))
-                (send-event *target* 'get-pickup (pickup-type health) -8.0)
-                (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
-                (send-event *target* 'get-pickup (pickup-type health) curr-health)))))
+              (send-event *target* 'get-pickup (pickup-type health) (- 1.0 curr-health))
+              (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
+              (send-event *target* 'get-pickup (pickup-type health) (- curr-health 1.0))))))
         (('rivals-of-aether) ;; ledge trap
           (process-spawn-function process
             (lambda :behavior process ()
@@ -558,21 +565,10 @@
         (('man-in-the-mirror) ;; mirror trap
           (process-spawn-function process
             (lambda :behavior process ()
-              (logxor! (-> *game-info* secrets) (the-as uint (/ 16 8))) ;; mirror world secret as a bitflag
+              (logxor! (-> *game-info* secrets) (game-secrets hflip-screen))
               (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
-              (logxor! (-> *game-info* secrets) (the-as uint (/ 16 8)))
-              )
-          ))
-        ;; <ap:todo> ammo trap, forced dark jak trap, no health trap, etc (i'm still trying to think of more to include)
-        ;; jak 2 ap traps, commenting out stuff that won't work for jak 3
-        ;; (('five-star) ;; high alert trap
-        ;;  (process-spawn-function process
-        ;;    (lambda :behavior process ()
-        ;;      (stack-size-set! (-> self main-thread) 512)
-        ;;      (send-event *traffic-manager* 'set-max-alert-level 5)
-        ;;      (send-event *traffic-manager* 'set-alert-level 5)
-        ;;      (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
-        ;;      (send-event *traffic-manager* 'set-alert-level 0))))
+              (logxor! (-> *game-info* secrets) (game-secrets hflip-screen)))))
+        ;; jak 2 ap traps that would work in Jak 3
         (('russian-roulette) ;; ammo trap
           (process-spawn-function process
             (lambda :behavior process ()
@@ -593,12 +589,17 @@
         (('anger-issues) ;; forced dark jak trap
           (process-spawn-function process
             (lambda :behavior process ()
+              (stack-size-set! (-> self main-thread) 512)
+              (let ((had-darkjak (logtest? (-> *game-info* features) (game-feature darkjak))))
+              (logior! (-> *game-info* features) (game-feature darkjak))
               (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
               (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
               (while (logtest? (-> *target* control current-surface flags) (surface-flag air)) ;; if jak is in the air, wait until he lands
                 (suspend)
               )
-              (send-event *target* 'change-mode 'normal))))
+              (send-event *target* 'change-mode 'normal)
+            (when (not had-darkjak)
+                (logclear! (-> *game-info* features) (game-feature darkjak)))))))
         (('sonic-speed) ;; speed trap
           (process-spawn-function process
             (lambda :behavior process ()
