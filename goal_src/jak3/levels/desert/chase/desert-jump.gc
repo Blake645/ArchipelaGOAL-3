@@ -319,7 +319,7 @@
         )
       (let ((f0-1 (vector-vector-distance-squared (-> this root trans) s5-0)))
         (when (>= (square (+ 12288.0 (-> s5-0 w))) f0-1)
-          (talker-spawn-func (-> *talker-speech* 128) *entity-pool* (target-pos 0) (the-as region #f))
+          ;;(talker-spawn-func (-> *talker-speech* 128) *entity-pool* (target-pos 0) (the-as region #f))
           (send-event (handle->process (-> this arrow)) 'die)
           (go (method-of-object this die))
           )

@@ -4941,7 +4941,14 @@
             :level 'desert
             :task (game-task desert-glide)
             :name "desert-glide-introduction"
-            :when-open #f
+            :when-open (new 'static 'boxed-array :type game-task-event
+              (new 'static 'game-task-event
+              :actor (game-task-actor minimap)
+              :action (game-task-action show)
+              :tex (game-task-icon gaticon-32)
+              :scene #f
+              )
+          )
             :flags (game-task-node-flag save-on-life act1)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node temple-climb-resolution)
@@ -5400,7 +5407,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtesta? (-> *game-info* features) (game-feature gun-red-2 artifact-invis))
+               (logtesta? (-> *game-info* features) (game-feature gun-red-2 artifact-invis lightjak lightjak-regen))
                )
             )
             :on-close #f
@@ -5951,7 +5958,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'templea
-              :type-to-spawn #f ;;'task-manager-lightjak-training <ap:preserve-this> remove light jak text
+              :type-to-spawn 'task-manager-lightjak-training
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -11080,7 +11087,7 @@
                 :scene #f
                 )
               )
-            :flags (game-task-node-flag set-task-mask save-on-life exclusive act2)
+            :flags (game-task-node-flag set-task-mask save-on-life act2)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node desert-chase-marauders-introduction)
               (game-task-node none)
