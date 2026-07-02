@@ -22182,11 +22182,7 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
-            )
+            :open? (lambda ((arg0 game-task-node-info)) #f)
             :on-close '(begin
                (task-open! "desert-bbush-total-air-time-introduction")
                (task-open! "desert-bbush-jump-distance-introduction")
@@ -22314,11 +22310,7 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
-            )
+            :open? (lambda ((arg0 game-task-node-info)) #f)
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-jump-distance-introduction")
@@ -22446,11 +22438,7 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
-            )
+            :open? (lambda ((arg0 game-task-node-info)) #f)
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-total-air-time-introduction")
@@ -22578,11 +22566,7 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
-            )
+            :open? (lambda ((arg0 game-task-node-info)) #f)
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-total-air-time-introduction")
@@ -22710,11 +22694,7 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-fox v-mirage v-x-ride))
-               (logtest? (-> *game-info* items) (game-items pass-front-gate))
-          )
-            )
+            :open? (lambda ((arg0 game-task-node-info)) #f)
             :on-close '(begin
                (task-open! "desert-bbush-air-time-introduction")
                (task-open! "desert-bbush-total-air-time-introduction")
@@ -23717,11 +23697,7 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info))
-          (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
-               (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-scorpion v-toad v-mirage v-fox v-x-ride v-rhino))
-            )
-            )
+            :open? (lambda ((arg0 game-task-node-info)) #f)
             :on-close #f
             :reset #f
             :suck-death-count #xa5

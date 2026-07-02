@@ -417,7 +417,9 @@
   (none)
   )
 
+;; <ap:preserve-this> save game before opening parent node to prevent progress loss on life reset
 (defmethod task-manager-vehicle-bbush-method-36 ((this task-manager-vehicle-bbush))
+  (ap-auto-save!)
   (let ((a0-1 (-> this node-info parent-node 0)))
     (task-node-open! a0-1 'event)
     )

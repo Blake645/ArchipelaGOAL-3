@@ -7,47 +7,43 @@
 (defmethod task-select-menu ((this process-taskable))
   (let* ((menu (-> this menu-list))
           (list-length (-> menu length))
-          (available-idxs (new 'static 'boxed-array :type int32)) ;; array to store the indexes of the options that are available for selection
-          (available-count 0)                                     ;; stores the amount of options that are available for selection
-          (found-exclusive? #f)                                   ;; determines if an available item is exlusive for later decisions
+          (available-idxs (new 'stack 'boxed-array :type int32 list-length))
+          (available-count 0)
+          (found-exclusive? #f)
           )
     (dotimes (i list-length)
       (let* ((allowed? (-> menu i allow-when))
              (forbidden? (-> menu i forbid-when)))
-        ;; include the option if `allowed?` is set (not allowed?) and returns true (allowed?),
-        ;; and `forbidden?` is either not set (not forbidden?) or does not return true (not (forbidden?)).
         (when (and (not found-exclusive?)
                    (or (not allowed?) (allowed?)) 
                    (or (not forbidden?) (not (forbidden?))))
-          ;; exclusive items take precedence over others (e.g. they are required to complete active missions).
-          ;; they are handled first come first serve, and they will be the only item in the available list.
           (cond
             ((-> menu i exclusive?)
-              (set! available-idxs (new 'static 'boxed-array :type int32))
+              (set! available-idxs (new 'stack 'boxed-array :type int32 list-length))
               (set! (-> available-idxs 0) i)
               (set! available-count 1)
               (set! found-exclusive? #t)
               )
             (else 
-              (set! (-> available-idxs available-count) i) ;; store the available option indexes in `available-idxs` array  
+              (set! (-> available-idxs available-count) i)
               (+! available-count 1)
               )
             )
           )
         )
       )
-    (let* ((page (-> this page))                          ;; current page
-            (start-idx (* page *tm-items-per-page*))      ;; start index of the current page
-            (end-idx (+ start-idx *tm-items-per-page*))   ;; exclusive end index for the current page, used to check if there's a next page
-            (have-next-page? (< end-idx available-count)) ;; is there a next page?
-            (have-prev-page? (> page 0))                  ;; is there a previous page?
-            (items-this-page (min *tm-items-per-page* (- available-count start-idx))) ;; amount of items in this page (only destination options is counted)
+    (let* ((page (-> this page))
+            (start-idx (* page *tm-items-per-page*))
+            (end-idx (+ start-idx *tm-items-per-page*))
+            (have-next-page? (< end-idx available-count))
+            (have-prev-page? (> page 0))
+            (items-this-page (min *tm-items-per-page* (- available-count start-idx)))
             (extra-options (cond 
-              ((and have-prev-page? have-next-page?) 2)           ;; add 2 if have next and previous pages
-              (have-prev-page? 1)                                 ;; add 1 if only have previous page 
-              (have-next-page? 1)                                 ;; add 1 if only have next page
-              (else 0)))                                          ;; no extra option
-            (total-items (+ items-this-page extra-options))    ;; total entries displayed on screen
+              ((and have-prev-page? have-next-page?) 2)
+              (have-prev-page? 1)
+              (have-next-page? 1)
+              (else 0)))
+            (total-items (+ items-this-page extra-options))
             )
       (when (not (paused?))
         (cond
@@ -62,16 +58,16 @@
           ((and (cpad-pressed? 0 confirm) (nonzero? available-count))
             (sound-play "menu-pick")
             (cond
-              ((and have-prev-page? (= (-> this selected) items-this-page)) ;; go to the previous page
+              ((and have-prev-page? (= (-> this selected) items-this-page))
                 (+! (-> this page) -1)
                 (set! (-> this selected) 0)
                 )
-              ((and have-next-page? (or (and have-prev-page? (= (-> this selected) (+ items-this-page 1))) ;; go to the next page
+              ((and have-next-page? (or (and have-prev-page? (= (-> this selected) (+ items-this-page 1)))
                                        (and (not have-prev-page?) (= (-> this selected) items-this-page))))
                 (+! (-> this page) 1)
                 (set! (-> this selected) 0)
                 )
-              (else ;; warp to the selected destination
+              (else
                 (set! *tm-selected* (-> available-idxs (+ start-idx (-> this selected))))
                 (go execute-task)
                 )
@@ -103,16 +99,14 @@
               (set! (-> font-ctxt origin x) (the float font-x))
               (set! (-> font-ctxt origin y) (the float a0-59))
               )
-            ;; print menu header
             (set! (-> font-ctxt color) (font-color progress-old-yellow))
             (let ((select-text (lookup-text! *common-text* (text-id select-mission) #f)))
               (format (clear *temp-string*) select-text)
               )
             (print-game-text *temp-string* font-ctxt #f 44 (bucket-id hud-draw-hud-alpha))
             (set! (-> font-ctxt height) (the float font-height))
-            ;; print menu options
             (cond
-              ((nonzero? available-count) ;; menu have data, print the options on the screen. 
+              ((nonzero? available-count)
                 (dotimes (i items-this-page)
                   (let ((valid-idx (-> available-idxs (+ start-idx i))))
                     (set! (-> font-ctxt origin x) (the float font-x))
@@ -135,7 +129,7 @@
                     (+! font-y font-height)
                     )
                   )
-                (when have-prev-page? ;; print `Previous Page` if there is a previous page indeed
+                (when have-prev-page?
                   (set! (-> font-ctxt origin x) (the float font-x))
                   (set! (-> font-ctxt origin y) (the float font-y))
                   (set! (-> font-ctxt scale) (if (= (-> this selected) items-this-page)
@@ -151,7 +145,7 @@
                   (print-game-text (lookup-text! *common-text* (text-id previous-page) #f) font-ctxt #f 44 (bucket-id hud-draw-hud-alpha))
                   (+! font-y font-height)
                   )
-                (when have-next-page? ;; print `Next Page` if there is a next page indeed
+                (when have-next-page?
                   (set! (-> font-ctxt origin x) (the float font-x))
                   (set! (-> font-ctxt origin y) (the float font-y))
                   (set! (-> font-ctxt scale) (if (= (-> this selected) (- total-items 1))
@@ -168,7 +162,7 @@
                   (+! font-y font-height)
                   )
                 )
-              (else ;; no menu data, print an error message on the screen.
+              (else
                 (set! (-> font-ctxt origin x) (the float font-x))
                 (set! (-> font-ctxt origin y) (the float font-y))
                 (set! (-> font-ctxt scale) 0.8)
@@ -249,8 +243,6 @@
     (dotimes (i list-length)
       (let* ((allowed? (-> menu i allow-when))
              (forbidden? (-> menu i forbid-when)))
-        ;; include the option if `allowed?` is set and returns true,
-        ;; and `forbidden?` is either not set (not forbidden?) or does not return true (not (forbidden?)).
         (when (and (or (not allowed?) (allowed?)) 
                    (or (not forbidden?) (not (forbidden?))))
           (return #t)
@@ -258,7 +250,7 @@
         )
       )
     (when (zero? list-length)
-      (return #t) ;; treat empty lists as available so that it can be displayed the "No Menu Data" error message instead of disabling interaction
+      (return #t)
       )
     )
   #f
@@ -279,8 +271,6 @@
     (remove-setting! 'mode-name)
     )
   :trans (behavior ()
-    ;(format *stdcon* "selected: ~D~%" *tm-selected*)
-    ;(format *stdcon* "page: ~D~%" (-> self page))
     (when (time-elapsed? (-> self state-time) (seconds 0.5))
       (task-select-menu self)
       (when (cpad-pressed? 0 triangle)
