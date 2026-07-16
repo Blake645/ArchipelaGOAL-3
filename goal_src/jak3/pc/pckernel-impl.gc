@@ -132,6 +132,7 @@
 (deftype ap-settings (basic)
   ((version              uint64)
    (deathlink?           symbol)
+   (item-messages?       symbol)
    (trap-duration        float)
    (completion-value     uint8)
    (completion-type      uint8)

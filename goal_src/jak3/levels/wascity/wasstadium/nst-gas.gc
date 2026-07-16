@@ -231,6 +231,7 @@
     (when (< (vector-vector-xz-distance *garage-center* (target-pos 0)) 81920.0)
       (send-event *target* 'end-mode 'pilot)
       (send-event self 'complete)
+      (task-node-close! (game-task-node nest-eggs-gas) 'event)
       )
     )
   :code sleep-code

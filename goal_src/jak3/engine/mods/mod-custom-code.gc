@@ -20,23 +20,212 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Begin function defintions.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun set-region-data! ((id int) (event-name string) (data pair))
-  (let ((region (region-lookup-by-id id)))
-    (when region
-      (cond
-        ((string= event-name "on-enter")
-          (set! (-> region on-enter) data)
-          )
-        ((string= event-name "on-inside")
-          (set! (-> region on-inside) data)
-          )
-        ((string= event-name "on-exit")
-          (set! (-> region on-exit) data)
-          )
-        (else
-          (format 0 "ERROR: invalid event-name!~%")
-          )
+(deftype w-parking-spot (process-drawable)
+  ((vehicle          handle)
+   (should-spawn?    symbol)
+   (should-cleanup?  symbol)
+   (v-type           game-vehicle-u8)
+   (minimap          connection-minimap)
+   (test-sphere      sphere  :inline)
+   (arrow            handle)
+   )
+  :method-count-assert 27
+  (:state-methods
+    idle
+    )
+  (:methods
+    (w-parking-spot-method-21 (_type_) none)
+    (w-parking-spot-method-22 (_type_) none)
+    (w-parking-spot-method-23 (_type_) none)
+    (w-parking-spot-method-24 (_type_) none)
+    (w-parking-spot-method-25 (_type_) symbol)
+    (w-parking-spot-method-26 (_type_) int)
+    )
+  )
+
+
+
+;; AP Messenger System
+(deftype ap-message (structure)
+  ((verb        string)
+   (item-name   string)
+   (dir         string)
+   (player-name string)
+   ))
+
+(deftype ap-message-array (inline-array-class)
+  ((target-index  int)
+   (messages      ap-message :inline :dynamic)
+   ))
+
+(set! (-> ap-message-array heap-base) (the-as uint 64))
+
+(deftype ap-messenger (process)
+  ((both-messages  ap-message-array)
+   (show-size      int)
+   (max-size       int)
+   (state-time     time-frame)
+   (last-index     int)
+   )
+  (:methods
+    (append-messages (_type_ symbol string string) none)
+    )
+  (:states
+    ap-messenger-show
+    ap-messenger-hide
+    ap-messenger-scroll
+    ))
+
+(defbehavior ap-messenger-init-by-other ap-messenger ()
+  (set! (-> self show-size) 3)
+  (set! (-> self max-size) 10)
+  (set! (-> self last-index) 0)
+  (set! (-> self both-messages) (new 'process 'ap-message-array (-> self max-size)))
+  (dotimes (i (-> self max-size))
+    (set! (-> self both-messages messages i verb) (new 'process 'string 32 (the string #f)))
+    (set! (-> self both-messages messages i item-name) (new 'process 'string 32 (the string #f)))
+    (set! (-> self both-messages messages i dir) (new 'process 'string 32 (the string #f)))
+    (set! (-> self both-messages messages i player-name) (new 'process 'string 32 (the string #f))))
+  (set! (-> self both-messages target-index) 0)
+  (go ap-messenger-show))
+
+(defmethod relocate ((this ap-messenger) (offset int))
+  (when (nonzero? (-> this both-messages))
+    (dotimes (i (-> this max-size))
+      (when (nonzero? (-> this both-messages messages i verb)) (&+! (-> this both-messages messages i verb) offset))
+      (when (nonzero? (-> this both-messages messages i item-name)) (&+! (-> this both-messages messages i item-name) offset))
+      (when (nonzero? (-> this both-messages messages i dir)) (&+! (-> this both-messages messages i dir) offset))
+      (when (nonzero? (-> this both-messages messages i player-name)) (&+! (-> this both-messages messages i player-name) offset)))
+    (&+! (-> this both-messages) offset))
+  (call-parent-method this offset))
+
+(defun shift-messages ((target-array ap-message-array) (show-size int) (max-size int))
+  (dotimes (i max-size)
+    (when (< i (- max-size 1))
+      (set! (-> target-array messages i verb) (-> target-array messages (+ i 1) verb))
+      (set! (-> target-array messages i item-name) (-> target-array messages (+ i 1) item-name))
+      (set! (-> target-array messages i dir) (-> target-array messages (+ i 1) dir))
+      (set! (-> target-array messages i player-name) (-> target-array messages (+ i 1) player-name))))
+  (if (> (-> target-array target-index) show-size)
+    (-! (-> target-array target-index) 1)))
+
+(defmethod append-messages ((this ap-messenger) (direction symbol) (item-name string) (player-name string))
+  (let* ((target-array (-> this both-messages))
+         (verb (case direction
+          (('sent) "SENT")
+          (('recv) "GOT")))
+         (dir (case direction
+          (('sent) "TO")
+          (('recv) "FROM"))))
+    (if (= (-> target-array target-index) (-> this max-size))
+      (set! (-> target-array target-index) (- (-> this max-size) 1)))
+    (set! (-> target-array messages (-> target-array target-index) verb) verb)
+    (set! (-> target-array messages (-> target-array target-index) item-name) item-name)
+    (set! (-> target-array messages (-> target-array target-index) dir) dir)
+    (set! (-> target-array messages (-> target-array target-index) player-name) player-name)
+    (if (< (-> target-array target-index) (- (-> this max-size) 1))
+      (+! (-> target-array target-index) 1)))
+  (none))
+
+(defun draw-message ((message string) (bottom float) (index int))
+  (let ((s4-1 (new 'stack 'font-context *font-default-matrix* 5 (the int bottom) 0.0 (font-color default) (font-flags shadow kerning large))))
+    (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id hud-draw-hud-alpha))
+      (set! (-> s4-1 origin y) (- bottom (* 14 index)))
+      (set! (-> s4-1 width) (the float 1920))
+      (draw-string-xy-scaled-ctxt message buf 5 (the int (- bottom (* 14 index))) s4-1 0.36))))
+
+(defbehavior draw-messages ap-messenger ((bottom float))
+  (dotimes (i (-> self show-size))
+    (when (not (string= (-> self both-messages messages i item-name) ""))
+      (draw-message (string-format "~S ~8L~S~0L ~S ~12L~S~0L"
+                    (-> self both-messages messages i verb)
+                    (-> self both-messages messages i item-name)
+                    (-> self both-messages messages i dir)
+                    (-> self both-messages messages i player-name))
+                    bottom i))))
+
+(defstate ap-messenger-show (ap-messenger)
+  :enter (behavior ()
+    (set! (-> self last-index) (-> self both-messages target-index)))
+  :code (behavior ()
+    (loop
+      (draw-messages 380.0)
+      (when (or (paused?) (not (-> *ap-settings* item-messages?)))
+        (go ap-messenger-hide))
+      (when (!= (-> self both-messages target-index) (-> self last-index))
+        (go ap-messenger-scroll))
+      (suspend))))
+
+(defstate ap-messenger-hide (ap-messenger)
+  :code (behavior ()
+    (loop
+      (when (and (not (paused?)) (-> *ap-settings* item-messages?))
+        (go ap-messenger-show))
+      (when (> (-> self both-messages target-index) (-> self show-size))
+        (shift-messages (-> self both-messages) (-> self show-size) (-> self max-size)))
+      (suspend))))
+
+(defstate ap-messenger-scroll (ap-messenger)
+  :enter (behavior ()
+    (set-time! (-> self state-time))
+    (set! (-> self last-index) (-> self both-messages target-index)))
+  :code (behavior ()
+    (loop
+      (let ((y (/ (the float (- (current-time) (-> self state-time))) 7.5)))
+        (cond
+          ((>= y 14.0)
+           (when (> (-> self both-messages target-index) (-> self show-size))
+             (shift-messages (-> self both-messages) (-> self show-size) (-> self max-size)))
+           (go ap-messenger-show))
+          (else
+           (draw-messages (+ 380.0 y)))))
+      (suspend))))
+
+(defun ap-messenger-run ()
+  "Run the AP Messenger"
+  (process-spawn ap-messenger :init ap-messenger-init-by-other :name "ap-messenger" :to *default-pool*))
+
+(defun ap-messenger-stop ()
+  "Stop the AP Messenger"
+  (kill-by-name "ap-messenger" *active-pool*))
+
+(define-perm *ap-messenger* (pointer ap-messenger) (the (pointer ap-messenger) #f))
+
+(defun debug-messenger ((dir symbol) (item string) (player string))
+  (let ((messenger (the ap-messenger (process-by-name "ap-messenger" *active-pool*))))
+    (when messenger
+      (append-messages messenger dir item player)))
+  (none))
+
+(defun load-levels-in-bubble! ((x float) (y float) (z float) (w float) (lev0 symbol) (lev1 symbol) (lev2 symbol))
+  (when (in-bubble-m? x y z w)
+    (when (or (!= (level-status? *level* lev0 #f) 'active) (!= (level-status? *level* lev1 #f) 'active) (!= (level-status? *level* lev2 #f) 'active))
+      (let ((a1-1 (new 'stack-no-clear 'array 'symbol 10)))
+        (set! (-> a1-1 9) #f)
+        (set! (-> a1-1 8) #f)
+        (set! (-> a1-1 7) #f)
+        (set! (-> a1-1 6) #f)
+        (set! (-> a1-1 5) #f)
+        (set! (-> a1-1 4) #f)
+        (set! (-> a1-1 3) #f)
+        (set! (-> a1-1 2) lev2)
+        (set! (-> a1-1 1) lev1)
+        (set! (-> a1-1 0) lev0)
+        (want-levels *load-state* a1-1)
+        (want-display-level *load-state* lev2 'display)
+        (want-display-level *load-state* lev1 'display)
+        (want-display-level *load-state* lev0 'display)
         )
+      )
+    )
+  (none)
+  )
+(defun clear-entity-kill-mask ((name string))
+  (let ((actor (entity-by-name name))
+        )
+    (when actor
+      (set! (-> (res-lump-data actor 'kill-mask (pointer task-mask))) (task-mask))
+      (set! (-> actor extra kill-mask) (task-mask))
       )
     )
   (none)
@@ -107,12 +296,37 @@
       )
     )
   )
+(load-levels-in-bubble! 4124.84 44.50 4431.53 40.0 'templed 'templeb 'templea) ;; load (templed, templeb, templea) in pole room
+(when (and (task-node-open? (game-task-node temple-tests-resolution))
+           (not (process-by-name "tpl-break-bridge" *active-pool*)))
+  (clear-entity-kill-mask "tpl-break-bridge-1")
+  (clear-entity-kill-mask "light-eco-vent-32")
+  (clear-entity-kill-mask "light-eco-vent-33")
+)
+(when (= (level-status? *level* 'ctyinda #f) 'active)
+  (clear-entity-kill-mask "krimson-wall-4")
+  (clear-entity-kill-mask "krimson-wall-5")
+  (clear-entity-kill-mask "krimson-wall-7")
+  (clear-entity-kill-mask "krimson-wall-8")
+  (clear-entity-kill-mask "krimson-wall-9")
+  (clear-entity-kill-mask "krimson-wall-10")
+)
+(when (= (level-status? *level* 'ctyindb #f) 'active)
+  (clear-entity-kill-mask "krimson-wall-2")
+  (clear-entity-kill-mask "krimson-wall-3")
+  (clear-entity-kill-mask "krimson-wall-6")
+)
       ;; <ap:preserve-this> allows vinroom to be open when jak is near
     (let ((door (entity-by-name "vin-door-ctyinda-1")))
       (when door
         (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
       )
     )
+(let ((gundoor (entity-by-name "hip-door-a-10")))
+  (when gundoor
+    (set! (cdr (res-lump-struct gundoor 'on-notice pair)) '((#t '(gungame))))
+  )
+)
     (let ((platform (entity-by-name "wstd-arena-plat-10")))
       (when platform
         (set! (cdr (res-lump-struct platform 'on-activate pair))  '(
@@ -131,7 +345,99 @@
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
     )
+    (let ((parking-spot (entity-by-name "w-parking-spot-3")))
+          (when parking-spot
+            (set! (cdr (res-lump-struct parking-spot 'on-activate pair)) '(#t))
+            )
+  )
+;; parking-spot auto-spawn: duplicate safe spawn logic from w-parking-spot
+(let ((spot (the-as w-parking-spot (process-by-name "w-parking-spot-3" *active-pool*))))
+  (when (and spot (not (handle->process (-> spot vehicle))))
+    (w-parking-spot-method-23 spot)
+  )
+)
+;; mhacity/tower
+      (let ((region-1280 (region-lookup-by-id 1280)))
+        (when region-1280
+          (set! (-> region-1280 on-enter) 
+            '(begin 
+              (when (task-closed? "city-start-resolution") (want-load 'ctywide-mh 'mhcityb 'towera))
+            )
+          )
+        )
+      )
+      (let ((region-1277 (region-lookup-by-id 1277)))
+        (when region-1277
+          (set! (-> region-1277 on-enter) 
+            '(begin 
+              (when (task-closed? "city-start-resolution") (want-display 'towera 'display))
+            )
+          )
+          (set! (-> region-1277 on-exit) 
+            '(begin 
+              (when (task-closed? "city-start-resolution") (want-display 'towera #f))
+            )
+        )
+      )
+    )
 ;; monk temple
+(let ((alcove (entity-by-name "tpl-break-alcove-1")))
+  (when alcove
+    (set! (cdr (res-lump-struct alcove 'on-activate pair)) '(
+      #f
+    ))
+    (set! (cdr (res-lump-struct alcove 'on-exit pair)) '(
+      (when (task-open? "temple-defend-door-2")
+            (task-close! "temple-defend-door-2"))
+    ))
+  )
+)
+
+(let ((eye (entity-by-name "tpl-holo-eye-1")))
+  (when eye
+    (set! (cdr (res-lump-struct eye 'on-deactivate pair)) '())
+  )
+)
+
+(let ((temdoor (entity-by-name "tpl-outer-airlock-door-2")))
+  (when temdoor
+    (set! (cdr (res-lump-struct temdoor 'on-notice pair)) '(
+      (or (task-open? "temple-oracle-introduction")
+          (task-open? "temple-tests-introduction")
+          (task-open? "temple-defend-introduction")
+          (task-closed? "temple-oracle-introduction")
+          (task-closed? "temple-tests-introduction")
+          (task-closed? "temple-defend-introduction"))
+      '(templea templex)))
+    (set! (cdr (res-lump-struct temdoor 'on-enter pair)) '(
+      (begin
+        (want-display 'templex 'display)
+        (send-event "tpl-holo-eye-1" 'kill)
+        (cond 
+        ((task-open? "temple-oracle-introduction")
+          (task-close! "temple-oracle-introduction"))))
+    ))
+  )
+)
+(let ((temdoor-1 (entity-by-name "tpl-break-door-a-1")))
+  (when temdoor-1
+    (set! (cdr (res-lump-struct temdoor-1 'on-activate pair)) '(
+      #f
+    ))
+    (set! (cdr (res-lump-struct temdoor-1 'on-exit pair)) '(
+      (when (task-open? "temple-defend-door-3")
+            (task-close! "temple-defend-door-3"))
+    ))
+  )
+)
+(let ((tempdoor-2 (entity-by-name "tpl-door-a-5")))
+  (when tempdoor-2
+    (set! (cdr (res-lump-struct tempdoor-2 'on-exit pair)) '(
+      (when (task-open? "temple-defend-door-4")
+            (task-close! "temple-defend-door-4"))
+    ))
+  )
+)
       (let ((region-1691 (region-lookup-by-id 1691)))
         (when region-1691
           (set! (-> region-1691 on-enter) 
@@ -149,6 +455,115 @@
             )
           )
         )
+      (let ((region-1675 (region-lookup-by-id 1675)))
+        (when region-1675
+          (set! (-> region-1675 on-enter) 
+            '(begin 
+              (when (task-open? "temple-oracle-stairs") (task-close! "temple-oracle-stairs"))
+            )
+          )
+        )
+      )
+      (let ((region-1504 (region-lookup-by-id 1504)))
+        (when region-1504
+          (set! (-> region-1504 on-enter) 
+            '(begin 
+              (when (task-open? "temple-tests-introduction") (scene-play "temple-tests-intro"))
+            )
+          )
+        )
+      )
+      (let ((region-1557 (region-lookup-by-id 1557)))
+        (when region-1557
+          (set! (-> region-1557 on-enter) 
+            '(begin 
+              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-enter))
+            )
+          )
+          (set! (-> region-1557 on-exit) 
+            '(begin 
+              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-exit))
+            )
+        )
+      )
+      )
+      (let ((region-1556 (region-lookup-by-id 1556)))
+        (when region-1556
+          (set! (-> region-1556 on-enter) 
+            '(begin 
+              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-on))
+            )
+          )
+          (set! (-> region-1556 on-exit) 
+            '(begin 
+              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-off))
+            )
+        )
+      )
+      )
+      (let ((region-1592 (region-lookup-by-id 1592)))
+        (when region-1592
+          (set! (-> region-1592 on-enter) 
+            '(begin 
+              (when (task-open? "temple-oracle-pre-pole-room") (send-event "tpl-gate-3" 'trigger))
+            )
+          )
+        )
+      )
+      (let ((region-1505 (region-lookup-by-id 1505)))
+        (when region-1505
+          (set! (-> region-1505 on-enter) 
+            '(begin 
+              (when (task-open? "temple-oracle-meeting") (scene-play "temple-oracle-intro"))
+            )
+          )
+        )
+      )
+      (let ((region-1506 (region-lookup-by-id 1506)))
+        (when region-1506
+          (set! (-> region-1506 on-enter) 
+            '(begin 
+              (when (task-open? "temple-oracle-powerup") (scene-play "temple-oracle-res"))
+            )
+          )
+        )
+      )
+      (let ((region-1507 (region-lookup-by-id 1507)))
+        (when region-1507
+          (set! (-> region-1507 on-enter) 
+            '(begin 
+              (when (task-open? "temple-tests-oracle") (task-closed? "temple-tests-hover-training") (scene-play "temple-tests-res-a"))
+            )
+          )
+        )
+      )
+      (let ((region-1761 (region-lookup-by-id 1761)))
+        (when region-1761
+          (set! (-> region-1761 on-enter) 
+            '(begin 
+              (when (task-open? "temple-tests-door-1") (send-event *target) 'end-mode 'freeze #t)
+            )
+          )
+        )
+      )
+      (let ((region-1699 (region-lookup-by-id 1699)))
+        (when region-1699
+          (set! (-> region-1699 on-enter) 
+            '(begin 
+              (when (task-closed? "temple-defend-introduction") (send-event *target) 'end-mode 'freeze #t)
+            )
+          )
+        )
+      )
+      (let ((region-1938 (region-lookup-by-id 1938)))
+        (when region-1938
+          (set! (-> region-1938 on-enter) 
+            '(begin 
+              (when (task-open? "temple-defend-resolution") (endlessfall))
+            )
+          )
+        )
+      )
   ;; nest
         (let ((region-1155 (region-lookup-by-id 1155)))
         (when region-1155
@@ -225,7 +640,10 @@
       (when *debug-segment*
         (orb-placer-maintenance)
         )
-        
+(when (and *ap-settings* 
+           (-> *ap-settings* item-messages?)
+           (not (process-by-name "ap-messenger" *active-pool*)))
+  (set! *ap-messenger* (the (pointer ap-messenger) (ap-messenger-run))))
     (none)
     )
 

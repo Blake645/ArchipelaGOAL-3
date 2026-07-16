@@ -135,7 +135,7 @@
                 :continue-name "templex-warp"
                 :text-id (text-id temple-name-entry) ;"Temple (Entrance)"
                 :allow-when (lambda () (task-closed? "temple-oracle-resolution"))  ;; first temple mission required
-                :forbid-when (lambda () (task-closed? "temple-tests-introduction"))  ;; unavailable from the second temple mission
+                :forbid-when #f  ;; unavailable from the second temple mission
                 :on-activate #f
                 )
               (static-warp-gate-menu-entry 

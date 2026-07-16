@@ -584,6 +584,126 @@ This gives us more freedom to write code how we want.
           ((2) (set! (-> *pc-settings* subtitle-speaker?) 'auto)))
           (pc-settings-save))))
 
+(defmacro game-options-pc-archipelagoal-3 ()
+  `(progress-new-generic-link-to-scrolling-page (text-id progress-menu-archipelagoal-3)
+     (archipelagoal-3-traps)
+     ;; <ap:todo> deathlink will come later, leave out for now
+     ;; (archipelagoal-3-deathlink)
+     )
+  )
+  (defmacro archipelagoal-3-traps ()
+ `(progress-new-generic-link-to-scrolling-page (text-id progress-menu-traps)
+  ;; Jak 1 traps (<ap:todo> tie the enabled/disabled to a boolean to change it on the fly)
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-trip)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-slip)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-gravity)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-camera)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-darkness)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-earthquake)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-teleport)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-pacifism)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-health)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-ledge)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-mirror)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  ;; Jak 2 traps
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-ammo)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-dark)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-speed)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-slow)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))
+  (new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-traps-hero)
+    :truthy-text (text-id progress-menu-enabled)
+    :falsey-text (text-id progress-menu-disabled)
+    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
+    :should-disable? (lambda () #t))))
+
+    ;; <ap:todo> deathlink will come later, leave out for now
+#|
+(defmacro archipelagoal-3-deathlink ()
+  '(new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-deathlink)
+    :truthy-text (text-id progress-on)
+    :falsey-text (text-id progress-off)
+    :get-value-fn (lambda () (-> *ap-settings* deathlink?))
+    :on-confirm (lambda ((val symbol))
+      (set! (-> *ap-settings* deathlink?) val)
+      (ap-settings-update))))
+|#
 (defmacro misc-options-pc-discord-rpc ()
   `(new 'static 'menu-generic-boolean-option
         :name (text-id progress-discord-rpc)
@@ -626,6 +746,7 @@ This gives us more freedom to write code how we want.
 
 (define *game-options-pc*
   (progress-new-generic-scrolling-page (text-id progress-game-options)
+    (game-options-pc-archipelagoal-3)
     (game-options-pc-input-options)
     (game-options-pc-subtitle-toggle)
     (game-options-pc-hint-subtitle-toggle)
@@ -641,6 +762,7 @@ This gives us more freedom to write code how we want.
 
 (define *game-options-title-pc*
   (progress-new-generic-scrolling-page (text-id progress-game-options)
+    (game-options-pc-archipelagoal-3)
     (game-options-pc-input-options)
     (game-options-pc-subtitle-toggle)
     (game-options-pc-hint-subtitle-toggle)

@@ -333,7 +333,7 @@
                          )
                   )
                 (520 (fadeout (frame-time-30 20)))
-                (10000 (task-close! "comb-travel-resolution") (kill "pecker-ingame-2"))
+                (10000 (task-close! "comb-travel-resolution") (task-close! "comb-travel-training") (kill "pecker-ingame-2"))
                 )
               :cut-list '(396)
               :wait-ground-time (seconds 1)

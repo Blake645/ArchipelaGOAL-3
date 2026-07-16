@@ -693,7 +693,8 @@
 
 (defun ap-setup-options! ((options ap-seed-options))
   (when (not *ap-settings*)
-    (set! *ap-settings* (new 'global 'ap-settings)))
+    (set! *ap-settings* (new 'global 'ap-settings))
+    (set! (-> *ap-settings* item-messages?) #t))
   (set! (-> *ap-settings* completion-type) (-> options completion-type))
   (set! (-> *ap-settings* completion-value) (-> options completion-value))
   (set! (-> *ap-settings* trap-duration) (-> options trap-duration))

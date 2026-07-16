@@ -205,7 +205,7 @@
       (set! (-> self arrow-handle) (the-as handle #f))
       )
     )
-  :code (behavior ()
+:code (behavior ()
     (until (-> self manager-entity)
       (suspend)
       )
@@ -356,6 +356,14 @@
            )
          )
         )
+      ;; poll corral proximity directly instead of relying on region-1266 send-event
+      (when (and *target*
+           (focus-test? *target* flut)
+           (> (-> self lizard-count) 0)
+           (>= (-> self corral-pos r) (vector-vector-xz-distance (target-pos 0) (-> self corral-pos)))
+           )
+  (set! (-> self lizard-in-corral) #t)
+  )
       (cond
         ((and *target*
               (focus-test? *target* flut)
@@ -445,9 +453,9 @@
                  )
                )
              (while (begin
-                      (set! (-> self vehicle-handle) (-> *vehicle-info* handle-by-vehicle-type 13))
-                      (not (handle->process (-> self vehicle-handle)))
-                      )
+                       (set! (-> self vehicle-handle) (-> *vehicle-info* handle-by-vehicle-type 13))
+                       (not (handle->process (-> self vehicle-handle)))
+                       )
                (format *stdebug* "waiting for snake~%")
                (suspend)
                )

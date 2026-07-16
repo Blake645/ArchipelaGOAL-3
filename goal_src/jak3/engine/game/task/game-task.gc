@@ -4577,9 +4577,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (ap-route-spargus-to-nest?)
             )
-            :on-close '(when (and (task-closed? "temple-climb-introduction") (not (task-closed? "temple-climb-resolution")))
-               (task-open! "temple-climb-introduction")
-               )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x1a
@@ -4760,7 +4758,7 @@
             :manager #f
             :borrow '((nstb 0 lnstoba display) (wasall 0 lwassig special))
             :open? #f
-            :on-close '(task-close! "nest-eggs-gas") ;; <ap:preserve-this> close so you can easily return back.
+            :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
                 :message (resetter-message mission-retry)
@@ -4943,12 +4941,12 @@
             :name "desert-glide-introduction"
             :when-open (new 'static 'boxed-array :type game-task-event
               (new 'static 'game-task-event
-              :actor (game-task-actor minimap)
-              :action (game-task-action show)
-              :tex (game-task-icon gaticon-32)
-              :scene #f
-              )
-          )
+                :actor (game-task-actor minimap)
+                :action (game-task-action show)
+                :tex (game-task-icon gaticon-119)
+                :scene #f
+                )
+            )
             :flags (game-task-node-flag save-on-life act1)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node temple-climb-resolution)
@@ -4969,6 +4967,7 @@
             :reset #f
             :suck-death-count #xa5
             :command-index #x1b
+            :description (text-id progress-missions-desert-glide)
             :faction-commands '()
             )
           (new 'static 'game-task-node-info
@@ -5098,10 +5097,10 @@
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
                 :action (game-task-action show)
-                :tex (game-task-icon gaticon-142)
+                :tex (game-task-icon gaticon-119)
                 :scene #f
                 )
-              )
+            )
             :flags (game-task-node-flag save-on-life act1)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node desert-glide-resolution)
@@ -5114,13 +5113,14 @@
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtest? (-> *game-info* features) (game-feature gun))
+               (logtesta? (-> *game-info* features) (game-feature gun artifact-invis))
                )
             )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x1b
+            :description (text-id progress-missions-volcano-darkeco)
             :faction-commands '()
             )
           (new 'static 'game-task-node-info
@@ -6196,7 +6196,7 @@
             :open? (lambda ((arg0 game-task-node-info))
               (and (ap-route-spargus-to-monk-temple?)
                    (logtest? (-> *game-info* items) (game-items seal-of-mar))
-                   (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+                   (logtesta? (-> *game-info* features) (game-feature artifact-invis board lightjak lightjak-freeze))
                    )
               )
             :on-close #f
@@ -6398,7 +6398,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'templea
-              :type-to-spawn #f ;; 'task-manager-lightjak-training-freeze <ap:preserve-this> light jak text removed
+              :type-to-spawn 'task-manager-lightjak-training-freeze
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -6847,7 +6847,7 @@
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
                 :action (game-task-action show)
-                :tex (game-task-icon gaticon-152)
+                :tex (game-task-icon gaticon-119)
                 :scene #f
                 )
               )
@@ -6915,7 +6915,7 @@
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
                 :action (game-task-action show)
-                :tex (game-task-icon gaticon-152)
+                :tex (game-task-icon gaticon-119)
                 :scene #f
                 )
               )
@@ -6982,7 +6982,7 @@
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
                 :action (game-task-action show)
-                :tex (game-task-icon gaticon-153)
+                :tex (game-task-icon gaticon-119)
                 :scene #f
                 )
               )
@@ -10405,7 +10405,7 @@
               :final-node (game-task-node nest-hunt-introduction)
               :vehicle-type #x1b
               :intro-delay (seconds 3)
-              :on-complete '(unless (task-closed? "desert-jump-mission-introduction") (talker-spawn "sig001"))
+              :on-complete '(talker-spawn "sig001")
               :on-fail #f
               )
             :borrow '()
@@ -11034,7 +11034,7 @@
               :final-node (game-task-node desert-chase-marauders-get-to-stronghold)
               :vehicle-type #x1b
               :index 8
-              :on-complete #f
+              :on-complete '(talker-spawn "seem003")
               :on-fail #f
               )
             :borrow '((desert-game alias desert copy deschase special))
@@ -13121,7 +13121,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtesta? (-> *game-info* features) (game-feature gun darkjak darkjak-smack lightjak lightjak-swoop))
+               (logtesta? (-> *game-info* features) (game-feature artifact-invis gun darkjak darkjak-smack lightjak lightjak-swoop))
           ) 
             )
             :on-close #f
@@ -13650,7 +13650,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'templea
-              :type-to-spawn #f ;;'task-manager-lightjak-training-swoop <ap:preserve-this> light jak text remove
+              :type-to-spawn 'task-manager-lightjak-training-swoop
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f

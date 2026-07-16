@@ -85,8 +85,8 @@
       )
     (static-taskable-menu-entry
       :task-node (game-task-node desert-catch-lizards-introduction)
-      :event-idx 0
-      :continue "wasdoors-city"
+      :event-idx 2
+      :continue #f
       :text-id (text-id progress-missions-desert-catch-lizards)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node desert-catch-lizards-introduction))
@@ -223,6 +223,14 @@
         )
       :forbid-when (lambda () (task-node-closed? (game-task-node wascity-leaper-race-resolution)))
        )
+    (static-taskable-menu-entry
+      :task-node (game-task-node temple-defend-resolution)
+      :event-idx 0
+      :continue "templed-after-res"
+      :text-id (text-id progress-missions-temple-defend)
+      :allow-when (lambda () (task-node-open? (game-task-node temple-defend-resolution)))
+      :forbid-when (lambda () (task-node-closed? (game-task-node temple-defend-resolution)))
+       )
   )
 )
 (define *ashelin-menu-list*
@@ -267,7 +275,7 @@
     (static-taskable-menu-entry
       :task-node (game-task-node city-blow-tower-introduction)
       :event-idx 0
-      :continue "cty-blow-tower-mission"
+      :continue #f
       :text-id (text-id progress-missions-city-blow-tower)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node city-blow-tower-introduction))
