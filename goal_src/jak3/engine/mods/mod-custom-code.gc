@@ -43,7 +43,8 @@
     )
   )
 
-
+(when *display-sha*
+  (set! *display-sha* #f))
 
 ;; AP Messenger System
 (deftype ap-message (structure)
@@ -51,6 +52,7 @@
    (item-name   string)
    (dir         string)
    (player-name string)
+   (trap?       symbol)
    ))
 
 (deftype ap-message-array (inline-array-class)
@@ -58,7 +60,7 @@
    (messages      ap-message :inline :dynamic)
    ))
 
-(set! (-> ap-message-array heap-base) (the-as uint 64))
+(set! (-> ap-message-array heap-base) (the-as uint 80))
 
 (deftype ap-messenger (process)
   ((both-messages  ap-message-array)
@@ -85,7 +87,8 @@
     (set! (-> self both-messages messages i verb) (new 'process 'string 32 (the string #f)))
     (set! (-> self both-messages messages i item-name) (new 'process 'string 32 (the string #f)))
     (set! (-> self both-messages messages i dir) (new 'process 'string 32 (the string #f)))
-    (set! (-> self both-messages messages i player-name) (new 'process 'string 32 (the string #f))))
+    (set! (-> self both-messages messages i player-name) (new 'process 'string 32 (the string #f)))
+    (set! (-> self both-messages messages i trap?) #f))
   (set! (-> self both-messages target-index) 0)
   (go ap-messenger-show))
 
@@ -105,7 +108,8 @@
       (set! (-> target-array messages i verb) (-> target-array messages (+ i 1) verb))
       (set! (-> target-array messages i item-name) (-> target-array messages (+ i 1) item-name))
       (set! (-> target-array messages i dir) (-> target-array messages (+ i 1) dir))
-      (set! (-> target-array messages i player-name) (-> target-array messages (+ i 1) player-name))))
+      (set! (-> target-array messages i player-name) (-> target-array messages (+ i 1) player-name))
+      (set! (-> target-array messages i trap?) (-> target-array messages (+ i 1) trap?))))
   (if (> (-> target-array target-index) show-size)
     (-! (-> target-array target-index) 1)))
 
@@ -113,16 +117,22 @@
   (let* ((target-array (-> this both-messages))
          (verb (case direction
           (('sent) "SENT")
-          (('recv) "GOT")))
+          (('recv) "GOT")
+          (('found) "FOUND")
+          (('trap) "GOT")))
          (dir (case direction
           (('sent) "TO")
-          (('recv) "FROM"))))
+          (('recv) "FROM")
+          (('found) "")
+          (('trap) "FROM")))
+         (is-trap? (= direction 'trap)))
     (if (= (-> target-array target-index) (-> this max-size))
       (set! (-> target-array target-index) (- (-> this max-size) 1)))
     (set! (-> target-array messages (-> target-array target-index) verb) verb)
     (set! (-> target-array messages (-> target-array target-index) item-name) item-name)
     (set! (-> target-array messages (-> target-array target-index) dir) dir)
     (set! (-> target-array messages (-> target-array target-index) player-name) player-name)
+    (set! (-> target-array messages (-> target-array target-index) trap?) is-trap?)
     (if (< (-> target-array target-index) (- (-> this max-size) 1))
       (+! (-> target-array target-index) 1)))
   (none))
@@ -137,19 +147,26 @@
 (defbehavior draw-messages ap-messenger ((bottom float))
   (dotimes (i (-> self show-size))
     (when (not (string= (-> self both-messages messages i item-name) ""))
-      (draw-message (string-format "~S ~8L~S~0L ~S ~12L~S~0L"
-                    (-> self both-messages messages i verb)
-                    (-> self both-messages messages i item-name)
-                    (-> self both-messages messages i dir)
-                    (-> self both-messages messages i player-name))
-                    bottom i))))
+      (let* ((item (-> self both-messages messages i item-name))
+             (verb (-> self both-messages messages i verb))
+             (dir (-> self both-messages messages i dir))
+             (player (-> self both-messages messages i player-name))
+             (is-trap? (or (-> self both-messages messages i trap?)
+                           (!= -1 (string-position "Trap" item))))
+             (msg (if (string= dir "")
+                    (string-format "~S ~8L~S~0L" verb item)
+                    (if is-trap?
+                      (string-format "~S ~3L~S~0L ~S ~12L~S~0L" verb item dir player)
+                      (string-format "~S ~8L~S~0L ~S ~12L~S~0L" verb item dir player)))))
+        (pc-encode-utf8-string msg *pc-encoded-temp-string*)
+        (draw-message *pc-encoded-temp-string* bottom i)))))
 
 (defstate ap-messenger-show (ap-messenger)
   :enter (behavior ()
     (set! (-> self last-index) (-> self both-messages target-index)))
   :code (behavior ()
     (loop
-      (draw-messages 380.0)
+      (draw-messages 400.0)
       (when (or (paused?) (not (-> *ap-settings* item-messages?)))
         (go ap-messenger-hide))
       (when (!= (-> self both-messages target-index) (-> self last-index))
@@ -178,7 +195,7 @@
              (shift-messages (-> self both-messages) (-> self show-size) (-> self max-size)))
            (go ap-messenger-show))
           (else
-           (draw-messages (+ 380.0 y)))))
+           (draw-messages (+ 400.0 y)))))
       (suspend))))
 
 (defun ap-messenger-run ()

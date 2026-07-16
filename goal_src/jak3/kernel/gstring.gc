@@ -118,7 +118,7 @@
     (let ((s4-0 (length suffix))
           (v1-5 (length str))
           )
-      (if (< s4-0 v1-5)
+      (if (> s4-0 v1-5)
           (return #f)
           )
       (let ((v1-7 (&+ s5-0 (- s4-0 v1-5))))
