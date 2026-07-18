@@ -1667,24 +1667,7 @@
 
   (burningbush-incoming-call #x2172)
 
-  (progress-menu-traps #x2173)
-  (progress-menu-traps-trip #x2174)
-  (progress-menu-traps-slip #x2175)
-  (progress-menu-traps-gravity #x2176)
-  (progress-menu-traps-camera #x2177)
-  (progress-menu-traps-darkness #x2178)
-  (progress-menu-traps-earthquake #x2179)
-  (progress-menu-traps-teleport #x2180)
-  (progress-menu-traps-pacifism #x2181)
-  (progress-menu-traps-health #x2182)
-  (progress-menu-traps-ledge #x2183)
-  (progress-menu-traps-mirror #x2184)
-
-  (progress-menu-traps-ammo #x2185)
-  (progress-menu-traps-dark #x2186)
-  (progress-menu-traps-speed #x2187)
-  (progress-menu-traps-slow #x2188)
-  (progress-menu-traps-hero #x2189)
+  (progress-menu-trap-duration #x2173)
 
   (talk-to-torn #x2190)
   (talk-to-onin #x2191)

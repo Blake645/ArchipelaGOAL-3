@@ -591,106 +591,17 @@ This gives us more freedom to write code how we want.
      ;; (archipelagoal-3-deathlink)
      )
   )
-  (defmacro archipelagoal-3-traps ()
- `(progress-new-generic-link-to-scrolling-page (text-id progress-menu-traps)
-  ;; Jak 1 traps (<ap:todo> tie the enabled/disabled to a boolean to change it on the fly)
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-trip)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-slip)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-gravity)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-camera)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-darkness)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-earthquake)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-teleport)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-pacifism)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-health)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-ledge)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-mirror)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  ;; Jak 2 traps
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-ammo)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-dark)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-speed)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-slow)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))
-  (new 'static 'menu-generic-boolean-option
-    :name (text-id progress-menu-traps-hero)
-    :truthy-text (text-id progress-menu-enabled)
-    :falsey-text (text-id progress-menu-disabled)
-    :get-value-fn (lambda () (nonzero? (-> *ap-settings* trap-duration)))
-    :should-disable? (lambda () #t))))
+(defmacro archipelagoal-3-traps ()
+  '(new 'static 'menu-generic-slider-option
+    :name (text-id progress-menu-trap-duration)
+    :min-value 0.0
+    :max-value 60.0
+    :step 1.0
+    :show-decimal? #f
+    :get-value-fn (lambda () (-> *ap-settings* trap-duration))
+    :on-confirm (lambda ((val float))
+      (set! (-> *ap-settings* trap-duration) val)
+      (ap-settings-update))))
 
     ;; <ap:todo> deathlink will come later, leave out for now
 #|
