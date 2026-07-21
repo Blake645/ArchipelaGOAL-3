@@ -236,9 +236,9 @@
 (define *ashelin-menu-list*
   (new 'static 'boxed-array :type taskable-menu-entry
     (static-taskable-menu-entry
-      :task-node (game-task-node desert-oasis-defense-introduction)
+      :task-node (game-task-node desert-oasis-defense-meeting)
       :event-idx 0
-      :continue "desert-ashelin"
+      :continue #f
       :text-id (text-id progress-missions-desert-oasis-defense)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node desert-oasis-defense-introduction))

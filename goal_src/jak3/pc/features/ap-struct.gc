@@ -695,6 +695,14 @@
   (when (not *ap-settings*)
     (set! *ap-settings* (new 'global 'ap-settings))
     (set! (-> *ap-settings* item-messages?) #t))
+  ;; reset messenger on connect
+  (let ((messenger (the ap-messenger (process-by-name "ap-messenger" *active-pool*))))
+    (when messenger
+      (set! (-> messenger both-messages target-index) 0)
+      (set! (-> messenger last-index) 0)
+      (set! (-> messenger total-received) 0)
+      (dotimes (i (-> messenger max-size))
+        (set! (-> messenger both-messages messages i item-name) ""))))
   (set! (-> *ap-settings* completion-type) (-> options completion-type))
   (set! (-> *ap-settings* completion-value) (-> options completion-value))
   (set! (-> *ap-settings* trap-duration) (-> options trap-duration))

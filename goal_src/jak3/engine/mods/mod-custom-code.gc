@@ -63,11 +63,12 @@
 (set! (-> ap-message-array heap-base) (the-as uint 80))
 
 (deftype ap-messenger (process)
-  ((both-messages  ap-message-array)
-   (show-size      int)
-   (max-size       int)
-   (state-time     time-frame)
-   (last-index     int)
+  ((both-messages   ap-message-array)
+   (show-size       int)
+   (max-size        int)
+   (state-time      time-frame)
+   (last-index      int)
+   (total-received  int)
    )
   (:methods
     (append-messages (_type_ symbol string string) none)
@@ -82,6 +83,7 @@
   (set! (-> self show-size) 3)
   (set! (-> self max-size) 10)
   (set! (-> self last-index) 0)
+  (set! (-> self total-received) 0)
   (set! (-> self both-messages) (new 'process 'ap-message-array (-> self max-size)))
   (dotimes (i (-> self max-size))
     (set! (-> self both-messages messages i verb) (new 'process 'string 32 (the string #f)))
@@ -134,7 +136,8 @@
     (set! (-> target-array messages (-> target-array target-index) player-name) player-name)
     (set! (-> target-array messages (-> target-array target-index) trap?) is-trap?)
     (if (< (-> target-array target-index) (- (-> this max-size) 1))
-      (+! (-> target-array target-index) 1)))
+      (+! (-> target-array target-index) 1))
+    (+! (-> this total-received) 1))
   (none))
 
 (defun draw-message ((message string) (bottom float) (index int))
@@ -162,14 +165,21 @@
         (draw-message *pc-encoded-temp-string* bottom i)))))
 
 (defstate ap-messenger-show (ap-messenger)
-  :enter (behavior ()
-    (set! (-> self last-index) (-> self both-messages target-index)))
   :code (behavior ()
     (loop
-      (draw-messages 400.0)
+      (when (and (not (paused?))
+                 (-> *ap-settings* item-messages?)
+                 (not (eq? (current-level-name) 'wasintro)))
+        (draw-messages 400.0))
       (when (or (paused?) (not (-> *ap-settings* item-messages?)))
         (go ap-messenger-hide))
-      (when (!= (-> self both-messages target-index) (-> self last-index))
+      ;; if messages fit within show window, just update last-index
+      (when (and (<= (-> self total-received) (-> self show-size))
+                 (> (-> self total-received) (-> self last-index)))
+        (set! (-> self last-index) (-> self total-received)))
+      ;; only scroll when we have more messages than show-size
+      (when (and (> (-> self total-received) (-> self last-index))
+                 (> (-> self total-received) (-> self show-size)))
         (go ap-messenger-scroll))
       (suspend))))
 
@@ -185,7 +195,9 @@
 (defstate ap-messenger-scroll (ap-messenger)
   :enter (behavior ()
     (set-time! (-> self state-time))
-    (set! (-> self last-index) (-> self both-messages target-index)))
+    (+! (-> self last-index) 1)
+    (when (> (-> self last-index) (-> self total-received))
+      (set! (-> self last-index) (-> self total-received))))
   :code (behavior ()
     (loop
       (let ((y (/ (the float (- (current-time) (-> self state-time))) 7.5)))
@@ -193,9 +205,12 @@
           ((>= y 14.0)
            (when (> (-> self both-messages target-index) (-> self show-size))
              (shift-messages (-> self both-messages) (-> self show-size) (-> self max-size)))
-           (go ap-messenger-show))
+           (if (> (-> self total-received) (-> self last-index))
+             (go ap-messenger-scroll)
+             (go ap-messenger-show)))
           (else
-           (draw-messages (+ 400.0 y)))))
+           (when (not (eq? (current-level-name) 'wasintro))
+             (draw-messages (+ 400.0 y))))))
       (suspend))))
 
 (defun ap-messenger-run ()

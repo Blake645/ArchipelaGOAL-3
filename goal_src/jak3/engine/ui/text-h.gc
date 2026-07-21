@@ -1668,6 +1668,7 @@
   (burningbush-incoming-call #x2172)
 
   (progress-menu-trap-duration #x2173)
+  (progress-menu-bbush-cost #x2174)
 
   (talk-to-torn #x2190)
   (talk-to-onin #x2191)
