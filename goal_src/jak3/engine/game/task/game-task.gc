@@ -7101,8 +7101,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtesta? (-> *game-info* items) (game-items seal-of-mar))
-               (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+               (logtest? (-> *game-info* features) (game-feature board))
                (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-1))
@@ -7291,8 +7290,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtest? (-> *game-info* items) (game-items seal-of-mar))
-               (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+               (logtest? (-> *game-info* features) (game-feature board))
                (or (logtest? (-> *game-info* features) (game-feature gun-yellow-1))
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-1))
@@ -23058,8 +23056,14 @@
             :on-open #f
             :manager #f
             :borrow '()
+            ;; <ap:preserve-this> require city-port-attack to be fully complete first - the two
+            ;; variants share the same lctypatk dead-pool and cannot be active at the same time.
+            ;; the normal parent-node dependency on city-port-attack-resolution doesn't enforce
+            ;; this by itself since it's a cross-task parent (see game-task-node-info-method-12).
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-spargus-to-port?)
+          (and (ap-route-spargus-to-port?)
+               (task-node-closed? (game-task-node city-port-attack-resolution))
+               )
             )
             :on-close #f
             :reset #f

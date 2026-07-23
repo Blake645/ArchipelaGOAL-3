@@ -228,7 +228,16 @@
     (when messenger
       (append-messages messenger dir item player)))
   (none))
-
+  
+(defun ap-messenger-reset! ()
+  (let ((messenger (the ap-messenger (process-by-name "ap-messenger" *active-pool*))))
+    (when messenger
+      (set! (-> messenger both-messages target-index) 0)
+      (set! (-> messenger last-index) 0)
+      (set! (-> messenger total-received) 0)
+      (dotimes (i (-> messenger max-size))
+        (set! (-> messenger both-messages messages i item-name) ""))))
+  (none))
 (defun load-levels-in-bubble! ((x float) (y float) (z float) (w float) (lev0 symbol) (lev1 symbol) (lev2 symbol))
   (when (in-bubble-m? x y z w)
     (when (or (!= (level-status? *level* lev0 #f) 'active) (!= (level-status? *level* lev1 #f) 'active) (!= (level-status? *level* lev2 #f) 'active))
@@ -724,11 +733,12 @@
       (none)
       )
 
-    (defun runs-on-jak-spawn ()
-      ;; Code here runs every time jak spawns (loading a file new game or death)   
-
-      (none)
-      )
+(defun runs-on-jak-spawn ()
+  (when (and (not (eq? (current-level-name) 'wasintro))
+             (zero? (-> *ap-info-jak3* initial-replay-done)))
+    (set! (-> *ap-info-jak3* needs-item-replay) (the-as uint8 1))
+    (set! (-> *ap-info-jak3* initial-replay-done) (the-as uint8 1)))
+  (none))
 
     (defun runs-on-jak-death ((death-event symbol))
       ;; <ap:todo> deathlink will come later, leave it out for now
