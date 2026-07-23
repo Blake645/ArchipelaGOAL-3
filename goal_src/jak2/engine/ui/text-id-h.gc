@@ -928,25 +928,7 @@
   
   (burningbush-incoming-call #x2163)
 
-  (progress-menu-traps #x2164)
-  (progress-menu-traps-trip #x2165)
-  (progress-menu-traps-slip #x2166)
-  (progress-menu-traps-gravity #x2167)
-  (progress-menu-traps-camera #x2168)
-  (progress-menu-traps-darkness #x2169)
-  (progress-menu-traps-earthquake #x2170)
-  (progress-menu-traps-teleport #x2171)
-  (progress-menu-traps-pacifism #x2172)
-  (progress-menu-traps-health #x2173)
-  (progress-menu-traps-ledge #x2174)
-  (progress-menu-traps-mirror #x2175)
-
-  (progress-menu-traps-high-alert #x2176)
-  (progress-menu-traps-ammo #x2177)
-  (progress-menu-traps-dark #x2178)
-  (progress-menu-traps-speed #x2179)
-  (progress-menu-traps-slow #x2180)
-  (progress-menu-traps-hero #x2181)
+  (progress-menu-trap-duration #x2164)
   
   ;; destination names text
   (caspad-name #x10000)

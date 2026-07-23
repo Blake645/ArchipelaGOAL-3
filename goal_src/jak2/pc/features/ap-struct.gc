@@ -1,6 +1,9 @@
 ;;-*-Lisp-*-
 (in-package goal)
 
+;; <ap:note> PLEASE COME BACK TO THIS LATER
+;; (define-extern *ap-onin-game* handle)
+
 (define *ap-info-jak2* (new 'static 'ap-info-jak2))
 (pc-get-archipelago-struct)
 
@@ -321,7 +324,7 @@
       (send-event *target* 'get-pickup (pickup-type ammo-blue) 10.0)
      )
     (('ammo-dark) ;; dark ammo filler item
-      (sound-play "ammo-pickup") ;; vulcan fury filler item
+      (sound-play "ammo-pickup")
       (send-event *target* 'get-pickup (pickup-type ammo-dark) 1.0)
      )
     )
@@ -329,38 +332,21 @@
   #t
   )
 
-;; <ap:todo> deathlink will come later, leave this out for now
+;; <ap:todo> deathlink will come later, leave this out for now (PLEASE COME BACK TO TEST THIS LATER)
 #|
 (defun ap-deathlink-received! ((chosen-death symbol))
-  ;; <note> if you're in onin's game, whack a metal, the gun courses, or a special mission (mech, turret, races, etc) retry/fail immediately. otherwise, kill jak or fail mission
-  (if (or (task-node-open? (game-task-node city-play-onin-game-resolution))
-          (task-node-open? (game-task-node city-whack-resolution))
-          (task-node-open? (game-task-node city-red-gun-training-resolution))
-          (task-node-open? (game-task-node city-yellow-gun-training-resolution))
-          (task-node-open? (game-task-node drill-eggs-eggs-2))
-          (task-node-open? (game-task-node drill-eggs-resolution))
-          (task-node-open? (game-task-node drill-ship-resolution))
-          (task-node-open? (game-task-node ruins-mech-break-wall-1))
-          (task-node-open? (game-task-node ruins-mech-move-block-1))
-          (task-node-open? (game-task-node ruins-mech-throw-block-1))
-          (task-node-open? (game-task-node ruins-mech-resolution))
-          (task-node-open? (game-task-node drill-mech-started-smashing))
-          (task-node-open? (game-task-node drill-mech-smash-consoles))
-          (task-node-open? (game-task-node drill-mech-resolution))
-          (task-node-open? (game-task-node under-mech-resolution))
-          (task-node-open? (game-task-node stadium-race-class3-race))
-          (task-node-open? (game-task-node stadium-race-class3-resolution))
-          (task-node-open? (game-task-node stadium-race-class2-race))
-          (task-node-open? (game-task-node stadium-race-class2-resolution))
-          (task-node-open? (game-task-node stadium-race-class1-race))
-          (task-node-open? (game-task-node stadium-race-class1-resolution))
-          (task-node-open? (game-task-node city-errol-challenge-race))
-          (task-node-open? (game-task-node city-errol-challenge-resolution)))
-          (restart-mission))        
-      (send-event *target* 'get-pickup (pickup-type health) -8.0)
-      (send-event *target* 'attack #f (static-attack-info ((deathlink-death #t) (mode chosen-death) (vector (new 'static 'vector :y (meters 1) :w 1.0)) (angle 'up) (control 1.0))))#t)
-|# 
 
+  (let ((onin-npc (process-by-ename "onin-npc-1")))
+
+    (format #t "ONIN NPC: ~A\n" onin-npc)
+
+    (if onin-npc
+        (let ((child (-> onin-npc child)))
+          (format #t "ONIN CHILD: ~A\n" child))
+        )
+
+    #t))
+|#
 (defun ap-trap-received! ((trap symbol))
   (when (and (> (-> *ap-info-jak2* trap-duration) 0.0)
              (task-closed? "fortress-escape-start")
@@ -608,7 +594,7 @@
 
 (defun ap-settings-update ()
   ;; <ap:todo> deathlink will come later, leave it out for now
-  ;; (set! (-> *ap-info-jak2* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
+  (set! (-> *ap-info-jak2* deathlink-enabled) (if (-> *ap-settings* deathlink?) 1 0))
   (set! (-> *ap-info-jak2* trap-duration) (-> *ap-settings* trap-duration))
   (set! (-> *ap-info-jak2* completion-goal-type) (the-as ap-completion-type (-> *ap-settings* completion-type)))
   (set! (-> *ap-info-jak2* completion-goal-value) (-> *ap-settings* completion-value))
