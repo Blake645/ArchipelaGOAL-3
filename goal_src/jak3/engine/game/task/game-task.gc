@@ -8814,7 +8814,7 @@
             :task (game-task city-destroy-grid)
             :name "city-destroy-grid-resolution"
             :when-open #f
-            :flags (game-task-node-flag close-task set-task-mask exclusive act2)
+            :flags (game-task-node-flag close-task set-task-mask act2)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node city-destroy-grid-introduction)
               (game-task-node none)
@@ -11316,6 +11316,7 @@
           (and (ap-route-port-to-metal-head-section?)
                (logtesta? (-> *game-info* items) (game-items artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator))
                (logtest? (-> *game-info* features) (game-feature board))
+               (task-node-closed? (game-task-node forest-kill-plants-resolution))
           )
             )
             :on-close #f
@@ -12147,7 +12148,7 @@
                 :scene #f
                 )
               )
-            :flags (game-task-node-flag auto-close abs-task-mask save-on-life act2)
+            :flags (game-task-node-flag abs-task-mask save-on-life act2)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node factory-sky-battle-resolution)
               (game-task-node none)
@@ -12163,6 +12164,7 @@
           (and  (ap-route-port-to-hq?)
                 (logtest? (-> *game-info* items) (game-items cypher-gliph))
                 (logtest? (-> *game-info* features) (game-feature gun))
+                (task-node-closed? (game-task-node factory-sky-battle-resolution))
           )
             )
             :on-close #f
@@ -12997,6 +12999,7 @@
           (and  (ap-route-port-to-hq?)
                 (logtest? (-> *game-info* items) (game-items cypher-gliph))
                 (logtest? (-> *game-info* features) (game-feature gun))
+                (task-node-closed? (game-task-node factory-assault-resolution))
           )
             )
             :on-close #f
@@ -13948,6 +13951,7 @@
           (and (ap-route-port-to-metal-head-section?)
                 (logtesta? (-> *game-info* items) (game-items artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
                 (logtest? (-> *game-info* features) (game-feature gun))
+                (task-node-closed? (game-task-node forest-ring-chase-resolution))
                 )
               )
             :on-close #f
@@ -14109,6 +14113,7 @@
           (and (ap-route-port-to-metal-head-section?)
                 (logtesta? (-> *game-info* items) (game-items artifact-holocube artifact-av-reflector artifact-av-prism artifact-av-generator artifact-av-map))
                 (logtest? (-> *game-info* features) (game-feature gun))
+                (task-node-closed? (game-task-node forest-turn-on-machine-resolution))
                 )
               )
             :on-close #f
@@ -14786,6 +14791,7 @@
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
+
                 )
               )
             :on-close #f
@@ -14881,6 +14887,7 @@
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
+               (task-node-closed? (game-task-node palace-ruins-attack-resolution))
                 )
               )
             :on-close #f
@@ -14971,6 +14978,7 @@
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
+               (task-node-closed? (game-task-node comb-wild-ride-resolution))
                 )
               )
             :on-close #f
@@ -15168,6 +15176,7 @@
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
+               (task-node-closed? (game-task-node precursor-destroy-ship-resolution))
                 )
             )
             :on-close #f

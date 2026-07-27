@@ -155,9 +155,11 @@
              (dir (-> self both-messages messages i dir))
              (player (-> self both-messages messages i player-name))
              (is-trap? (or (-> self both-messages messages i trap?)
-                           (!= -1 (string-position "Trap" item))))
+                           (!= -1 (string-position "TRAP" item))))
              (msg (if (string= dir "")
-                    (string-format "~S ~8L~S~0L" verb item)
+                    (if is-trap?
+                      (string-format "~S ~3L~S~0L" verb item)
+                      (string-format "~S ~8L~S~0L" verb item))
                     (if is-trap?
                       (string-format "~S ~3L~S~0L ~S ~12L~S~0L" verb item dir player)
                       (string-format "~S ~8L~S~0L ~S ~12L~S~0L" verb item dir player)))))
@@ -419,6 +421,15 @@
               (when (task-closed? "city-start-resolution") (want-display 'towera #f))
             )
         )
+      )
+    )
+      (let ((region-1757 (region-lookup-by-id 1757)))
+        (when region-1757
+          (set! (-> region-1757 on-enter) 
+            '(begin 
+              (when (task-open? "tower-destroy-introduction") (task-close! "tower-destroy-introduction") (want-sound 'tower1 'tower2 'tower3))
+            )
+          )
       )
     )
 ;; monk temple

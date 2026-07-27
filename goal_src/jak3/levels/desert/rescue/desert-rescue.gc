@@ -2416,8 +2416,8 @@
     (until (time-elapsed? (-> self state-time) (seconds 1.5))
       (suspend)
       )
-    (send-event self 'complete)
     (task-node-close! (game-task-node desert-rescue-resolution) 'event)
+    (send-event self 'complete)
     )
   )
 

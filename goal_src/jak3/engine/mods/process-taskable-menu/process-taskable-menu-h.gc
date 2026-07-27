@@ -126,7 +126,7 @@
     (static-taskable-menu-entry
       :task-node (game-task-node desert-artifact-race-1-introduction)
       :event-idx 0
-      :continue "wasdoors-city"
+      :continue #f
       :text-id (text-id progress-missions-desert-artiface-race-1)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node desert-artifact-race-1-introduction))
@@ -251,7 +251,7 @@
     (static-taskable-menu-entry
       :task-node (game-task-node city-protect-hq-introduction)
       :event-idx 0
-      :continue "ctyslumc-freehq-exit"
+      :continue #f
       :text-id (text-id progress-missions-city-protect-hq)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node city-protect-hq-introduction))
@@ -461,6 +461,19 @@
           )
         :forbid-when (lambda () (task-node-closed? (game-task-node sewer-met-hum-resolution)))
          )
+      (static-taskable-menu-entry
+        :task-node (game-task-node temple-defend-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-temple-defend)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node temple-defend-introduction))
+              (task-node-open? (game-task-node temple-defend-talk-box))
+              (task-node-open? (game-task-node temple-defend-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node temple-defend-resolution)))
+         )
     )
   )
   (define *vin-menu-list*
@@ -476,6 +489,22 @@
               )
           )
         :forbid-when (lambda () (task-node-closed? (game-task-node city-power-game-resolution)))
+         )
+    )
+  )
+  (define *veger-menu-list*
+    (new 'static 'boxed-array :type taskable-menu-entry
+      (static-taskable-menu-entry
+        :task-node (game-task-node mine-boss-introduction)
+        :event-idx 0
+        :continue #f
+        :text-id (text-id progress-missions-mine-boss)
+        :allow-when (lambda ()
+          (or (task-node-open? (game-task-node mine-boss-introduction))
+              (task-node-open? (game-task-node mine-boss-resolution))
+              )
+          )
+        :forbid-when (lambda () (task-node-closed? (game-task-node mine-boss-resolution)))
          )
     )
   )

@@ -772,7 +772,7 @@
                   )
                 (1111 (fadeout (frame-time-30 10)))
                 (10000
-                  (send-event self 'user-data-set! (task-closed? "temple-defend-introduction"))
+                  (send-event self 'user-data-set! (task-open? "temple-defend-introduction"))
                   (task-close! "temple-defend-introduction")
                   )
                 )

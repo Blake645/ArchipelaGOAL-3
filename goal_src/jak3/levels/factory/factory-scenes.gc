@@ -428,7 +428,7 @@
              )
            )
       (595 (fadeout (frame-time-30 20)))
-      (10000 (task-close! "factory-sky-battle-resolution"))
+      (10000 (task-close! "factory-sky-battle-resolution") (task-close! "factory-assault-introduction"))
       )
     :cut-list '(141)
     :wait-ground-time (seconds 1)
