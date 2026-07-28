@@ -694,9 +694,6 @@
   )
 
 (defun ap-setup-options! ((options ap-seed-options))
-  (when (not *ap-settings*)
-    (set! *ap-settings* (new 'global 'ap-settings))
-    (set! (-> *ap-settings* item-messages?) #t))
   (ap-messenger-reset!)
   (set! (-> *ap-info-jak3* needs-item-replay) (the-as uint8 0))
   (set! (-> *ap-info-jak3* initial-replay-done) (the-as uint8 0))

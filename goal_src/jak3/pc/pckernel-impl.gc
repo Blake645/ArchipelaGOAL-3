@@ -133,7 +133,10 @@
   ((version              uint64)
    (deathlink?           symbol)
    (item-messages?       symbol)
-   (bbush-cost           float)
+   (bbush-cost-get-to    float)
+   (bbush-cost-race      float)
+   (bbush-cost-other     float)
+   (randomize-bbush      uint8)
    (trap-duration        float)
    (completion-value     uint8)
    (completion-type      uint8)
@@ -253,6 +256,22 @@
     (set! (-> obj controller-swap-r1-r2?) #f)
     )
   0)
+
+(defmethod reset ap-settings
+  ((obj ap-settings))
+  "Set the default settings for archipelago"
+  (format 0 "Resetting archipelago settings~%")
+  (set! (-> obj version) 1)
+  (set! (-> obj deathlink?) #f)
+  (set! (-> obj item-messages?) #t)
+  (set! (-> obj bbush-cost-get-to) 4.0)
+  (set! (-> obj bbush-cost-race) 8.0)
+  (set! (-> obj bbush-cost-other) 12.0)
+  (set! (-> obj randomize-bbush) 0)
+  (set! (-> obj trap-duration) 30.0)
+  (set! (-> obj completion-type) 1)
+  (set! (-> obj completion-value) 60)
+  (none))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

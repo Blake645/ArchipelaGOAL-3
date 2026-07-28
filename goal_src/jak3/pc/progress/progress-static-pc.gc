@@ -587,7 +587,9 @@ This gives us more freedom to write code how we want.
 (defmacro game-options-pc-archipelagoal-3 ()
   `(progress-new-generic-link-to-scrolling-page (text-id progress-menu-archipelagoal-3)
      (archipelagoal-3-traps)
-     ;(archipelagoal-3-bbush-cost)
+     (archipelagoal-3-bbush-cost-get-to)
+     (archipelagoal-3-bbush-cost-race)
+     (archipelagoal-3-bbush-cost-other)
      ;; <ap:todo> deathlink will come later, leave out for now
      ;; (archipelagoal-3-deathlink)
      )
@@ -602,19 +604,44 @@ This gives us more freedom to write code how we want.
     :get-value-fn (lambda () (-> *ap-settings* trap-duration))
     :on-confirm (lambda ((val float))
       (set! (-> *ap-settings* trap-duration) val)
-      (ap-settings-update))))
+      (ap-settings-update)
+      (ap-settings-save))))
 
-#|(defmacro archipelagoal-3-bbush-cost ()
+(defmacro archipelagoal-3-bbush-cost-get-to ()
   '(new 'static 'menu-generic-slider-option
-    :name (text-id progress-menu-bbush-cost)
+    :name (text-id progress-menu-bbush-cost-get-to)
     :min-value 0.0
-    :max-value 100.0
+    :max-value 500.0
     :step 1.0
     :show-decimal? #t
-    :get-value-fn (lambda () (-> *ap-settings* bbush-cost))
+    :get-value-fn (lambda () (-> *ap-settings* bbush-cost-get-to))
     :on-confirm (lambda ((val float))
-      (set! (-> *ap-settings* bbush-cost) val)
-      (ap-settings-update))))|#
+      (set! (-> *ap-settings* bbush-cost-get-to) val)
+      (ap-settings-save))))
+
+(defmacro archipelagoal-3-bbush-cost-race ()
+  '(new 'static 'menu-generic-slider-option
+    :name (text-id progress-menu-bbush-cost-race)
+    :min-value 0.0
+    :max-value 500.0
+    :step 1.0
+    :show-decimal? #t
+    :get-value-fn (lambda () (-> *ap-settings* bbush-cost-race))
+    :on-confirm (lambda ((val float))
+      (set! (-> *ap-settings* bbush-cost-race) val)
+      (ap-settings-save))))
+
+(defmacro archipelagoal-3-bbush-cost-other ()
+  '(new 'static 'menu-generic-slider-option
+    :name (text-id progress-menu-bbush-cost-other)
+    :min-value 0.0
+    :max-value 500.0
+    :step 1.0
+    :show-decimal? #t
+    :get-value-fn (lambda () (-> *ap-settings* bbush-cost-other))
+    :on-confirm (lambda ((val float))
+      (set! (-> *ap-settings* bbush-cost-other) val)
+      (ap-settings-save))))
     ;; <ap:todo> deathlink will come later, leave out for now
 #|
 (defmacro archipelagoal-3-deathlink ()
