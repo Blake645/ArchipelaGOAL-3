@@ -611,7 +611,7 @@ This gives us more freedom to write code how we want.
   '(new 'static 'menu-generic-slider-option
     :name (text-id progress-menu-bbush-cost-get-to)
     :min-value 0.0
-    :max-value 500.0
+    :max-value 100.0
     :step 1.0
     :show-decimal? #t
     :get-value-fn (lambda () (-> *ap-settings* bbush-cost-get-to))
@@ -623,7 +623,7 @@ This gives us more freedom to write code how we want.
   '(new 'static 'menu-generic-slider-option
     :name (text-id progress-menu-bbush-cost-race)
     :min-value 0.0
-    :max-value 500.0
+    :max-value 100.0
     :step 1.0
     :show-decimal? #t
     :get-value-fn (lambda () (-> *ap-settings* bbush-cost-race))
@@ -635,7 +635,7 @@ This gives us more freedom to write code how we want.
   '(new 'static 'menu-generic-slider-option
     :name (text-id progress-menu-bbush-cost-other)
     :min-value 0.0
-    :max-value 500.0
+    :max-value 100.0
     :step 1.0
     :show-decimal? #t
     :get-value-fn (lambda () (-> *ap-settings* bbush-cost-other))

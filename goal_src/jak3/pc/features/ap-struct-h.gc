@@ -28,6 +28,10 @@
     (completion-type      uint8)
     (completion-value     uint8)
     (jak-is-jak2          uint8)
+    (randomize-bbush      uint8)
+    (bbush-cost-get-to    float)
+    (bbush-cost-race      float)
+    (bbush-cost-other     float)
     ))
 
 (deftype ap-info-jak3 (structure)

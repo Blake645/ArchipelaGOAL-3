@@ -701,12 +701,16 @@
   (set! (-> *ap-settings* completion-value) (-> options completion-value))
   (set! (-> *ap-settings* trap-duration) (-> options trap-duration))
   (set! (-> *ap-settings* jak-is-jak2) (-> options jak-is-jak2))
+  (set! (-> *ap-settings* randomize-bbush) (-> options randomize-bbush))
+  (when (nonzero? (-> options randomize-bbush))
+    (set! (-> *ap-settings* bbush-cost-get-to) (-> options bbush-cost-get-to))
+    (set! (-> *ap-settings* bbush-cost-race) (-> options bbush-cost-race))
+    (set! (-> *ap-settings* bbush-cost-other) (-> options bbush-cost-other)))
   (when (nonzero? (-> options jak-is-jak2))
     (logior! (-> *game-info* secrets) (game-secrets jak-is-jak2))
     (when *target*
       (send-event *target* 'loading)))
   #t)
-
 (defun ap-settings-update ()
   (when *ap-settings*
     (set! (-> *ap-info-jak3* trap-duration) (-> *ap-settings* trap-duration))

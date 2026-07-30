@@ -1332,7 +1332,17 @@
       (suspend)
       )
     (suspend)
-    (let ((gp-0 (-> (get-current-task-event (-> self task)) tex)))
+    (let ((gp-0 (if (and *ap-settings* (nonzero? (-> *ap-settings* randomize-bbush)))
+                  (let ((task-name (-> *game-info* sub-task-list (-> self task current-node) name)))
+                    (cond
+                      ((string-prefix= "city-bbush-get-to" task-name)
+                       (the int (-> *ap-settings* bbush-cost-get-to)))
+                      ((or (string-prefix= "city-bbush-ring" task-name)
+                           (string-prefix= "city-bbush-spirit" task-name))
+                       (the int (-> *ap-settings* bbush-cost-race)))
+                      (else
+                       (the int (-> *ap-settings* bbush-cost-other)))))
+                  (-> (get-current-task-event (-> self task)) tex))))
       (format 0 "skull-cost: ~d~%" gp-0)
       (set! (-> *target* game gem) (- (-> *target* game gem) (the float gp-0)))
       (until (time-elapsed? (-> self state-time) (* 45 (the-as int gp-0)))
@@ -1394,7 +1404,17 @@
          (let ((s4-2
                  (new 'stack 'font-context *font-default-matrix* 32 300 0.0 (font-color default) (font-flags shadow kerning))
                  )
-               (s5-1 (-> gp-0 tex))
+               (s5-1 (if (and *ap-settings* (nonzero? (-> *ap-settings* randomize-bbush)))
+                  (let ((task-name (-> *game-info* sub-task-list (-> self task current-node) name)))
+                    (cond
+                      ((string-prefix= "city-bbush-get-to" task-name)
+                       (the int (-> *ap-settings* bbush-cost-get-to)))
+                      ((or (string-prefix= "city-bbush-ring" task-name)
+                       (string-prefix= "city-bbush-spirit" task-name))
+                        (the int (-> *ap-settings* bbush-cost-race)))
+             (else
+              (the int (-> *ap-settings* bbush-cost-other)))))
+         (-> gp-0 tex)))
                )
            (set! (-> s4-2 flags) (font-flags shadow kerning large))
            (set-width! s4-2 340)
