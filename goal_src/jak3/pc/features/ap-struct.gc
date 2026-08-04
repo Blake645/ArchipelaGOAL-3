@@ -599,20 +599,26 @@
                     (send-event *target* 'get-pickup (pickup-type ammo-yellow) curr-yellow)
                     (send-event *target* 'get-pickup (pickup-type ammo-blue) curr-blue)
                     (send-event *target* 'get-pickup (pickup-type ammo-dark) curr-dark)))))
-        (('anger-issues) ;; forced dark jak trap
-          (process-spawn-function process
-            (lambda :behavior process ()
-              (stack-size-set! (-> self main-thread) 512)
-              (let ((had-darkjak (logtest? (-> *game-info* features) (game-feature darkjak))))
-              (logior! (-> *game-info* features) (game-feature darkjak))
-              (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
-              (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
-              (while (logtest? (-> *target* control current-surface flags) (surface-flag air))
-                (suspend)
-              )
-              (send-event *target* 'change-mode 'normal)
-            (when (not had-darkjak)
-                (logclear! (-> *game-info* features) (game-feature darkjak)))))))
+(('anger-issues) ;; forced dark jak trap
+  (process-spawn-function process
+    (lambda :behavior process ()
+      (stack-size-set! (-> self main-thread) 512)
+      (let ((had-darkjak (logtest? (-> *game-info* features) (game-feature darkjak))))
+        (logior! (-> *game-info* features) (game-feature darkjak))
+        (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
+        (let ((end-time (+ (current-time) (the int (seconds (-> *ap-info-jak3* trap-duration))))))
+          (while (< (current-time) end-time)
+            ;; keep dark eco meter full so it never auto-depletes and exits
+            (set! (-> *game-info* eco-pill-dark) (-> *FACT-bank* eco-pill-dark-max-default))
+            ;; if player exited (dark focus flag cleared), force back in
+            (when (not (focus-test? *target* dark))
+              (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active)))
+            (suspend)))
+        (while (logtest? (-> *target* control current-surface flags) (surface-flag air))
+          (suspend))
+        (send-event *target* 'change-mode 'normal)
+        (when (not had-darkjak)
+          (logclear! (-> *game-info* features) (game-feature darkjak)))))))
 (('no-light-eco) ;; no light eco trap
   (process-spawn-function process
     (lambda :behavior process ()

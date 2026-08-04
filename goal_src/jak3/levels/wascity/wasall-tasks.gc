@@ -642,7 +642,8 @@
   (let ((t1-0 4))
     (set-setting! 'vehicles 'set (shr t1-0 32) t1-0)
     )
-  (set-setting! 'exclusive-task-list (new 'static 'boxed-array :type uint8 #x36 #x7) 0.0 0)
+    ;;<ap:preserve-this> commented this out to make it not exclusive, so players don't have to do this mission when it's open to do other missions.
+  ;; (set-setting! 'exclusive-task-list (new 'static 'boxed-array :type uint8 #x36 #x7) 0.0 0)
   (set! (-> this sig-rider-handle) (the-as handle #f))
   ((method-of-type task-manager set-time-limit) this)
   (none)

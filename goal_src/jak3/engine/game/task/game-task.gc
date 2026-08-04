@@ -6869,7 +6869,6 @@
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-1))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-2))
-                   (logtest? (-> *game-info* features) (game-feature gun-blue-3))
                    )
                )
               )
@@ -7106,7 +7105,6 @@
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-1))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-2))
-                   (logtest? (-> *game-info* features) (game-feature gun-blue-3))
                    )
                )
               )
@@ -7295,7 +7293,6 @@
                    (logtest? (-> *game-info* features) (game-feature gun-yellow-2))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-1))
                    (logtest? (-> *game-info* features) (game-feature gun-blue-2))
-                   (logtest? (-> *game-info* features) (game-feature gun-blue-3))
                    )
                )
               )
@@ -20677,7 +20674,9 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-spargus-to-desert?)
+          (and (ap-route-spargus-to-desert?)
+               (task-node-closed? (game-task-node nest-eggs-gas))
+               )
             )
             :on-close #f
             :reset #f
