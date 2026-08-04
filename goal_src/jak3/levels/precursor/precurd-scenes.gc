@@ -1198,7 +1198,11 @@
               :command-list '((10000 (apply ,(lambda :behavior scene-player
                                  ()
                                  (if (-> self aborted?)
-                                     (task-close! "desert-final-boss-introduction")
+                                     (begin
+                                       (task-close! "precursor-destroy-ship-resolution")
+                                       (task-close! "desert-final-boss-introduction")
+                                       )                                      
+                                     (task-close! "precursor-destroy-ship-resolution")
                                      )
                                  (none)
                                  )
