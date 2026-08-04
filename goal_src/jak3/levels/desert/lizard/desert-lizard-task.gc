@@ -359,7 +359,7 @@
       ;; poll corral proximity directly instead of relying on region-1266 send-event
       (when (and *target*
            (focus-test? *target* flut)
-           (> (-> self lizard-count) 0)
+           (> (-> self lizards-left) 0)
            (>= (-> self corral-pos r) (vector-vector-xz-distance (target-pos 0) (-> self corral-pos)))
            )
   (set! (-> self lizard-in-corral) #t)
@@ -578,6 +578,7 @@
   )
 
 (defmethod on-fail ((this task-manager-desert-catch-lizards) (arg0 symbol))
+  (set! (-> this lizard-in-corral) #f)
   (case arg0
     (('death)
      (let ((v1-1 (rand-vu-int-count 5)))
@@ -816,6 +817,7 @@
      v0-0
      )
     (('restart)
+     (set! (-> this lizard-in-corral) #f)
      (on-restart this)
      ((method-of-type task-manager taskman-event-handler) this arg0 arg1 arg2 arg3)
      )

@@ -399,6 +399,16 @@
     (w-parking-spot-method-23 spot)
   )
 )
+;; desert
+      (let ((region-1203 (region-lookup-by-id 1203)))
+        (when region-1203
+          (set! (-> region-1203 on-enter) 
+            '(begin 
+              (when (task-open? "desert-artifact-race-1-race") (talker-spawn "vehic03"))
+            )
+          )
+        )
+      )
 ;; mhacity/tower
       (let ((region-1280 (region-lookup-by-id 1280)))
         (when region-1280

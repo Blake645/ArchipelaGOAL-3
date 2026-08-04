@@ -8800,7 +8800,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-metal-head-section?)
-                 (logtest? (-> *game-info* features) (game-feature gun))
+                 (logtesta? (-> *game-info* features) (game-feature gun pass-port-inda))
                  )
               )
             :on-close #f
