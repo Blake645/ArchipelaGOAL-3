@@ -2,6 +2,8 @@
 (in-package goal)
 
 (define-extern ap-messenger-reset! (function none))
+(declare-type was-pre-game process-drawable)
+(define-extern *was-pre-game* (pointer was-pre-game))
 
 (define *ap-info-jak3* (new 'static 'ap-info-jak3))
 (pc-get-archipelago-struct)
@@ -433,35 +435,43 @@
   )
 
 ;; <ap:todo> deathlink will come later, leave this out for now
-#|
+
 (defun ap-deathlink-received! ((chosen-death symbol))
-  (if (or (task-node-open? (game-task-node city-play-onin-game-resolution))
-          (task-node-open? (game-task-node city-whack-resolution))
-          (task-node-open? (game-task-node city-red-gun-training-resolution))
-          (task-node-open? (game-task-node city-yellow-gun-training-resolution))
-          (task-node-open? (game-task-node drill-eggs-eggs-2))
-          (task-node-open? (game-task-node drill-eggs-resolution))
-          (task-node-open? (game-task-node drill-ship-resolution))
-          (task-node-open? (game-task-node ruins-mech-break-wall-1))
-          (task-node-open? (game-task-node ruins-mech-move-block-1))
-          (task-node-open? (game-task-node ruins-mech-throw-block-1))
-          (task-node-open? (game-task-node ruins-mech-resolution))
-          (task-node-open? (game-task-node drill-mech-started-smashing))
-          (task-node-open? (game-task-node drill-mech-smash-consoles))
-          (task-node-open? (game-task-node drill-mech-resolution))
-          (task-node-open? (game-task-node under-mech-resolution))
-          (task-node-open? (game-task-node stadium-race-class3-race))
-          (task-node-open? (game-task-node stadium-race-class3-resolution))
-          (task-node-open? (game-task-node stadium-race-class2-race))
-          (task-node-open? (game-task-node stadium-race-class2-resolution))
-          (task-node-open? (game-task-node stadium-race-class1-race))
-          (task-node-open? (game-task-node stadium-race-class1-resolution))
-          (task-node-open? (game-task-node city-errol-challenge-race))
-          (task-node-open? (game-task-node city-errol-challenge-resolution)))
-          (restart-mission))
-      (send-event *target* 'get-pickup (pickup-type health) -8.0)
-      (send-event *target* 'attack #f (static-attack-info ((deathlink-death #t) (mode chosen-death) (vector (new 'static 'vector :y (meters 1) :w 1.0)) (angle 'up) (control 1.0))))#t)
-|#
+  (cond
+    ((and *target* (= (send-event *target* 'query 'mode) 'turret))
+     (send-event (handle->process (-> (the target *target*) turret handle)) 'deathlink))
+    ((and *was-pre-game*
+          (nonzero? *was-pre-game*)
+          (let ((proc (ppointer->process *was-pre-game*)))
+            (and proc (= (-> proc state name) 'active))))
+     (send-event (ppointer->process *was-pre-game*) 'deathlink))
+    ((and (!= (-> *game-info* current-vehicle) (vehicle-type-u8 vt27))
+          (handle->process (-> *vehicle-info* handle-by-vehicle-type (-> *game-info* current-vehicle))))
+     (send-event
+      (handle->process (-> *vehicle-info* handle-by-vehicle-type (-> *game-info* current-vehicle)))
+      'attack
+      #f
+      (static-attack-info
+       :mask (vehicle-impulse-factor)
+       ((id (new-attack-id))
+        (damage 100.0)
+        (vehicle-damage-factor 1.0)
+        (vehicle-impulse-factor 1.0)
+        (mode 'death)))))
+    (else
+     (send-event
+      *target*
+      'attack
+      #f
+      (static-attack-info
+       :mask (vehicle-impulse-factor)
+       ((id (new-attack-id))
+        (damage 2.0)
+        (vehicle-damage-factor 1.0)
+        (vehicle-impulse-factor 1.0)
+        (mode (or chosen-death 'death))
+        (deathlink-death #t))))))
+  #t)
 
 (defun ap-trap-received! ((trap symbol))
   (when (and (> (-> *ap-info-jak3* trap-duration) 0.0)

@@ -80,6 +80,7 @@
   (vehicle-impulse-factor         22) ;; hi 64
   (knock 23)
   (test 24)
+  (deathlink-death 25)
   )
 
 (defmacro static-attack-info (&key (mask ()) args)
@@ -393,6 +394,7 @@ to have a type with a large number of slots which can be turned into real method
    (vehicle-impulse-factor  float)
    (knock                   knocked-type)
    (test                    symbol)
+   (deathlink-death    symbol)
    )
   (:methods
     (attack-info-method-9 (_type_ attack-info process-drawable process-drawable) none)

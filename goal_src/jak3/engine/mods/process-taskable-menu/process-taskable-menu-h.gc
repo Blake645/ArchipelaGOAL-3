@@ -206,6 +206,7 @@
       :text-id (text-id progress-missions-wascityb-game)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node wascity-pre-game-introduction))
+            (task-node-open? (game-task-node wascity-pre-game-wait))
             (task-node-open? (game-task-node wascity-pre-game-resolution))
             )
         )

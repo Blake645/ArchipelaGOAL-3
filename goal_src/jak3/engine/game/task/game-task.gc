@@ -21308,7 +21308,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-            (and  (ap-route-port-to-inda?)
+            (and  (ap-route-port-to-indb?)
                 (logtest? (-> *game-info* features) (game-feature board))
                 )
             )
