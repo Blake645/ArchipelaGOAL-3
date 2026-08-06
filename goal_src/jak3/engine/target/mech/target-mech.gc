@@ -606,6 +606,9 @@
      )
     (else
       (case arg2
+        (('deathlink)
+          (go target-mech-death 'deathlink)
+         )      
         (('end-mode)
          (case (-> arg3 param 0)
            (('mech)
@@ -614,6 +617,9 @@
             (go target-mech-get-off)
             )
            )
+         )
+        (('get-mech)
+         (-> self mech handle)
          )
         (('change-mode)
          (let ((v1-8 (-> arg3 param 0)))

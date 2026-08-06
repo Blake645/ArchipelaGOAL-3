@@ -10,6 +10,7 @@
 (deftype mech-info (basic)
   ((entity                 entity-actor)
    (hud                    handle          1)
+   (handle                 handle)
    (mech-trans             vector          :inline)
    (mech-quat              vector          :inline)
    (mech-scale             vector          :inline)

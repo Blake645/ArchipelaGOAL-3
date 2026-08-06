@@ -1820,6 +1820,9 @@
 
 (defmethod taskman-event-handler ((this ctyport-attack-manager) (arg0 process) (arg1 int) (arg2 symbol) (arg3 event-message-block))
   (case arg2
+  (('get-torpedo)
+    (-> this active-torpedo)
+  )
     (('notify)
      (case (-> arg3 param 0)
        (('pickup)

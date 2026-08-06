@@ -2,8 +2,12 @@
 (in-package goal)
 
 (define-extern ap-messenger-reset! (function none))
+(define-extern ap-deathlink-vehicle-check! (function symbol))
+(declare-type turret-info basic)
 (declare-type was-pre-game process-drawable)
 (define-extern *was-pre-game* (pointer was-pre-game))
+(declare-type power-game process-drawable)
+(define-extern *power-game* (pointer power-game))
 
 (define *ap-info-jak3* (new 'static 'ap-info-jak3))
 (pc-get-archipelago-struct)
@@ -439,25 +443,23 @@
 (defun ap-deathlink-received! ((chosen-death symbol))
   (cond
     ((and *target* (= (send-event *target* 'query 'mode) 'turret))
-     (send-event (handle->process (-> (the target *target*) turret handle)) 'deathlink))
+     (let ((turret-proc (handle->process (send-event *target* 'get-turret))))
+       (if turret-proc (send-event turret-proc 'deathlink))))
+    ((and *target* (= (send-event *target* 'query 'mode) 'mech))
+     (let ((mech-proc (handle->process (send-event *target* 'get-mech))))
+       (if mech-proc (send-event mech-proc 'deathlink))))
     ((and *was-pre-game*
           (nonzero? *was-pre-game*)
           (let ((proc (ppointer->process *was-pre-game*)))
             (and proc (= (-> proc state name) 'active))))
      (send-event (ppointer->process *was-pre-game*) 'deathlink))
-    ((and (!= (-> *game-info* current-vehicle) (vehicle-type-u8 vt27))
-          (handle->process (-> *vehicle-info* handle-by-vehicle-type (-> *game-info* current-vehicle))))
-     (send-event
-      (handle->process (-> *vehicle-info* handle-by-vehicle-type (-> *game-info* current-vehicle)))
-      'attack
-      #f
-      (static-attack-info
-       :mask (vehicle-impulse-factor)
-       ((id (new-attack-id))
-        (damage 100.0)
-        (vehicle-damage-factor 1.0)
-        (vehicle-impulse-factor 1.0)
-        (mode 'death)))))
+    ((and *power-game*
+          (nonzero? *power-game*)
+          (let ((proc (ppointer->process *power-game*)))
+            (and proc (= (-> proc state name) 'active))))
+     (let ((player (handle->process (the-as handle (send-event (ppointer->process *power-game*) 'get-player)))))
+       (if player (send-event player 'deathlink))))
+    ((ap-deathlink-vehicle-check!))
     (else
      (send-event
       *target*
@@ -466,10 +468,10 @@
       (static-attack-info
        :mask (vehicle-impulse-factor)
        ((id (new-attack-id))
-        (damage 2.0)
+        (damage 20.0)
         (vehicle-damage-factor 1.0)
         (vehicle-impulse-factor 1.0)
-        (mode (or chosen-death 'death))
+        (mode (if (focus-test? *target* flut) 'death (or chosen-death 'death)))
         (deathlink-death #t))))))
   #t)
 

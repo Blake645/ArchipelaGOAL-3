@@ -486,6 +486,7 @@
         :text-id (text-id progress-missions-city-power-game)
         :allow-when (lambda ()
           (or (task-node-open? (game-task-node city-power-game-introduction))
+              (task-node-open? (game-task-node city-power-game-wait))
               (task-node-open? (game-task-node city-power-game-resolution))
               )
           )

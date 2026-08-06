@@ -7556,7 +7556,7 @@
             :task (game-task city-port-fight)
             :name "city-port-fight-resolution"
             :when-open #f
-            :flags (game-task-node-flag close-task act2)
+            :flags (game-task-node-flag close-task exclusive act2)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node city-port-fight-introduction)
               (game-task-node none)
