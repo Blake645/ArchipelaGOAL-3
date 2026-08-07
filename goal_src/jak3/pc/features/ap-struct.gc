@@ -2,6 +2,7 @@
 (in-package goal)
 
 (define-extern ap-messenger-reset! (function none))
+(define-extern *ap-reverse-controls?* symbol)
 (define-extern ap-deathlink-vehicle-check! (function symbol))
 (declare-type turret-info basic)
 (declare-type was-pre-game process-drawable)
@@ -443,11 +444,20 @@
 (defun ap-deathlink-received! ((chosen-death symbol))
   (cond
     ((and *target* (= (send-event *target* 'query 'mode) 'turret))
-     (let ((turret-proc (handle->process (send-event *target* 'get-turret))))
-       (if turret-proc (send-event turret-proc 'deathlink))))
+     (send-event (handle->process (send-event *target* 'get-turret)) 'deathlink))
     ((and *target* (= (send-event *target* 'query 'mode) 'mech))
-     (let ((mech-proc (handle->process (send-event *target* 'get-mech))))
-       (if mech-proc (send-event mech-proc 'deathlink))))
+     (send-event
+      *target*
+      'attack
+      #f
+      (static-attack-info
+       :mask (vehicle-impulse-factor)
+       ((id (new-attack-id))
+        (damage 1000.0)
+        (vehicle-damage-factor 1.0)
+        (vehicle-impulse-factor 1.0)
+        (mode 'death)
+        (deathlink-death #t)))))
     ((and *was-pre-game*
           (nonzero? *was-pre-game*)
           (let ((proc (ppointer->process *was-pre-game*)))
@@ -468,7 +478,7 @@
       (static-attack-info
        :mask (vehicle-impulse-factor)
        ((id (new-attack-id))
-        (damage 20.0)
+        (damage 2.0)
         (vehicle-damage-factor 1.0)
         (vehicle-impulse-factor 1.0)
         (mode (if (focus-test? *target* flut) 'death (or chosen-death 'death)))
@@ -611,41 +621,47 @@
                     (send-event *target* 'get-pickup (pickup-type ammo-yellow) curr-yellow)
                     (send-event *target* 'get-pickup (pickup-type ammo-blue) curr-blue)
                     (send-event *target* 'get-pickup (pickup-type ammo-dark) curr-dark)))))
-(('anger-issues) ;; forced dark jak trap
-  (process-spawn-function process
-    (lambda :behavior process ()
-      (stack-size-set! (-> self main-thread) 512)
-      (let ((had-darkjak (logtest? (-> *game-info* features) (game-feature darkjak))))
-        (logior! (-> *game-info* features) (game-feature darkjak))
-        (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
-        (let ((end-time (+ (current-time) (the int (seconds (-> *ap-info-jak3* trap-duration))))))
-          (while (< (current-time) end-time)
-            ;; keep dark eco meter full so it never auto-depletes and exits
-            (set! (-> *game-info* eco-pill-dark) (-> *FACT-bank* eco-pill-dark-max-default))
-            ;; if player exited (dark focus flag cleared), force back in
-            (when (not (focus-test? *target* dark))
-              (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active)))
-            (suspend)))
-        (while (logtest? (-> *target* control current-surface flags) (surface-flag air))
-          (suspend))
-        (send-event *target* 'change-mode 'normal)
-        (when (not had-darkjak)
-          (logclear! (-> *game-info* features) (game-feature darkjak)))))))
-(('no-light-eco) ;; no light eco trap
-  (process-spawn-function process
-    (lambda :behavior process ()
-      (give *game-info* 'eco-pill-light (- (-> *game-info* eco-pill-light)) (the-as handle #f))
-      (let ((end-time (+ (current-time) (the int (seconds (-> *ap-info-jak3* trap-duration))))))
-        (while (< (current-time) end-time)
-          (when (> (-> *game-info* eco-pill-light) 0.0)
-            (give *game-info* 'eco-pill-light (- (-> *game-info* eco-pill-light)) (the-as handle #f)))
-          (suspend))))))
+        (('anger-issues) ;; forced dark jak trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (stack-size-set! (-> self main-thread) 512)
+              (let ((had-darkjak (logtest? (-> *game-info* features) (game-feature darkjak))))
+                (logior! (-> *game-info* features) (game-feature darkjak))
+                (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active))
+                (let ((end-time (+ (current-time) (the int (seconds (-> *ap-info-jak3* trap-duration))))))
+                  (while (< (current-time) end-time)
+                    ;; keep dark eco meter full so it never auto-depletes and exits
+                    (set! (-> *game-info* eco-pill-dark) (-> *FACT-bank* eco-pill-dark-max-default))
+                    ;; if player exited (dark focus flag cleared), force back in
+                    (when (not (focus-test? *target* dark))
+                      (send-event *target* 'change-mode 'darkjak #f (darkjak-stage force-on active)))
+                    (suspend)))
+                (while (logtest? (-> *target* control current-surface flags) (surface-flag air))
+                  (suspend))
+                (send-event *target* 'change-mode 'normal)
+                (when (not had-darkjak)
+                  (logclear! (-> *game-info* features) (game-feature darkjak)))))))
+        (('no-light-eco) ;; no light eco trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (give *game-info* 'eco-pill-light (- (-> *game-info* eco-pill-light)) (the-as handle #f))
+              (let ((end-time (+ (current-time) (the int (seconds (-> *ap-info-jak3* trap-duration))))))
+                (while (< (current-time) end-time)
+                  (when (> (-> *game-info* eco-pill-light) 0.0)
+                    (give *game-info* 'eco-pill-light (- (-> *game-info* eco-pill-light)) (the-as handle #f)))
+                  (suspend))))))
         (('hardcore) ;; hero mode trap :D
           (process-spawn-function process
             (lambda :behavior process ()
               (logxor! (-> *game-info* secrets) (game-secrets hero-mode))
               (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
               (logxor! (-> *game-info* secrets) (game-secrets hero-mode)))))
+        (('turn-right-to-go-left) ;; reverse controls trap
+          (process-spawn-function process
+            (lambda :behavior process ()
+              (set! *ap-reverse-controls?* #t)
+              (suspend-for (seconds (-> *ap-info-jak3* trap-duration)))
+              (set! *ap-reverse-controls?* #f))))
         ))
         #f
         )
