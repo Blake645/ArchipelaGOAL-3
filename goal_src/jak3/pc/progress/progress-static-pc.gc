@@ -591,7 +591,7 @@ This gives us more freedom to write code how we want.
      (archipelagoal-3-bbush-cost-race)
      (archipelagoal-3-bbush-cost-other)
      ;; <ap:todo> deathlink will come later, leave out for now
-     ;; (archipelagoal-3-deathlink)
+     (archipelagoal-3-deathlink)
      )
   )
 (defmacro archipelagoal-3-traps ()
@@ -643,7 +643,7 @@ This gives us more freedom to write code how we want.
       (set! (-> *ap-settings* bbush-cost-other) val)
       (ap-settings-save))))
     ;; <ap:todo> deathlink will come later, leave out for now
-#|
+
 (defmacro archipelagoal-3-deathlink ()
   '(new 'static 'menu-generic-boolean-option
     :name (text-id progress-menu-deathlink)
@@ -653,7 +653,7 @@ This gives us more freedom to write code how we want.
     :on-confirm (lambda ((val symbol))
       (set! (-> *ap-settings* deathlink?) val)
       (ap-settings-update))))
-|#
+
 (defmacro misc-options-pc-discord-rpc ()
   `(new 'static 'menu-generic-boolean-option
         :name (text-id progress-discord-rpc)

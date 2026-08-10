@@ -469,6 +469,8 @@
             (and proc (= (-> proc state name) 'active))))
      (let ((player (handle->process (the-as handle (send-event (ppointer->process *power-game*) 'get-player)))))
        (if player (send-event player 'deathlink))))
+    ((process-by-name "bombbot-player" *active-pool*)
+     (send-event (process-by-name "bombbot-player" *active-pool*) 'explode))
     ((ap-deathlink-vehicle-check!))
     (else
      (send-event
@@ -743,6 +745,7 @@
     (set! (-> *ap-info-jak3* trap-duration) (-> *ap-settings* trap-duration))
     (set! (-> *ap-info-jak3* completion-goal-type) (the-as ap-completion-type (-> *ap-settings* completion-type)))
     (set! (-> *ap-info-jak3* completion-goal-value) (-> *ap-settings* completion-value))
+    (set! (-> *ap-info-jak3* deathlink-enabled) (the-as uint8 (if (-> *ap-settings* deathlink?) 1 0)))
     (when (nonzero? (-> *ap-settings* jak-is-jak2))
       (logior! (-> *game-info* secrets) (game-secrets jak-is-jak2))))
   ;; <ap:preserve-this> autosave every 30 seconds to prevent progress loss on life resets

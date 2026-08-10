@@ -859,7 +859,7 @@
     (format file "  (bbush-cost-get-to ~f)~%" (-> obj bbush-cost-get-to))
     (format file "  (bbush-cost-race ~f)~%" (-> obj bbush-cost-race))
     (format file "  (bbush-cost-other ~f)~%" (-> obj bbush-cost-other))
-    ;; (format file "  (deathlink? ~A)~%" (-> obj deathlink?))
+    (format file "  (deathlink? ~A)~%" (-> obj deathlink?))
     ;; file trailer
     (format file "  )~%")
     (file-stream-close file))
@@ -892,7 +892,7 @@
                (("bbush-cost-get-to") (set! (-> obj bbush-cost-get-to) (file-stream-read-float file)))
                (("bbush-cost-race") (set! (-> obj bbush-cost-race) (file-stream-read-float file)))
                (("bbush-cost-other") (set! (-> obj bbush-cost-other) (file-stream-read-float file)))
-               ;; (("deathlink?") (set! (-> obj deathlink?) (file-stream-read-symbol file)))
+               (("deathlink?") (set! (-> obj deathlink?) (file-stream-read-symbol file)))
                ))))))
     (inspect file)
     (file-stream-close file))
