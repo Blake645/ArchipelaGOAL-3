@@ -4011,6 +4011,12 @@
        (set! (-> *game-info* vehicles) v0-1)
        v0-1
        )
+      (((game-secrets gs21))
+       (give *game-info* 'gem 20.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs21))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs21))
+       v0-1
+       )
       )
     )
   )

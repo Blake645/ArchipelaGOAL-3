@@ -409,6 +409,11 @@
             (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
             )
     )
+    (let ((wascity-small-door (entity-by-name "wascity-airlock-small-1")))
+          (when wascity-small-door
+            (set! (cdr (res-lump-struct wascity-small-door 'on-notice pair)) '((#t '(wasdoors))))
+            )
+    )
     (let ((parking-spot (entity-by-name "w-parking-spot-3")))
           (when parking-spot
             (set! (cdr (res-lump-struct parking-spot 'on-activate pair)) '(#t))
