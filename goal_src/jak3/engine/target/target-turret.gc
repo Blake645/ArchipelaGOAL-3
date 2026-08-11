@@ -6,7 +6,7 @@
 ;; dgos: WCB, LFORM, DESBATTL, LCTYBLOW
 
 ;; DECOMP BEGINS
-
+(define-extern runs-on-jak-death (function symbol none))
 (defpartgroup group-turret-explode
   :id 235
   :duration (seconds 0.5)
@@ -1863,7 +1863,7 @@
             (the-as touching-shapes-entry (-> arg3 param 0))
             )
            (case (-> (the-as attack-info gp-1) mode)
-             (('turret)
+(('turret)
               (let ((a0-22 (-> self attack-info)))
                 (let ((v1-24 a0-22))
                   (set! (-> v1-24 attacker) (the-as handle #f))
@@ -1881,6 +1881,8 @@
               (cond
                 ((= (-> self game mode) 'play)
                  (send-event (handle->process (-> self turret handle)) 'player-pos (-> self control trans))
+                 (when (zero? (-> (the-as attack-info gp-1) deathlink-death))
+                   (runs-on-jak-death 'turret))
                  (go target-death 'turret)
                  #t
                  )
@@ -1905,6 +1907,8 @@
                   )
                 (combine! a0-32 (the-as attack-info gp-1) self)
                 )
+              (when (zero? (-> (the-as attack-info gp-1) deathlink-death))
+                (runs-on-jak-death 'bot))
               (go target-death 'bot)
               )
              )

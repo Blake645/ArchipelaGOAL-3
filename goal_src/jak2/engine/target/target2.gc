@@ -1026,7 +1026,6 @@
     (cond
       ((and (= (-> self game mode) 'play) (>= 0.0 (-> (the-as fact-info-target (-> self fact)) health)))
        (set! (-> self attack-info attacker) (the-as handle #f))
-       (runs-on-jak-death 'smush)
        (go target-death 'target-hit-ground-hard)
        )
       (else

@@ -1,6 +1,6 @@
 ;;-*-Lisp-*-
 (in-package goal)
-
+(define-extern runs-on-jak-death (function symbol none))
 ;; name: target2.gc
 ;; name in dgo: target2
 ;; dgos: GAME
@@ -1357,10 +1357,12 @@
           (the-as handle #f)
           )
         )
-      (target-timed-invulnerable (-> *TARGET-bank* hit-invulnerable-timeout) self 1)
+      (target-timed-invulnerable (the-as time-frame (-> *TARGET-bank* hit-invulnerable-timeout)) self 1)
       )
     (cond
-      ((and (= (-> self game mode) 'play) (>= 0.0 (-> self fact health)))
+      ((and (= (-> self game mode) 'play) (>= 0.0 (-> (the-as fact-info-target (-> self fact)) health)))
+       (when (zero? (-> self attack-info deathlink-death))
+         (runs-on-jak-death 'smush))
        (set! (-> self attack-info attacker) (the-as handle #f))
        (go target-death 'target-hit-ground-hard)
        )

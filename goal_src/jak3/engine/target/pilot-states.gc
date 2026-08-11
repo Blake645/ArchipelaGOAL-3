@@ -937,6 +937,8 @@
         )
       (combine! sv-16 arg1 self)
       (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+      (when (zero? (-> arg1 deathlink-death))
+        (runs-on-jak-death (-> sv-16 mode)))
       (go target-pilot-death (-> sv-16 mode))
       )
     )

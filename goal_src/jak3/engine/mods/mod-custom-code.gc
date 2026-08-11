@@ -873,6 +873,11 @@
       (('tentacle)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 24))
         (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
+      
+      )
+      (('generic)
+        (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 25))
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )))
   (none)
   )

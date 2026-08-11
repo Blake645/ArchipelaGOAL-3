@@ -1,6 +1,6 @@
 ;;-*-Lisp-*-
 (in-package goal)
-
+(define-extern runs-on-jak-death (function symbol none))
 ;; name: target-indax.gc
 ;; name in dgo: target-indax
 ;; dgos: FACC, HALFPIPE, VOCA
@@ -1515,12 +1515,16 @@
                  )
                 (else
                   (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+                  (when (zero? (-> arg1 deathlink-death))
+                    (runs-on-jak-death 'endlessfall))
                   (go target-indax-death (-> gp-0 mode))
                   )
                 )
               )
              (('instant-death 'smush 'tomb-spider 'ice 'bot 'death)
               (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+              (when (and (= (-> self game mode) 'play) (zero? (-> arg1 deathlink-death)))
+                (runs-on-jak-death (-> gp-0 mode)))
               (if (= (-> self game mode) 'play)
                   (go target-indax-death (-> gp-0 mode))
                   )
@@ -1528,16 +1532,22 @@
              (('shock)
               (pickup-collectable! (-> self fact) (pickup-type health) (- (-> gp-0 damage)) (the-as handle #f))
               (if (and (= (-> self game mode) 'play) (>= 0.0 (-> self fact health)))
-                  (go target-indax-death (if (logtest? (target-flags tf26) (-> self target-flags))
-                                             'endlessfall
-                                             (-> gp-0 mode)
-                                             )
-                      )
+                  (begin
+                    (when (zero? (-> arg1 deathlink-death))
+                      (runs-on-jak-death 'shock))
+                    (go target-indax-death (if (logtest? (target-flags tf26) (-> self target-flags))
+                                               'endlessfall
+                                               (-> gp-0 mode)
+                                               )
+                        )
+                    )
                   )
               )
              (('lava 'melt 'fry 'slime)
               (when (= (-> self game mode) 'play)
                 (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+                (when (zero? (-> arg1 deathlink-death))
+                  (runs-on-jak-death 'lava))
                 (go target-indax-death (-> gp-0 mode))
                 )
               )
@@ -1566,7 +1576,11 @@
              (ja :num! (seek!))
              )
            (if (and (= (-> self game mode) 'play) (>= 0.0 (-> self fact health)))
-               (go target-indax-death 'endlessfall)
+               (begin
+                 (when (zero? (-> arg1 deathlink-death))
+                   (runs-on-jak-death 'endlessfall))
+                 (go target-indax-death 'endlessfall)
+                 )
                )
            (go target-indax-hang-stance)
            )
@@ -1577,7 +1591,11 @@
           )
         )
       (if (and (= (-> self game mode) 'play) (>= 0.0 (-> self fact health)))
-          (go target-indax-death (-> gp-0 mode))
+          (begin
+            (when (zero? (-> arg1 deathlink-death))
+              (runs-on-jak-death (-> gp-0 mode)))
+            (go target-indax-death (-> gp-0 mode))
+            )
           )
       )
     (go target-indax-hit-ground #f)

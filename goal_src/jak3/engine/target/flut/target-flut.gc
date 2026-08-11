@@ -1,6 +1,6 @@
 ;;-*-Lisp-*-
 (in-package goal)
-
+(define-extern runs-on-jak-death (function symbol none))
 ;; name: target-flut.gc
 ;; name in dgo: target-flut
 ;; dgos: WWD, DESLIZ, VOCA
@@ -2703,12 +2703,16 @@
                  )
                 (else
                   (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+                  (when (zero? (-> arg1 deathlink-death))
+                    (runs-on-jak-death 'endlessfall))
                   (go target-flut-death (-> s5-0 mode))
                   )
                 )
               )
              (('water-vol 'sharkey 'bot 'drown-death 'instant-death 'crush 'tentacle)
               (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+              (when (and (= (-> self game mode) 'play) (zero? (-> arg1 deathlink-death)))
+                (runs-on-jak-death (-> s5-0 mode)))
               (if (= (-> self game mode) 'play)
                   (go target-flut-death (-> s5-0 mode))
                   )
@@ -2811,6 +2815,8 @@
         )
       (cond
         ((and (= (-> self game mode) 'play) (>= 0.0 (-> self fact health)))
+         (when (zero? (-> arg1 deathlink-death))
+           (runs-on-jak-death (-> s5-0 mode)))
          (go target-flut-death (-> s5-0 mode))
          )
         ((and (= (-> self flut mode) 'normal) (= arg0 'attack))

@@ -1694,6 +1694,7 @@
   (vinroom-name #x10006)
   (genb-name #x10007)
   (mine-name #x10008)
+  (factory-name #x10009)
 
   ;; menu stuff text
   (select-destination #x100000)
