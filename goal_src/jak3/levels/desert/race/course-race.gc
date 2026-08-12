@@ -772,6 +772,14 @@
     )
   )
 
+(defstate finished (task-manager-bbush-time-trial-1)
+  :virtual #t
+  :code (behavior ()
+    (task-node-close! (game-task-node desert-bbush-time-trial-1-resolution) 'event)
+    (call-parent-state-handler code)
+    )
+  )
+
 (deftype des-rally-bollard (process-drawable)
   ((root  collide-shape :override)
    )
@@ -915,6 +923,13 @@
             (process-spawn hud-wasbbv-goal-time :init hud-init-by-other :name "hud-wasbbv-goal-time" :to self)
             )
           )
+    (call-parent-state-handler code)
+    )
+  )
+(defstate finished (task-manager-bbush-rally)
+  :virtual #t
+  :code (behavior ()
+    (task-node-close! (game-task-node desert-bbush-rally-resolution) 'event)
     (call-parent-state-handler code)
     )
   )

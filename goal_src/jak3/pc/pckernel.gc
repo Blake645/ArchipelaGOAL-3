@@ -860,12 +860,14 @@
     (format file "  (bbush-cost-race ~f)~%" (-> obj bbush-cost-race))
     (format file "  (bbush-cost-other ~f)~%" (-> obj bbush-cost-other))
     (format file "  (deathlink? ~A)~%" (-> obj deathlink?))
+    (format file "  (completion-type ~D)~%" (-> obj completion-type))
+    (format file "  (completion-value ~D)~%" (-> obj completion-value))
+    (format file "  (completion-mission-count ~D)~%" (-> obj completion-mission-count))
     ;; file trailer
     (format file "  )~%")
     (file-stream-close file))
   (format 0 "Archipelago settings file write: ~A~%" filename)
   #t)
-
 (defmethod commit-to-file ap-settings
   ((obj ap-settings))
   "Commits the current archipelago settings to the file"
@@ -893,6 +895,9 @@
                (("bbush-cost-race") (set! (-> obj bbush-cost-race) (file-stream-read-float file)))
                (("bbush-cost-other") (set! (-> obj bbush-cost-other) (file-stream-read-float file)))
                (("deathlink?") (set! (-> obj deathlink?) (file-stream-read-symbol file)))
+               (("completion-type") (set! (-> obj completion-type) (the-as uint8 (file-stream-read-int file))))
+               (("completion-value") (set! (-> obj completion-value) (the-as uint8 (file-stream-read-int file))))
+               (("completion-mission-count") (set! (-> obj completion-mission-count) (the-as uint8 (file-stream-read-int file))))
                ))))))
     (inspect file)
     (file-stream-close file))

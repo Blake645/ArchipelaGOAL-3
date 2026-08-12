@@ -689,6 +689,10 @@
          )
        )
      )
+     (('deathlink)
+     (set! (-> this hit-points) 0.0)
+     (go (method-of-object this die))
+     )
     (else
       #f
       )
@@ -1294,6 +1298,9 @@
     (('turret-type)
      'hellcat
      )
+    (('deathlink)
+     (send-event (handle->process (-> this parent-vehicle)) 'deathlink)
+     )     
     (('allow-exit)
      (set! v0-0 #t)
      (set! (-> this can-exit?) (the-as symbol v0-0))

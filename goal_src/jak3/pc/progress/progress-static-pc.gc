@@ -586,14 +586,24 @@ This gives us more freedom to write code how we want.
 
 (defmacro game-options-pc-archipelagoal-3 ()
   `(progress-new-generic-link-to-scrolling-page (text-id progress-menu-archipelagoal-3)
+     (archipelagoal-3-deathlink)
+     (archipelagoal-3-item-messages)
+     (archipelagoal-3-seed-options-link)
+     )
+  )
+
+(defmacro archipelagoal-3-seed-options-link ()
+  '(progress-new-generic-link-to-scrolling-page (text-id progress-menu-seed-options)
      (archipelagoal-3-traps)
      (archipelagoal-3-bbush-cost-get-to)
      (archipelagoal-3-bbush-cost-race)
      (archipelagoal-3-bbush-cost-other)
-     ;; <ap:todo> deathlink will come later, leave out for now
-     (archipelagoal-3-deathlink)
+     (archipelagoal-3-completion-type)
+     (archipelagoal-3-completion-specific-mission)
+     (archipelagoal-3-completion-value)
      )
   )
+
 (defmacro archipelagoal-3-traps ()
   '(new 'static 'menu-generic-slider-option
     :name (text-id progress-menu-trap-duration)
@@ -642,7 +652,6 @@ This gives us more freedom to write code how we want.
     :on-confirm (lambda ((val float))
       (set! (-> *ap-settings* bbush-cost-other) val)
       (ap-settings-save))))
-    ;; <ap:todo> deathlink will come later, leave out for now
 
 (defmacro archipelagoal-3-deathlink ()
   '(new 'static 'menu-generic-boolean-option
@@ -652,7 +661,76 @@ This gives us more freedom to write code how we want.
     :get-value-fn (lambda () (-> *ap-settings* deathlink?))
     :on-confirm (lambda ((val symbol))
       (set! (-> *ap-settings* deathlink?) val)
-      (ap-settings-update))))
+      (ap-settings-update)
+      (ap-settings-save))))
+
+(defmacro archipelagoal-3-item-messages ()
+  '(new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-item-messages)
+    :truthy-text (text-id progress-on)
+    :falsey-text (text-id progress-off)
+    :get-value-fn (lambda () (-> *ap-settings* item-messages?))
+    :on-confirm (lambda ((val symbol))
+      (set! (-> *ap-settings* item-messages?) val)
+      (ap-settings-save))))
+
+(defmacro archipelagoal-3-completion-type ()
+  '(new 'static 'menu-generic-carousel-option
+    :name (text-id progress-menu-completion-type)
+    :items (new 'static 'boxed-array :type text-id
+                (text-id progress-menu-completion-type-mission-count)
+                (text-id progress-menu-completion-type-specific-mission))
+    :get-item-index-fn (lambda ()
+      (case (-> *ap-settings* completion-type)
+        ((2) 0)  ;; mission-count
+        ((1) 1)  ;; specific-mission
+        (else 0)))
+    :on-confirm (lambda ((index int) (the-progress progress))
+      (set! (-> *ap-settings* completion-type)
+        (the-as uint8 (case index
+          ((0) 2)  ;; mission-count
+          ((1) 1)  ;; specific-mission
+          (else 2))))
+      (ap-settings-update)
+      (ap-settings-save))))
+
+(defmacro archipelagoal-3-completion-value ()
+  '(new 'static 'menu-generic-slider-option
+    :name (text-id progress-menu-completion-value)
+    :should-disable? (lambda () (= (-> *ap-settings* completion-type) 1))
+    :min-value 0.0
+    :max-value 118.0
+    :step 1.0
+    :show-decimal? #t
+    :get-value-fn (lambda () (the float (-> *ap-settings* completion-mission-count)))
+    :on-confirm (lambda ((val float))
+      (set! (-> *ap-settings* completion-mission-count) (the-as uint8 (the int val)))
+      (ap-settings-update)
+      (ap-settings-save))))
+
+(defmacro archipelagoal-3-completion-specific-mission ()
+  '(new 'static 'menu-generic-carousel-option
+    :name (text-id progress-menu-completion-specific-mission)
+    :should-disable? (lambda () (!= (-> *ap-settings* completion-type) 1))
+    :items (new 'static 'boxed-array :type text-id
+                (text-id progress-menu-mission-mine-boss)
+                (text-id progress-menu-mission-factory-boss)
+                (text-id progress-menu-mission-desert-final-boss))
+    :get-item-index-fn (lambda ()
+      (case (-> *ap-settings* completion-value)
+        ((34) 0)
+        ((60) 1)
+        ((71) 2)
+        (else 0)))
+    :on-confirm (lambda ((index int) (the-progress progress))
+      (set! (-> *ap-settings* completion-value)
+        (the-as uint8 (case index
+          ((0) 34)
+          ((1) 60)
+          ((2) 71)
+          (else 34))))
+      (ap-settings-update)
+      (ap-settings-save))))
 
 (defmacro misc-options-pc-discord-rpc ()
   `(new 'static 'menu-generic-boolean-option

@@ -306,16 +306,15 @@
 
 
   "2158": "Archipelago Options",
-  "2160": "Unlocked",
-  "2161": "Locked",
-
-  "2162": "Dark Eco Pill Received",
-  "2163": "Health Pack Received",
-  "2164": "Scatter Gun Ammo Received",
-  "2165": "Blaster Ammo Received",
-  "2166": "Vulcan Fury Ammo Received",
-  "2167": "Peacemaker Ammo Received",
-  "2168": "Light Eco Pill Received",
+  "2159": "Seed Options",
+  "2160": "Completion Type",
+  "2161": "Total Missions",
+  "2162": "Specific Mission",
+  "2163": "Number of Missions to Complete",
+  "2164": "Specific Mission to Complete",
+  "2165": "Defeat Veger's Robot",
+  "2166": "Defeat Errol at War Factory",
+  "2167": "Defeat Final Boss",
 
   "2169": "Deathlink",
   "2170": "Enabled",
@@ -327,6 +326,7 @@
   "2174": "Find Orbs Cost",
   "2175": "Race Orbs Cost",
   "2176": "Other Orbs Cost",
+  "2177": "Show Item Messages",
   "2190": "Talk to Torn",
   "2191": "Talk to Onin",
   "2192": "Talk to Vin",
