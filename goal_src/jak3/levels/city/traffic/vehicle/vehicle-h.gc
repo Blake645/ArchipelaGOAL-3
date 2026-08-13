@@ -612,6 +612,7 @@
    (exhaust-part-accum        sparticle-launch-control      2)
    (smoke-part-accum          sparticle-launch-control      2)
    (section-array             vehicle-section               4 :inline)
+   (deathlink-death?          symbol)
    )
   (:state-methods
     inactive

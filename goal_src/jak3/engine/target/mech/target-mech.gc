@@ -689,7 +689,7 @@
          )
         (('attack 'attack-or-shove 'attack-invinc)
          (let ((s3-0
-                 (the-as object (mem-copy! (the-as pointer (-> self attack-info-rec)) (the-as pointer (-> arg3 param 1)) 168))
+                 (the-as object (mem-copy! (the-as pointer (-> self attack-info-rec)) (the-as pointer (-> arg3 param 1)) 172))
                  )
                )
            (let ((s2-0 (the-as pointer s3-0))
@@ -802,7 +802,7 @@
          )
         (('shove)
          (when (not (focus-test? self dead hit))
-           (mem-copy! (the-as pointer (-> self attack-info-rec)) (the-as pointer (-> arg3 param 1)) 168)
+           (mem-copy! (the-as pointer (-> self attack-info-rec)) (the-as pointer (-> arg3 param 1)) 172)
            (when (not (logtest? (-> self attack-info-rec mask) (attack-mask attacker)))
              (set! (-> self attack-info-rec attacker) (process->handle arg0))
              (logior! (-> self attack-info-rec mask) (attack-mask attacker))

@@ -67,5 +67,6 @@
    (hud-health               handle)
    (hud-turbo                handle)
    (jumping?                 symbol)
+   (deathlink-death?         symbol)
    )
   )

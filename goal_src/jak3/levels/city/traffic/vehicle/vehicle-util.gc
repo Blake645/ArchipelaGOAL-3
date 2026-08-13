@@ -1167,6 +1167,7 @@
   )
 
 (defmethod vehicle-method-116 ((this vehicle) (arg0 symbol))
+(format 0 "VEHICLE METHOD 116: sending with deathlink-death? = ~A~%" (-> this deathlink-death?))
   (dotimes (s4-0 (-> this info rider seat-count))
     (let ((a0-5 (as-type (handle->process (-> this rider-array s4-0)) process-focusable)))
       (send-event
@@ -1175,7 +1176,7 @@
         #f
         (static-attack-info
           :mask (vehicle-impulse-factor)
-          ((id (new-attack-id)) (damage 2.0) (vehicle-damage-factor 1.0) (vehicle-impulse-factor 1.0) (mode arg0))
+          ((id (new-attack-id)) (damage 2.0) (vehicle-damage-factor 1.0) (vehicle-impulse-factor 1.0) (mode arg0) (deathlink-death (-> this deathlink-death?)))
           )
         )
       )

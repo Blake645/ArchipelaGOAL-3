@@ -381,6 +381,7 @@
    (arrow-red           float)
    (red-filter-timer    time-frame)
    (ride-height         float)
+   (deathlink-death?    symbol)
    )
   (:state-methods
     idle
@@ -846,6 +847,7 @@
          )
        )
       (('deathlink)
+       (set! (-> self deathlink-death?) #t)
        (set! (-> self health) 0.0)
        )
       (('test)
@@ -1029,7 +1031,7 @@
       #f
       (static-attack-info
         :mask (vehicle-impulse-factor)
-        ((id (new-attack-id)) (damage 2.0) (vehicle-damage-factor 1.0) (vehicle-impulse-factor 1.0) (mode 'turret))
+        ((id (new-attack-id)) (damage 2.0) (vehicle-damage-factor 1.0) (vehicle-impulse-factor 1.0) (mode 'turret) (deathlink-death (-> self deathlink-death?)))
         )
       )
     (let ((v1-18 (-> self root root-prim)))
@@ -1852,7 +1854,7 @@
          )
         (('attack 'attack-invinc)
          (let ((gp-1
-                 (the-as object (mem-copy! (the-as pointer (-> self attack-info-rec)) (the-as pointer (-> arg3 param 1)) 168))
+                 (the-as object (mem-copy! (the-as pointer (-> self attack-info-rec)) (the-as pointer (-> arg3 param 1)) 172))
                  )
                )
            ((method-of-type attack-info compute-intersect-info)

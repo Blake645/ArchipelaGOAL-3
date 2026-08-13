@@ -53,7 +53,7 @@
                 :continue-name "factoryc-start"
                 :text-id (text-id factory-name) ;"Factory"
                 :allow-when (lambda () (task-closed? "factory-assault-introduction")) ;; factory mission required
-                :forbid-when (lambda () (task-closed? "factory-resolution")) ;; factory mission required
+                :forbid-when (lambda () (task-closed? "factory-boss-resolution")) ;; factory mission required
                 :on-activate #f
                 )
               )

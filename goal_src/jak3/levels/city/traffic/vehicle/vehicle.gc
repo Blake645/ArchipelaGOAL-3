@@ -1144,6 +1144,8 @@
                       )
                   )
          (set! (-> this incoming-attack-id) (-> (the-as attack-info s3-1) id))
+         (set! (-> this deathlink-death?) (-> (the-as attack-info s3-1) deathlink-death))
+         (format 0 "VEHICLE: captured deathlink-death? = ~A~%" (-> this deathlink-death?))
          (when (and (logtest? (-> this info flags) 4) (logtest? (vehicle-flag ai-driving) (-> this v-flags)))
            (let ((a1-6 (find-offending-process-focusable arg0 (the-as attack-info s3-1))))
              (if (and a1-6 (logtest? (-> a1-6 mask) (process-mask target)))
