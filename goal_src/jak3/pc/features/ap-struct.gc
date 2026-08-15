@@ -570,11 +570,8 @@
             (lambda :behavior process ()
               (suspend-for (seconds 1))
               (while (movie?) (suspend-for (seconds 1)))
-              (let ((target-continue (get-continue-by-name *game-info* "wasdoors-city")))
-                  (when target-continue
-                  (set! (-> *game-info* current-continue) target-continue)
-                  (send-event *target* 'loading)
-                  (initialize! *game-info* 'dead (the-as game-save #f) "wasdoors-city" (the-as resetter-spec #f)))))))
+              (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "wasdoors-city"))
+              (initialize! *game-info* 'die (the-as game-save #f) "wasdoors-city" (the-as resetter-spec #f)))))
         (('personal-bubble) ;; pacifism trap
           (process-spawn-function process
             (lambda :behavior process ()

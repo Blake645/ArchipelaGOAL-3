@@ -3767,5 +3767,15 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id seal-of-mar-acquired)
                             :on-close #f
                             :camera #f)
+                          (new 'static 'talker-speech-class
+                            :name "hint01"
+                            :channel (gui-channel message)
+                            :speech #x18c
+                            :text-duration (seconds 5)
+                            :neg #x1
+                            :text-message (text-id mhcity-door-hint)
+                            :on-close #f
+                            :camera #f
+                            )
                           )
         )

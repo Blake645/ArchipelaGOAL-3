@@ -1677,6 +1677,7 @@
   (talk-to-vin #x2192)
   (talk-to-veger #x2193)
   (progress-buy-gems #x2194)
+  (mhcity-door-hint #x2195)
   
   ;; mod text
   (pad-triangle #x2000)
