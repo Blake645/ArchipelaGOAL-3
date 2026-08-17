@@ -98,4 +98,4 @@
   (*! (-> font-ctxt height) scale)
   (draw-string str buf font-ctxt)
   (none))
-  
+

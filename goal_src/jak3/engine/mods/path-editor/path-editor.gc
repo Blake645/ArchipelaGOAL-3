@@ -155,17 +155,17 @@
   )
 
 (defmethod draw-curved-path ((this path-editor) (node1 vector) (node2 vector) (idx int))
-  "Draw a curved path. 
+  "Draw a curved path.
   I know the game uses NURB curves for curved paths representation, but I couldn't figure out how to do it :("
   (let* ((count (-> this node-count))
          (prev-pos (new 'stack-no-clear 'vector)))
     (vector-copy! prev-pos node1)
-                    
+
     (let* ((p0 (-> this nodes (max 0 (- idx 1))))
            (p1 node1)
            (p2 node2)
            (p3 (-> this nodes (min (- count 1) (+ idx 2)))))
-                      
+
       (dotimes (j 10)
         (let* ((t-val (/ (the float (+ j 1)) 10.0))
                (curr-pos (new 'stack-no-clear 'vector))
@@ -203,7 +203,7 @@
   (draw-node-sphere this)
 
   (let ((count (-> this node-count)))
-    
+
     ;; draw node ID's
     (draw-node-id this)
 
@@ -228,7 +228,7 @@
       )
 
     ;; draw preview edge mode (draw it only in edit mode and if target exists)
-    (when (and *path-toggle-preview-edge?* (> count 0) (= (-> this mode) (nick-path-mode edit)) 
+    (when (and *path-toggle-preview-edge?* (> count 0) (= (-> this mode) (nick-path-mode edit))
           (= (-> this selected-node) (- count 1))
           *path-toggle-edge-visible?*
           *target*
@@ -329,7 +329,7 @@
                                )
     (let* ((x 10)
           (y 40)
-          (line-height 16) 
+          (line-height 16)
           (last-idx (- (-> this node-count) 1))
           (selected (-> this selected-node))
           (closest (-> this closest-node))
@@ -337,13 +337,13 @@
       (draw-string-xy "--- PATH EDITOR ---" buf x y (font-color white) (font-flags shadow))
 
       (draw-string-xy (string-format "nodes: ~d / 100" (-> this node-count)) buf x (+ y (* line-height 2)) (font-color white) (font-flags shadow))
-      
+
       (draw-string-xy (string-format "selected node: ~d" selected) buf x (+ y (* line-height 3)) (font-color orange) (font-flags shadow))
-      
+
       (draw-string-xy (string-format "path type: ~s" (nick-path-check-path-type this #f)) buf x (+ y (* line-height 4)) (font-color white) (font-flags shadow))
 
       (draw-string-xy (string-format "mode: ~s" (nick-path-check-mode this)) buf x (+ y (* line-height 5)) (font-color white) (font-flags shadow))
-      
+
       (draw-string-xy "-----------------------------" buf x (+ y (* line-height 6)) (font-color white) (font-flags shadow))
 
       (cond
@@ -375,19 +375,19 @@
             )
 
           (draw-string-xy "[R1 + up]: switch to preview mode" buf x (+ y (* line-height 11)) (font-color white) (font-flags shadow))
-          
+
           (draw-string-xy "-----------------------------" buf x (+ y (* line-height 12)) (font-color white) (font-flags shadow))
           )
-        
+
         ((= (-> this mode) (nick-path-mode moving-node)) ;; moving node mode
           (draw-string-xy "[L3 + triangle]: confirm position" buf x (+ y (* line-height 7)) (font-color white) (font-flags shadow))
-          
+
           (draw-string-xy "-----------------------------" buf x (+ y (* line-height 8)) (font-color white) (font-flags shadow))
           )
-        
+
         (else ;; preview mode
           (draw-string-xy "[R1 + down]: switch to edit mode" buf x (+ y (* line-height 7)) (font-color white) (font-flags shadow))
-          
+
           (draw-string-xy "-----------------------------" buf x (+ y (* line-height 8)) (font-color white) (font-flags shadow))
           )
         )
@@ -406,7 +406,7 @@
   ;; always draw the path graph logic (must be always running)
   (draw-path-graph this)
 
-  ;; draw a menu displaying the editor controls and status (preview or edit mode) 
+  ;; draw a menu displaying the editor controls and status (preview or edit mode)
   (draw-menu this)
 
   ;; always update the closest node from jak's current position
@@ -478,14 +478,14 @@
     (else ;; preview mode
       (remove-setting! 'allow-look-around) ;; enable jak look around setting
       (remove-setting! 'gun) ;; jak can use guns
-          
+
       ;; disable spheres display
       (when (logtest? (-> this flags) (nick-path-flags display-spheres))
         (logclear! (-> this flags) (nick-path-flags display-spheres))
         )
       )
     )
-  
+
   ;; switch between edit/preview modes (L1 + up/down)
   (when (not (logtest? (-> this mode) (nick-path-mode moving-node)))
     (when (cpad-hold? 0 r1)
@@ -514,7 +514,7 @@
           )
         )
       (format 0 "    ],~%")
-      
+
       ;; print the path-k (knots)
       (format 0 "~%   \"path-k\": [\"float\",~%")
       (let* ((num-knots (+ count 4))

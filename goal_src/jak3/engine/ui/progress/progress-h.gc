@@ -639,7 +639,7 @@
 (deftype menu-quit-qr-option (menu-qr-option)
   ()
   )
-  
+
 (deftype menu-go-home-qr-option (menu-qr-option)
   ((next-state  symbol)
    )

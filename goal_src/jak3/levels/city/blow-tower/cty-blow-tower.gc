@@ -1300,7 +1300,7 @@
      )
     (('deathlink)
      (send-event (handle->process (-> this parent-vehicle)) 'deathlink)
-     )     
+     )
     (('allow-exit)
      (set! v0-0 #t)
      (set! (-> this can-exit?) (the-as symbol v0-0))

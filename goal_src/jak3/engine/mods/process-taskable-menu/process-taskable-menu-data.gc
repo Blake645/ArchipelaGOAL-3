@@ -105,7 +105,7 @@
       (if (= (-> self task current-node) (game-task-node none))
           (set! v1-1 (get-current-task-event (-> self task)))
           )
-      (if (and (nonzero? (-> v1-1 action)) 
+      (if (and (nonzero? (-> v1-1 action))
                (or (not (logtest? (-> self draw status) (draw-control-status on-screen)))
                    (logtest? (-> v1-1 flags) (game-task-flags gatflag-01))
                    (not (time-elapsed? (-> self birth-time) (seconds 0.1)))

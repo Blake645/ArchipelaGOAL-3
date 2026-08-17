@@ -4369,7 +4369,7 @@
               )
             :borrow '((wasstada 0 wasstadc display))
             ;; <ap:preserve-this> added open hook to check for archipelago items.
-            :open? (lambda ((arg0 game-task-node-info)) 
+            :open? (lambda ((arg0 game-task-node-info))
               (logtest? (-> *game-info* features) (game-feature gun)))
             :on-close #f
             :reset (new 'static 'task-reset-info
@@ -8897,7 +8897,7 @@
               ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-indb?)
-                (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3)) 
+                (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3))
                  )
               )
             :on-close #f
@@ -10220,7 +10220,7 @@
             (and (logtest? (-> *game-info* items) (game-items pass-front-gate))
                  (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
                  )
-              ) 
+              )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -11036,7 +11036,7 @@
             :borrow '((desert-game alias desert copy deschase special))
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-            (and (ap-route-spargus-to-monk-temple?)            
+            (and (ap-route-spargus-to-monk-temple?)
                  (logtest? (-> *game-info* features) (game-feature gun))
              )
             )
@@ -13121,7 +13121,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
                (logtesta? (-> *game-info* features) (game-feature artifact-invis gun darkjak darkjak-smack lightjak lightjak-swoop))
-          ) 
+          )
             )
             :on-close #f
             :reset #f
@@ -13189,7 +13189,7 @@
               :on-fail #f
               )
             :borrow '()
-            :open? #f      
+            :open? #f
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -14785,7 +14785,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
                (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
-                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
@@ -14881,7 +14881,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
                (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
-                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
@@ -14971,8 +14971,8 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
-               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2  
-                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+               (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))
@@ -15170,7 +15170,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-ruins?)
                (logtesta? (-> *game-info* items) (game-items amulet0 amulet1 amulet2
-                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3 
+                                                  dark-eco-crystal0 dark-eco-crystal1 dark-eco-crystal2 dark-eco-crystal3
                                                   light-eco-crystal0 light-eco-crystal1 light-eco-crystal2 light-eco-crystal3))
                (logtesta? (-> *game-info* features) (game-feature gun board lightjak lightjak-swoop darkjak darkjak-smack))
                (logtesta? (-> *game-info* vehicles) (game-vehicles v-rhino v-snake))

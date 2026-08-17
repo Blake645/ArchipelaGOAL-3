@@ -1,7 +1,7 @@
 ;;-*-Lisp-*-
 (in-package goal)
 
-;; name: warp-gate-menu-data.gc 
+;; name: warp-gate-menu-data.gc
 ;; name in dgo: warp-gate-menu-data
 ;; dgos: GAME
 
@@ -553,7 +553,7 @@
         *warp-gate-30-menu-list*
         )
       (else
-        *empty-warp-gate-menu-list* ;; Just an empty array. Leave it at is. Used as a fallback when an entity doesn't have a defined menu. 
+        *empty-warp-gate-menu-list* ;; Just an empty array. Leave it at is. Used as a fallback when an entity doesn't have a defined menu.
         )
       )
     )
@@ -1010,7 +1010,7 @@
         *air-train-5-menu-data*
         )
       (else
-        *empty-air-train-menu-data* ;; Just an empty array. Leave it at is. Used as a fallback when an entity doesn't have a defined menu. 
+        *empty-air-train-menu-data* ;; Just an empty array. Leave it at is. Used as a fallback when an entity doesn't have a defined menu.
         )
       )
     )

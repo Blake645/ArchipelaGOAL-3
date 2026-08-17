@@ -15,7 +15,7 @@
       (let* ((allowed? (-> menu i allow-when))
              (forbidden? (-> menu i forbid-when)))
         (when (and (not found-exclusive?)
-                   (or (not allowed?) (allowed?)) 
+                   (or (not allowed?) (allowed?))
                    (or (not forbidden?) (not (forbidden?))))
           (cond
                 ((-> menu i exclusive?)
@@ -24,7 +24,7 @@
                 (set! available-count 1)
                 (set! found-exclusive? #t)
   )
-            (else 
+            (else
               (set! (-> available-idxs available-count) i)
               (+! available-count 1)
               )
@@ -38,7 +38,7 @@
             (have-next-page? (< end-idx available-count))
             (have-prev-page? (> page 0))
             (items-this-page (min *tm-items-per-page* (- available-count start-idx)))
-            (extra-options (cond 
+            (extra-options (cond
               ((and have-prev-page? have-next-page?) 2)
               (have-prev-page? 1)
               (have-next-page? 1)
@@ -243,7 +243,7 @@
     (dotimes (i list-length)
       (let* ((allowed? (-> menu i allow-when))
              (forbidden? (-> menu i forbid-when)))
-        (when (and (or (not allowed?) (allowed?)) 
+        (when (and (or (not allowed?) (allowed?))
                    (or (not forbidden?) (not (forbidden?))))
           (return #t)
           )

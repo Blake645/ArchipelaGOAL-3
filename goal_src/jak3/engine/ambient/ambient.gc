@@ -225,7 +225,7 @@
     (case-str name
       (("car001" "car002" "car003" "car004"
         "car005" "car006" "car007" "car008"
-        "red001" "turret001" "dark001" "dark002" 
+        "red001" "turret001" "dark001" "dark002"
         "dark003" "dark004" "dark005""shine001"
         "amulet001" "amulet002" "amulet003" "gate001"
         "train001" "pass001" "pass002" "pass003"

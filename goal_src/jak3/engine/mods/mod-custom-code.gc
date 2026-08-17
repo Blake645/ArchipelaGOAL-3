@@ -255,7 +255,7 @@
     (when messenger
       (append-messages messenger dir item player)))
   (none))
-  
+
 (defun ap-messenger-reset! ()
   (let ((messenger (the ap-messenger (process-by-name "ap-messenger" *active-pool*))))
     (when messenger
@@ -302,7 +302,7 @@
 
        ;; Transfer important settings to ap-info struct
       (ap-settings-update)
-      
+
       ;; Draw Archipelago connection status
       (ap-draw-connection-status)
       ;; <ap:note> comment this out/in to show to testers.
@@ -398,11 +398,11 @@
     (let ((platform (entity-by-name "wstd-arena-plat-10")))
       (when platform
         (set! (cdr (res-lump-struct platform 'on-activate pair))  '(
-        ((or (task-open? "desert-catch-lizards-introduction")  
-        ;;(task-open? "wascity-chase-introduction") 
-        ;;(task-open? "wascity-chase-resolution") 
-        (task-open? "arena-fight-2-resolution") 
-        (task-open? "arena-fight-3-introduction")) 'wait) 
+        ((or (task-open? "desert-catch-lizards-introduction")
+        ;;(task-open? "wascity-chase-introduction")
+        ;;(task-open? "wascity-chase-resolution")
+        (task-open? "arena-fight-2-resolution")
+        (task-open? "arena-fight-3-introduction")) 'wait)
         ((or (task-open? "arena-fight-2-fight")) 'wait-end)
         ((or (task-open? "arena-training-1-collect")) 'wait-show)
         (else #f))))
@@ -444,8 +444,8 @@
 ;; desert
       (let ((region-1203 (region-lookup-by-id 1203)))
         (when region-1203
-          (set! (-> region-1203 on-enter) 
-            '(begin 
+          (set! (-> region-1203 on-enter)
+            '(begin
               (when (task-open? "desert-artifact-race-1-race") (talker-spawn "vehic03"))
             )
           )
@@ -454,8 +454,8 @@
 ;; mhacity/tower
       (let ((region-1280 (region-lookup-by-id 1280)))
         (when region-1280
-          (set! (-> region-1280 on-enter) 
-            '(begin 
+          (set! (-> region-1280 on-enter)
+            '(begin
               (when (task-closed? "city-start-resolution") (want-load 'ctywide-mh 'mhcityb 'towera))
             )
           )
@@ -463,13 +463,13 @@
       )
       (let ((region-1277 (region-lookup-by-id 1277)))
         (when region-1277
-          (set! (-> region-1277 on-enter) 
-            '(begin 
+          (set! (-> region-1277 on-enter)
+            '(begin
               (when (task-closed? "city-start-resolution") (want-display 'towera 'display))
             )
           )
-          (set! (-> region-1277 on-exit) 
-            '(begin 
+          (set! (-> region-1277 on-exit)
+            '(begin
               (when (task-closed? "city-start-resolution") (want-display 'towera #f))
             )
         )
@@ -477,8 +477,8 @@
     )
       (let ((region-1757 (region-lookup-by-id 1757)))
         (when region-1757
-          (set! (-> region-1757 on-enter) 
-            '(begin 
+          (set! (-> region-1757 on-enter)
+            '(begin
               (when (task-open? "tower-destroy-introduction") (task-close! "tower-destroy-introduction") (want-sound 'tower1 'tower2 'tower3))
             )
           )
@@ -517,7 +517,7 @@
       (begin
         (want-display 'templex 'display)
         (send-event "tpl-holo-eye-1" 'kill)
-        (cond 
+        (cond
         ((task-open? "temple-oracle-introduction")
           (task-close! "temple-oracle-introduction"))))
     ))
@@ -544,8 +544,8 @@
 )
       (let ((region-1691 (region-lookup-by-id 1691)))
         (when region-1691
-          (set! (-> region-1691 on-enter) 
-            '(begin 
+          (set! (-> region-1691 on-enter)
+            '(begin
               (when (task-closed? "temple-climb-introduction") (task-close! "temple-climb-resolution"))
               (when (task-open? "desert-glide-introduction") (scene-play "temple-climb-res")))
             )
@@ -553,16 +553,16 @@
         )
         (let ((region-1528 (region-lookup-by-id 1528)))
         (when region-1528
-          (set! (-> region-1528 on-enter) 
-            '(begin 
+          (set! (-> region-1528 on-enter)
+            '(begin
               (when (task-open? "temple-climb-introduction") (scene-play "temple-climb-intro")) (want-sound wasall1 temple1 temple6))
             )
           )
         )
       (let ((region-1675 (region-lookup-by-id 1675)))
         (when region-1675
-          (set! (-> region-1675 on-enter) 
-            '(begin 
+          (set! (-> region-1675 on-enter)
+            '(begin
               (when (task-open? "temple-oracle-stairs") (task-close! "temple-oracle-stairs"))
             )
           )
@@ -570,8 +570,8 @@
       )
       (let ((region-1504 (region-lookup-by-id 1504)))
         (when region-1504
-          (set! (-> region-1504 on-enter) 
-            '(begin 
+          (set! (-> region-1504 on-enter)
+            '(begin
               (when (task-open? "temple-tests-introduction") (scene-play "temple-tests-intro"))
             )
           )
@@ -579,13 +579,13 @@
       )
       (let ((region-1557 (region-lookup-by-id 1557)))
         (when region-1557
-          (set! (-> region-1557 on-enter) 
-            '(begin 
+          (set! (-> region-1557 on-enter)
+            '(begin
               (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-enter))
             )
           )
-          (set! (-> region-1557 on-exit) 
-            '(begin 
+          (set! (-> region-1557 on-exit)
+            '(begin
               (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-exit))
             )
         )
@@ -593,13 +593,13 @@
       )
       (let ((region-1556 (region-lookup-by-id 1556)))
         (when region-1556
-          (set! (-> region-1556 on-enter) 
-            '(begin 
+          (set! (-> region-1556 on-enter)
+            '(begin
               (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-on))
             )
           )
-          (set! (-> region-1556 on-exit) 
-            '(begin 
+          (set! (-> region-1556 on-exit)
+            '(begin
               (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-off))
             )
         )
@@ -607,8 +607,8 @@
       )
       (let ((region-1592 (region-lookup-by-id 1592)))
         (when region-1592
-          (set! (-> region-1592 on-enter) 
-            '(begin 
+          (set! (-> region-1592 on-enter)
+            '(begin
               (when (task-open? "temple-oracle-pre-pole-room") (send-event "tpl-gate-3" 'trigger))
             )
           )
@@ -616,8 +616,8 @@
       )
       (let ((region-1505 (region-lookup-by-id 1505)))
         (when region-1505
-          (set! (-> region-1505 on-enter) 
-            '(begin 
+          (set! (-> region-1505 on-enter)
+            '(begin
               (when (task-open? "temple-oracle-meeting") (scene-play "temple-oracle-intro"))
             )
           )
@@ -625,8 +625,8 @@
       )
       (let ((region-1506 (region-lookup-by-id 1506)))
         (when region-1506
-          (set! (-> region-1506 on-enter) 
-            '(begin 
+          (set! (-> region-1506 on-enter)
+            '(begin
               (when (task-open? "temple-oracle-powerup") (scene-play "temple-oracle-res"))
             )
           )
@@ -634,8 +634,8 @@
       )
       (let ((region-1507 (region-lookup-by-id 1507)))
         (when region-1507
-          (set! (-> region-1507 on-enter) 
-            '(begin 
+          (set! (-> region-1507 on-enter)
+            '(begin
               (when (task-open? "temple-tests-oracle") (task-closed? "temple-tests-hover-training") (scene-play "temple-tests-res-a"))
             )
           )
@@ -643,8 +643,8 @@
       )
       (let ((region-1761 (region-lookup-by-id 1761)))
         (when region-1761
-          (set! (-> region-1761 on-enter) 
-            '(begin 
+          (set! (-> region-1761 on-enter)
+            '(begin
               (when (task-open? "temple-tests-door-1") (send-event *target) 'end-mode 'freeze #t)
             )
           )
@@ -652,8 +652,8 @@
       )
       (let ((region-1699 (region-lookup-by-id 1699)))
         (when region-1699
-          (set! (-> region-1699 on-enter) 
-            '(begin 
+          (set! (-> region-1699 on-enter)
+            '(begin
               (when (task-closed? "temple-defend-introduction") (send-event *target) 'end-mode 'freeze #t)
             )
           )
@@ -661,8 +661,8 @@
       )
       (let ((region-1938 (region-lookup-by-id 1938)))
         (when region-1938
-          (set! (-> region-1938 on-enter) 
-            '(begin 
+          (set! (-> region-1938 on-enter)
+            '(begin
               (when (task-open? "temple-defend-resolution") (endlessfall))
             )
           )
@@ -671,8 +671,8 @@
   ;; nest
         (let ((region-1155 (region-lookup-by-id 1155)))
         (when region-1155
-          (set! (-> region-1155 on-enter) 
-            '(begin 
+          (set! (-> region-1155 on-enter)
+            '(begin
               (when (task-closed? "nest-eggs-wall") (task-close! "nest-eggs-tunnel"))
             )
           )
@@ -681,8 +681,8 @@
   ;; mines
         (let ((region-1852 (region-lookup-by-id 1852)))
         (when region-1852
-          (set! (-> region-1852 on-enter) 
-            '(begin 
+          (set! (-> region-1852 on-enter)
+            '(begin
               (when (task-open? "mine-explore-introduction") (scene-play "catacombs-travel-res"))
             )
           )
@@ -691,8 +691,8 @@
   ;; genb
         (let ((region-102 (region-lookup-by-id 102)))
         (when region-102
-          (set! (-> region-102 on-enter) 
-            '(begin 
+          (set! (-> region-102 on-enter)
+            '(begin
               (if (task-open? "sewer-met-hum-introduction") (want-load 'slumbset 'ctygenb 'ctywide-ff) (want-load 'ctyslumb 'ctygenb 'ctywide-ff))
             )
           )
@@ -700,8 +700,8 @@
         )
         (let ((region-101 (region-lookup-by-id 101)))
         (when region-101
-          (set! (-> region-101 on-enter) 
-            '(begin 
+          (set! (-> region-101 on-enter)
+            '(begin
               (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset 'display) (want-display 'ctyslumb 'display))
             )
           )
@@ -709,8 +709,8 @@
         )
         (let ((region (region-lookup-by-id 101)))
         (when region
-          (set! (-> region on-exit) 
-            '(begin 
+          (set! (-> region on-exit)
+            '(begin
               (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset #f) (want-display 'ctyslumb #f))
             )
           )
@@ -719,8 +719,8 @@
         ;; ruins
         (let ((region-1500 (region-lookup-by-id 1500)))
         (when region-1500
-          (set! (-> region-1500 on-enter) 
-            '(begin 
+          (set! (-> region-1500 on-enter)
+            '(begin
               (when (task-open? "palace-ruins-patrol-stadium") (scene-play "palace-ruins-patrol-intro"))
             )
           )
@@ -728,15 +728,15 @@
         )
         (let ((region-1391 (region-lookup-by-id 1391)))
         (when region-1391
-          (set! (-> region-1391 on-enter) 
-            '(begin 
+          (set! (-> region-1391 on-enter)
+            '(begin
               (when (task-closed? "palace-ruins-patrol-stadium") (task-close! "palace-ruins-patrol-resolution")
                     (task-open? "palace-ruins-attack-introduction") (scene-play "palace-ruins-attack-intro"))
             )
           )
         )
         )
-      (if *show-input-display* 
+      (if *show-input-display*
         (input-display-on)
         (input-display-off)
         )
@@ -744,7 +744,7 @@
       (when *debug-segment*
         (orb-placer-maintenance)
         )
-(when (and *ap-settings* 
+(when (and *ap-settings*
            (-> *ap-settings* item-messages?)
            (not (process-by-name "ap-messenger" *active-pool*)))
   (set! *ap-messenger* (the (pointer ap-messenger) (ap-messenger-run))))
@@ -758,7 +758,7 @@
       )
 
     (defun runs-on-task-close ()
-    
+
 
       (none)
       )
@@ -768,25 +768,25 @@
         ;; Code here runs as soon as you pickup ANY eco
 
         (case eco-type
-          (((pickup-type eco-yellow))      
+          (((pickup-type eco-yellow))
             ;; Code here runs as soon as you pickup yellow eco
 
             )
-          (((pickup-type eco-red))      
+          (((pickup-type eco-red))
             ;; Code here runs as soon as you pickup red eco
 
             )
-          (((pickup-type eco-blue))      
+          (((pickup-type eco-blue))
             ;; Code here runs as soon as you pickup blue eco
 
             )
 
-          (((pickup-type eco-green))      
-            ;; Code here runs as soon as you pickup big green eco 
+          (((pickup-type eco-green))
+            ;; Code here runs as soon as you pickup big green eco
 
             )
           )
-        
+
         (when from-vent?
           ;; Code here runs only if the eco was picked up from a vent
 
@@ -816,35 +816,35 @@
       )
       (('centipede)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 6))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('endlessfall)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 7))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('instant-death)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 8))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('lava)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 9))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('melt)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 10))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('explode)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 11))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('big-explosion)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 12))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('turret)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 13))
-        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))    
+        (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
       )
       (('smush)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 14))
@@ -889,7 +889,7 @@
       (('tentacle)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 24))
         (+! (-> *ap-info-jak3* death-count) (the-as uint 1))
-      
+
       )
       (('generic)
         (set! (-> *ap-info-jak3* cause-of-death) (the-as uint 25))

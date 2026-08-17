@@ -1642,7 +1642,7 @@
   (pass-slumb-genb-acquried #x2126)
   (cypher-glyph-acquried #x2127)
   (progress-go-home #x2128)
-  
+
   (ap-connect-and-start #x2129)
   (ap-ready #x2130)
   (ap-waiting-for-items #x2131)
@@ -1651,7 +1651,7 @@
 
   (progress-menu-archipelagoal-3 #x2158)
   (progress-menu-seed-options #x2159)
-  (progress-menu-completion-type #x2160)  
+  (progress-menu-completion-type #x2160)
   (progress-menu-completion-type-mission-count #x2161)
   (progress-menu-completion-type-specific-mission #x2162)
   (progress-menu-completion-value #x2163)
@@ -1678,7 +1678,7 @@
   (talk-to-veger #x2193)
   (progress-buy-gems #x2194)
   (mhcity-door-hint #x2195)
-  
+
   ;; mod text
   (pad-triangle #x2000)
   (pad-circle #x2001)

@@ -5,9 +5,9 @@
    Each menu list corresponds to a specific cutscene, game-task-node, actor, etc,
    based on mission/task progress.
 
-   Also, check the method `setup-fields` of the `warp-gate` type in `warp-gate-menu-data.gc`, 
+   Also, check the method `setup-fields` of the `warp-gate` type in `warp-gate-menu-data.gc`,
    which is responsible for assigning a menu entry list to a specific entity. Do this if you
-   want to add custom warp-gate menus in your own custom levels.  
+   want to add custom warp-gate menus in your own custom levels.
  |#
 
 (deftype taskable-menu-entry (structure)
@@ -18,10 +18,10 @@
    (exclusive?    symbol)            ;; optional: if true and item is available, it will be the only menu item in the list (first come first serve).
    (allow-when    (function symbol)) ;; optional: function that must return true for this entry to become available
    (forbid-when   (function symbol)) ;; optional: function that hides this entry if it returns true, regardless of `allow-when`
-   )  
+   )
   )
 
-(defmacro static-taskable-menu-entry 
+(defmacro static-taskable-menu-entry
   (&key task-node
     &key event-idx
     &key continue

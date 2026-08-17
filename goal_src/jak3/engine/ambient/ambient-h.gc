@@ -1164,7 +1164,7 @@ and neg-state is greater than or equal to neg.
                             :on-close #f
                             :camera #f
                             )
-                            ;; <ap:note> wave concussor 
+                            ;; <ap:note> wave concussor
                           (new 'static 'talker-speech-class
                             :name "powup002"
                             :channel (gui-channel alert)
@@ -3491,7 +3491,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id slam-dozer-acquired)
                             :on-close #f
                             :camera #f)
-                            
+
                             (new 'static 'talker-speech-class
                             :name "car006"
                             :channel (gui-channel alert)
@@ -3503,7 +3503,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id heat-seeker-acquired)
                             :on-close #f
                             :camera #f)
-                            
+
                             (new 'static 'talker-speech-class
                             :name "car007"
                             :channel (gui-channel alert)
@@ -3515,7 +3515,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id dust-demon-acquired)
                             :on-close #f
                             :camera #f)
-                            
+
                             (new 'static 'talker-speech-class
                             :name "car008"
                             :channel (gui-channel alert)
@@ -3527,7 +3527,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id desert-screamer-acquired)
                             :on-close #f
                             :camera #f)
-                            
+
                             (new 'static 'talker-speech-class
                             :name "red001"
                             :channel (gui-channel alert)
@@ -3539,7 +3539,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id scatter-gun-acquired)
                             :on-close #f
                             :camera #f)
-                            
+
                             (new 'static 'talker-speech-class
                             :name "turret001"
                             :channel (gui-channel alert)
@@ -3551,7 +3551,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id gun-turret-acquired)
                             :on-close #f
                             :camera #f)
-                            
+
                             (new 'static 'talker-speech-class
                             :name "dark001"
                             :channel (gui-channel alert)
@@ -3563,7 +3563,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id dark-jak-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "dark002"
                             :channel (gui-channel alert)
@@ -3575,7 +3575,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id dark-bomb-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "dark003"
                             :channel (gui-channel alert)
@@ -3587,7 +3587,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id dark-blast-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "dark004"
                             :channel (gui-channel alert)
@@ -3599,7 +3599,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id dark-invisiblity-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "dark005"
                             :channel (gui-channel alert)
@@ -3611,7 +3611,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id dark-strike-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "shine001"
                             :channel (gui-channel alert)
@@ -3623,7 +3623,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id light-jak-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "amulet001"
                             :channel (gui-channel alert)
@@ -3635,7 +3635,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id war-amulet-1-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "amulet002"
                             :channel (gui-channel alert)
@@ -3647,7 +3647,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id war-amulet-2-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "amulet003"
                             :channel (gui-channel alert)
@@ -3659,7 +3659,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id war-amulet-3-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "gate001"
                             :channel (gui-channel alert)
@@ -3671,7 +3671,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id gate-pass-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "train001"
                             :channel (gui-channel alert)
@@ -3683,7 +3683,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id pass-air-train-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "pass001"
                             :channel (gui-channel alert)
@@ -3695,7 +3695,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id pass-port-mha-acquired)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "pass002"
                             :channel (gui-channel alert)
@@ -3707,7 +3707,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id pass-port-inda-acquried)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "pass003"
                             :channel (gui-channel alert)
@@ -3719,7 +3719,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id pass-inda-indb-acquried)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "pass004"
                             :channel (gui-channel alert)
@@ -3731,7 +3731,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id pass-indb-sluma-acquried)
                             :on-close #f
                             :camera #f)
-                                                        
+
                             (new 'static 'talker-speech-class
                             :name "pass005"
                             :channel (gui-channel alert)
@@ -3743,7 +3743,7 @@ and neg-state is greater than or equal to neg.
                             :text-message (text-id pass-slumb-genb-acquried)
                             :on-close #f
                             :camera #f)
-                                                                                    
+
                             (new 'static 'talker-speech-class
                             :name "item001"
                             :channel (gui-channel alert)

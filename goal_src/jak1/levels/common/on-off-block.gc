@@ -73,7 +73,7 @@
   (basebutton-method-26 this)
 
   (let ((g (res-lump-value (-> this entity) 'on-off-group uint128 :default (the-as uint128 0))))
-    (when (>= g 0) 
+    (when (>= g 0)
       (set! (-> this group) (the-as on-off-group g))))
   (case (-> this group)
     (((on-off-group red))
@@ -156,7 +156,7 @@
   :event
     (behavior ((proc process) (argc int) (message symbol) (block event-message-block))
       ;; only respond when player has eco / full HP
-      (when (and *target* (or (and (= (-> *target* fact health) (-> *target* fact health-max)) 
+      (when (and *target* (or (and (= (-> *target* fact health) (-> *target* fact health-max))
                                    (= (-> *target* fact eco-pill) (-> *target* fact eco-pill-max)))
                               (< 0.0 (-> *target* fact eco-level))))
         (case message
@@ -249,7 +249,7 @@
           ((2) (set-vector! (-> self draw color-mult) 1.0 5.0 1.0 1.0)) ;; green
           ((3) (set-vector! (-> self draw color-mult) 5.0 5.0 1.0 1.0)) ;; yellow
           )
-        ) 
+        )
       (if (-> self move-to?) (rider-trans)))
   :code anim-loop
   :post
@@ -371,7 +371,7 @@
     (if (and (>= g 0) (< g (on-off-group max))) (set! (-> this group) (the-as on-off-group g))))
   (false! (-> this inverted?))
   (let ((i (res-lump-value (-> this entity) 'inverted? uint128 :default (the-as uint128 0))))
-    (when (> i 0) 
+    (when (> i 0)
       (true! (-> this inverted?))))
   (set-time! (-> this birth-time))
   (initialize-skeleton this *on-off-block-sg* '())

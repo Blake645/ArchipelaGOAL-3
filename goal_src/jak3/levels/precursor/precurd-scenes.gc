@@ -1201,7 +1201,7 @@
                                      (begin
                                        (task-close! "precursor-destroy-ship-resolution")
                                        (task-close! "desert-final-boss-introduction")
-                                       )                                      
+                                       )
                                      (task-close! "precursor-destroy-ship-resolution")
                                      )
                                  (none)

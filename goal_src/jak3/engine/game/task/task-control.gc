@@ -259,7 +259,7 @@
                 (('debug 'level)
                  )
                 (else
-                 ;;<ap:preserve-this> comment out to stop items being given to Jak automatically. (i hate this) 
+                 ;;<ap:preserve-this> comment out to stop items being given to Jak automatically. (i hate this)
                   ;; (if (logtest? (-> s1-0 flags) (game-task-node-flag closed))
                   ;;    (eval-game-task-cmd! s1-0)
                   ;;    )
@@ -318,7 +318,7 @@
                   )
                 ;; (s5-1 (-> s1-0 borrow))
                 ;; only consider tasks starting from arena-training-1
-                (when (and (nonzero? (length (-> s1-0 borrow)))  
+                (when (and (nonzero? (length (-> s1-0 borrow)))
                            (>= (-> s1-0 task) (game-task arena-training-1)))
                   (let ((b-list (-> s1-0 borrow))
                         (s4-0 (car (-> s1-0 borrow))))
@@ -417,8 +417,8 @@
         (a0-4 (-> *game-info* sub-task-list))
         )
     ;; <ap:preserve-this>
-    ;; In the vanilla game, later subtasks overlay/override earlier subtasks when setting level task-masks. 
-    ;; This means later missions can lock out earlier missions because some important actors, based on their task/kill-masks, 
+    ;; In the vanilla game, later subtasks overlay/override earlier subtasks when setting level task-masks.
+    ;; This means later missions can lock out earlier missions because some important actors, based on their task/kill-masks,
     ;; are not spawned in. What we do instead is stop applying task-masks once we find a task node in this level that is not closed.
     ;; This prioritizes earlier missions over later ones and stabilizes the state of the game.
     (dotimes (a1-1 (-> a0-4 length))
@@ -902,13 +902,13 @@
   (format 0 "##########################################~%")
   (format 0 "Task being closed: ~A (ID: ~D)~%" arg0 (the-as uint arg0))
   (format 0 "##########################################~%~%")
-  
+
   (let ((game-nodes (-> *game-info* sub-task-list)))
     (dotimes (i (-> game-nodes length))
       (when (nonzero? i)
         (let ((node (-> game-nodes i)))
           (when (and (= (-> node task) arg0) (logtest? (-> node flags) (game-task-node-flag close-task)))
-            ;; <ap:preserve-this> we need to pick the correct ap-struct to update, so check if the node 
+            ;; <ap:preserve-this> we need to pick the correct ap-struct to update, so check if the node
             ;; we are about to close is a side mission or a main mission. the game-task-node range of side missions
             ;; is known to be the 2 listed below.
             (let ((side-missions-start (the int (game-task-node desert-bbush-get-to-1-introduction)))
@@ -1098,7 +1098,7 @@
                         )
                     )
                   )
-                
+
                 (goto cfg-21)
                 )
               )
@@ -1223,7 +1223,7 @@
            (dotimes (a2-2 4)
              (let ((t0-0 (-> v1-1 parent-node a2-2)))
              ;; <ap:preserve-this> when statement replaced to prevent percentage warping.
-               (when (and (nonzero? t0-0) 
+               (when (and (nonzero? t0-0)
                (= (-> this task) (-> a1-0 t0-0 task))
                (not (logtest? (-> a1-0 t0-0 flags) (game-task-node-flag closed))))
                  (set! a1-1 #f)
@@ -1260,7 +1260,7 @@
          )
     )
   )
-  
+
 (defun task-node-open! ((arg0 game-task-node) (arg1 symbol))
   (let ((s5-0 (-> *game-info* sub-task-list arg0)))
     (dotimes (s4-0 4)
@@ -1297,7 +1297,7 @@
      )
     (((game-task-node-command add-board-training))
      (set! (-> *game-info* features)
-      (the-as game-feature (logior (game-feature feature36) (-> *game-info* features)))    
+      (the-as game-feature (logior (game-feature feature36) (-> *game-info* features)))
      )
     )
     (((game-task-node-command add-board-launch))
@@ -1596,7 +1596,7 @@
       (((game-task-node-command add-gun-turret))
       (logior! (-> *game-info* features) (game-feature gun-turret))
     )
-    )    
+    )
     )
 
 (defmethod eval-game-task-cmd! ((this game-task-node-info))
