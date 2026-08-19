@@ -7542,7 +7542,6 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-spargus-to-port?)
                  (logtest? (-> *game-info* features) (game-feature gun))
-                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f

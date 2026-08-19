@@ -6,6 +6,7 @@
 ;; dgos: GAME
 
 (define-extern task-node-close-upwards (function (array game-task-node-info) int none))
+(define-extern ap-clear-ctywide-borrow-slot-4! (function none))
 
 ;; DECOMP BEGINS
 
@@ -1038,6 +1039,21 @@
                     (if (= arg1 'event)
                         (menu-secrets-notify-task-node-close (the-as game-task-node arg0))
                         )
+                    ;; <ap:preserve-this> force-clear ctywide borrow slot 4 if this mission used it,
+                    ;; to prevent multiple slot-4-dependent missions loading simultaneously due to
+                    ;; AP's non-linear unlock order.
+                    (let ((b-list (-> arg0 borrow)))
+                      (while (not (null? b-list))
+                        (let ((entry (car b-list)))
+                          (when (and (pair? entry)
+                                     (= (car entry) 'ctywide)
+                                     (= (car (cdr entry)) 4))
+                            (ap-clear-ctywide-borrow-slot-4!)
+                            )
+                          )
+                        (set! b-list (cdr b-list))
+                        )
+                      )
                     )
                   (if (logtest? (-> arg0 flags) (game-task-node-flag close-task))
                       ((lambda ((arg0 game-task-node-info))

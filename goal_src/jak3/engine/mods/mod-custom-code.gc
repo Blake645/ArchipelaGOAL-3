@@ -309,7 +309,7 @@
 (when (and *debug-segment* *show-test-build-info*)
   (format *stdcon0* "~%~4LArchipelaGOAL 3 - Test Build~0L~%")
   (format *stdcon* "Found a bug? Send us a screenshot!~%")
-  (format *stdcon0* "Toggle this text in Debug Menu > Modding Tools.~%~%")
+  (format *stdcon0* "Toggle this text in Debug Menu (L3 + Start) > Modding Tools.~%~%")
   (format *stdcon0* "~4Lgame features:~0L ~S~%"
     (begin
       (clear *temp-string*)
@@ -339,6 +339,22 @@
       *temp-string*
       )
     )
+(format *stdcon0* "~4Lcurrent mission:~0L ~S~%~%"
+  (let ((subtasks (-> *game-info* sub-task-list))
+        (found (the-as string #f)))
+    (dotimes (i (-> subtasks length))
+      (when (and (not found) (nonzero? i))
+        (let ((subtask (-> subtasks i)))
+          (when (and (-> subtask manager)
+                     (handle->process (-> subtask manager manager)))
+            (set! found (-> subtask name))
+            )
+          )
+        )
+      )
+    (or found "none")
+    )
+  )
   (format *stdcon0* "~4Lcurrent tasks:~0L~%~%")
   (let ((level (level-get-target-inside *level*)))
     (when level
@@ -364,6 +380,19 @@
       )
     )
   )
+;; <ap:preserve-this> process queued important-item talker announcements one at a time,
+;; with a cooldown so the previous banner's delay+display window fully finishes first.
+(when (and (not (null? *ap-important-item-queue*))
+           (not (talker-displayed?))
+           (time-elapsed? *ap-talker-cooldown-timer* (seconds 8.5))
+           (not (eq? (current-level-name) 'wasintro)))
+  (let ((next-speech (car *ap-important-item-queue*)))
+    (set! *ap-important-item-queue* (cdr *ap-important-item-queue*))
+    (set-time! *ap-talker-cooldown-timer*)
+    (script-eval (list 'talker-spawn next-speech))
+    )
+  )
+
 (load-levels-in-bubble! 4124.84 44.50 4431.53 40.0 'templed 'templeb 'templea) ;; load (templed, templeb, templea) in pole room
 (when (and (task-node-open? (game-task-node temple-tests-resolution))
            (not (process-by-name "tpl-break-bridge" *active-pool*)))
@@ -416,6 +445,11 @@
     (let ((wascity-small-door (entity-by-name "wascity-airlock-small-1")))
           (when wascity-small-door
             (set! (cdr (res-lump-struct wascity-small-door 'on-notice pair)) '((#t '(wasdoors))))
+            )
+    )
+    (let ((temple-door (entity-by-name "tpl-inner-airlock-door-1")))
+          (when temple-door
+            (set! (cdr (res-lump-struct temple-door 'on-notice pair)) '((#t '(templea templex))))
             )
     )
     (let ((parking-spot (entity-by-name "w-parking-spot-3")))

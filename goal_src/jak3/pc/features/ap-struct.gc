@@ -41,6 +41,48 @@
         (false! *ap-auto-saving?*))))
   *ap-auto-saving?*)
 
+;; <ap:preserve-this> queue for important-item talker announcements, so multiple items received
+;; at the same time don't have their announcement text overwrite each other. Each talker entry
+;; has its own delay+text-duration (e.g. 3s delay + 5s display), so we cooldown between spawns
+;; rather than firing the instant the previous one is no longer "displayed".
+(define *ap-important-item-queue* '())
+(define *ap-talker-cooldown-timer* (the time-frame 0))
+
+(defun list-append! ((lst pair) (item string))
+  (if (null? lst)
+      (cons item '())
+      (let ((cur lst))
+        (while (not (null? (cdr cur)))
+          (set! cur (the-as pair (cdr cur)))
+          )
+        (set! (-> cur cdr) (cons item '()))
+        lst
+        )
+      )
+  )
+
+(defun queue-important-talker! ((speech-name string))
+  (set! *ap-important-item-queue*
+        (if (null? *ap-important-item-queue*)
+            (cons speech-name '())
+            (list-append! (the-as pair *ap-important-item-queue*) speech-name)
+            )
+        )
+  (none)
+  )
+  
+;; <ap:preserve-this> force-clear ctywide's borrow slot 4, to prevent multiple slot-4-dependent
+;; missions from being loaded simultaneously due to AP's non-linear unlock order (root cause of
+;; "could not find free borrow bank" crash).
+(defun ap-clear-ctywide-borrow-slot-4! ()
+  (let ((ctywide-info (lookup-level-info 'ctywide)))
+    (when ctywide-info
+      (set! (-> ctywide-info borrow borrow-info 4) #f)
+      (set! (-> ctywide-info borrow borrow-size 4) (the-as uint16 0))
+      )
+    )
+  (none)
+  )
 (defun ap-mission-checked! ((mission-id uint))
   (format 0 "~%~%*************************************************~%")
   (format 0 "*** ARCHIPELAGO MISSION COMPLETION DETECTED ***~%")
@@ -174,235 +216,235 @@
   (case item
     (('gun-red-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-1))))
-        (script-eval '(talker-spawn "red001")) ;; scatter gun
-        ))
+        (queue-important-talker! "red001")) ;; scatter gun
+      )
     (('gun-red-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-2))))
         (eval-single-cmd! (game-task-node-command add-gun-red-ammo-1))
-        (script-eval '(talker-spawn "powup002")) ;; wave concussor
-        ))
+        (queue-important-talker! "powup002")) ;; wave concussor
+      )
     (('gun-red-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-red-3))))
         (eval-single-cmd! (game-task-node-command add-gun-red-ammo-2))
-        (script-eval '(talker-spawn "powup012")) ;; plasmite RPG
-        ))
+        (queue-important-talker! "powup012")) ;; plasmite RPG
+      )
     (('gun-yellow-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-1))))
-        (script-eval '(talker-spawn "powup001")) ;; blaster
-        ))
+        (queue-important-talker! "powup001")) ;; blaster
+      )
     (('gun-yellow-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-2))))
         (eval-single-cmd! (game-task-node-command add-gun-yellow-ammo-1))
-        (script-eval '(talker-spawn "powup003")) ;; beam reflexor
-        ))
+        (queue-important-talker! "powup003")) ;; beam reflexor
+      )
     (('gun-yellow-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-yellow-3))))
         (eval-single-cmd! (game-task-node-command add-gun-yellow-ammo-2))
-        (script-eval '(talker-spawn "powup011")) ;; gyro bruster
-        ))
+        (queue-important-talker! "powup011")) ;; gyro bruster
+      )
     (('gun-blue-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-1))))
-        (script-eval '(talker-spawn "powup008")) ;; vulcan fury
-        ))
+        (queue-important-talker! "powup008")) ;; vulcan fury
+      )
     (('gun-blue-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-2))))
         (eval-single-cmd! (game-task-node-command add-gun-blue-ammo-1))
-        (script-eval '(talker-spawn "powup009")) ;; arc wielder
-        ))
+        (queue-important-talker! "powup009")) ;; arc wielder
+      )
     (('gun-blue-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-blue-3))))
         (eval-single-cmd! (game-task-node-command add-gun-blue-ammo-2))
-        (script-eval '(talker-spawn "powup010")) ;; needle lazer
-        ))
+        (queue-important-talker! "powup010")) ;; needle lazer
+      )
     (('gun-dark-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-1))))
-        (script-eval '(talker-spawn "powup014")) ;; peacemaker
-        ))
+        (queue-important-talker! "powup014")) ;; peacemaker
+      )
     (('gun-dark-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-2))))
         (eval-single-cmd! (game-task-node-command add-gun-dark-ammo-1))
-        (script-eval '(talker-spawn "powup015")) ;; mass inverter
-        ))
+        (queue-important-talker! "powup015")) ;; mass inverter
+      )
     (('gun-dark-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-dark-3))))
         (eval-single-cmd! (game-task-node-command add-gun-dark-ammo-2))
-        (script-eval '(talker-spawn "powup016")) ;; super nova
-        ))
+        (queue-important-talker! "powup016")) ;; super nova
+      )
     (('darkjak)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-darkjak))))
         (eval-single-cmd! (game-task-node-command add-darkeco))
-        (script-eval '(talker-spawn "dark001"))
-        ))
+        (queue-important-talker! "dark001"))
+      )
     (('darkjak-bomb0)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-darkjak-bomb0))))
-        (script-eval '(talker-spawn "dark002")) ;;dark bomb
-        ))
+        (queue-important-talker! "dark002")) ;;dark bomb
+      )
     (('darkjak-bomb1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-darkjak-bomb1))))
-        (script-eval '(talker-spawn "dark003")) ;; dark blast
-        ))
+        (queue-important-talker! "dark003")) ;; dark blast
+      )
     (('artifact-invis)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-artifact-invis))))
-        (script-eval '(talker-spawn "dark004")) ;; invisibility artifact
-        ))
+        (queue-important-talker! "dark004")) ;; invisibility artifact
+      )
     (('darkjak-smack)
        (let ((dummy-node (eval-single-cmd! (game-task-node-command add-darkjak-smack))))
-        (script-eval '(talker-spawn "dark005")) ;; dark strike
-        ))
+        (queue-important-talker! "dark005")) ;; dark strike
+      )
     (('lightjak)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-lightjak))))
         (eval-single-cmd! (game-task-node-command add-lighteco))
-        (script-eval '(talker-spawn "shine001"))
-        ))
+        (queue-important-talker! "shine001"))
+      )
     (('lightjak-regen)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-lightjak-regen))))
-        (script-eval '(talker-spawn "powup017")) ;; light jak regen
-        ))
+        (queue-important-talker! "powup017")) ;; light jak regen
+      )
     (('lightjak-freeze)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-lightjak-freeze))))
-        (script-eval '(talker-spawn "powup018")) ;; freeze flash
-        ))
+        (queue-important-talker! "powup018")) ;; freeze flash
+      )
     (('lightjak-shield)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-lightjak-shield))))
-        (script-eval '(talker-spawn "powup019")) ;; light jak shield
-        ))
+        (queue-important-talker! "powup019")) ;; light jak shield
+      )
     (('lightjak-swoop)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-lightjak-swoop))))
-        (script-eval '(talker-spawn "powup020")) ;; light jak flight
-        ))
+        (queue-important-talker! "powup020")) ;; light jak flight
+      )
     (('board)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-board))))
         (eval-single-cmd! (game-task-node-command add-board-launch))
-        (script-eval '(talker-spawn "powup013")) ;; jetboard
-        ))
+        (queue-important-talker! "powup013")) ;; jetboard
+      )
     (('av-generator)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-av-generator))))
-        (script-eval '(talker-spawn "powup021")) ;; beam generator
-        ))
+        (queue-important-talker! "powup021")) ;; beam generator
+      )
     (('av-cube)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-av-cube))))
-        (script-eval '(talker-spawn "powup022")) ;; holo cube
-        ))
+        (queue-important-talker! "powup022")) ;; holo cube
+      )
     (('av-prism)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-av-prism))))
-        (script-eval '(talker-spawn "powup023")) ;; prism
-        ))
+        (queue-important-talker! "powup023")) ;; prism
+      )
     (('av-reflector)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-av-reflector))))
-        (script-eval '(talker-spawn "powup024")) ;; reflector
-        ))
+        (queue-important-talker! "powup024")) ;; reflector
+      )
     (('av-map)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-av-map))))
-        (script-eval '(talker-spawn "powup025")) ;; time map
-        ))
+        (queue-important-talker! "powup025")) ;; time map
+      )
     (('vehicle-turtle)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-turtle))))
-        (script-eval '(talker-spawn "car001")) ;; tought puppy
-        ))
+        (queue-important-talker! "car001")) ;; tought puppy
+      )
     (('vehicle-snake)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-snake))))
-        (script-eval '(talker-spawn "car002")) ;; sand shark
-        ))
+        (queue-important-talker! "car002")) ;; sand shark
+      )
     (('vehicle-scorpion)
        (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-scorpion))))
-        (script-eval '(talker-spawn "car004")) ;; gila stomper
-        ))
+        (queue-important-talker! "car004")) ;; gila stomper
+      )
     (('vehicle-toad)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-toad))))
-        (script-eval '(talker-spawn "car003")) ;; dune hopper
-        ))
+        (queue-important-talker! "car003")) ;; dune hopper
+      )
     (('vehicle-rhino)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-rhino))))
-        (script-eval '(talker-spawn "car005")) ;; slam dozer
-        ))
+        (queue-important-talker! "car005")) ;; slam dozer
+      )
     (('vehicle-fox)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-fox))))
-        (script-eval '(talker-spawn "car006")) ;; heat seeker
-        ))
+        (queue-important-talker! "car006")) ;; heat seeker
+      )
     (('vehicle-mirage)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-mirage))))
-        (script-eval '(talker-spawn "car007")) ;; dust demon
-        ))
+        (queue-important-talker! "car007")) ;; dust demon
+      )
     (('vehicle-x-ride)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-vehicle-x-ride))))
-        (script-eval '(talker-spawn "car008")) ;; desert screamer
-        ))
+        (queue-important-talker! "car008")) ;; desert screamer
+      )
     (('gun-turret)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-gun-turret))))
-        (script-eval '(talker-spawn "turret001")) ;; turret
-        ))
+        (queue-important-talker! "turret001")) ;; turret
+      )
     (('amulet-1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-amulet-1))))
-        (script-eval '(talker-spawn "amulet001")) ;; amulet
-        ))
+        (queue-important-talker! "amulet001")) ;; amulet
+      )
     (('amulet-2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-amulet-2))))
-        (script-eval '(talker-spawn "amulet002")) ;; amulet
-        ))
+        (queue-important-talker! "amulet002")) ;; amulet
+      )
     (('amulet-3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-amulet-3))))
-        (script-eval '(talker-spawn "amulet003")) ;; amulet
-        ))
+        (queue-important-talker! "amulet003")) ;; amulet
+      )
     (('pass-front-gate)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-front-gate))))
-        (script-eval '(talker-spawn "gate001")) ;; gate pass to spargus
-        ))
+        (queue-important-talker! "gate001")) ;; gate pass to spargus
+      )
     (('pass-air-train)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-air-train))))
-        (script-eval '(talker-spawn "train001")) ;; pass to air train
-        ))
+        (queue-important-talker! "train001")) ;; pass to air train
+      )
     (('pass-port-mh)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-port-mh))))
-        (script-eval '(talker-spawn "pass001")) ;; pass to port mh
-        ))
+        (queue-important-talker! "pass001")) ;; pass to port mh
+      )
     (('pass-port-inda)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-port-inda))))
-        (script-eval '(talker-spawn "pass002")) ;; pass to port inda
-        ))
+        (queue-important-talker! "pass002")) ;; pass to port inda
+      )
     (('pass-inda-indb)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-inda-indb))))
-        (script-eval '(talker-spawn "pass003")) ;; pass to indb
-        ))
+        (queue-important-talker! "pass003")) ;; pass to indb
+      )
     (('pass-indb-sluma)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-indb-sluma))))
-        (script-eval '(talker-spawn "pass004")) ;; pass to sluma
-        ))
+        (queue-important-talker! "pass004")) ;; pass to sluma
+      )
     (('pass-slumb-genb)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-pass-slumb-genb))))
-        (script-eval '(talker-spawn "pass005")) ;; pass to genb
-        ))
+        (queue-important-talker! "pass005")) ;; pass to genb
+      )
     (('cypher-gliph)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-cypher-gliph))))
-        (script-eval '(talker-spawn "item001")) ;; cypher gliph
-        ))
+        (queue-important-talker! "item001")) ;; cypher gliph
+      )
     (('dark-eco-crystal)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-dark-eco-crystal))))
-        (script-eval '(talker-spawn "powup099")) ;; dark eco crystal
-        ))
+        (queue-important-talker! "powup099")) ;; dark eco crystal
+      )
     (('light-eco-crystal)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-light-eco-crystal))))
-        (script-eval '(talker-spawn "powup026")) ;; light eco crystal
-        ))
+        (queue-important-talker! "powup026")) ;; light eco crystal
+      )
     (('armor0)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-armor-0))))
-        (script-eval '(talker-spawn "powup004")) ;; forearm armor
-        ))
+        (queue-important-talker! "powup004")) ;; forearm armor
+      )
     (('armor1)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-armor-1))))
-        (script-eval '(talker-spawn "powup005")) ;; leg armor
-        ))
+        (queue-important-talker! "powup005")) ;; leg armor
+      )
     (('armor2)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-armor-2))))
-        (script-eval '(talker-spawn "powup006")) ;; shoulder armor
-        ))
+        (queue-important-talker! "powup006")) ;; shoulder armor
+      )
     (('armor3)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-armor-3))))
-        (script-eval '(talker-spawn "powup007")) ;; chest armor
-        ))
+        (queue-important-talker! "powup007")) ;; chest armor
+      )
     (('seal-of-mar)
       (let ((dummy-node (eval-single-cmd! (game-task-node-command add-seal))))
-        (script-eval '(talker-spawn "seal001")) ;; seal of mar
-        ))
+        (queue-important-talker! "seal001")) ;; seal of mar
+      )
     (('dark-eco-pill)
       (sound-play "pill-pickup") ;; dark eco pill filler item
       (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 5.0)
