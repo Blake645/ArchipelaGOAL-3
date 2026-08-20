@@ -13814,6 +13814,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (logtest? (-> *game-info* features) (game-feature gun-turret))
                (logtesta? (-> *game-info* items) (game-items amulet0 amulet1))
+               (task-node-closed? (game-task-node wascity-gungame-resolution))
                )
             )
             :on-close #f

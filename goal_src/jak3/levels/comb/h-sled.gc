@@ -776,7 +776,7 @@
    (engine-sound-id         sound-id)
    (steer-sound-id          sound-id)
    (turbo-sound-id          sound-id)
-   (in-tunnel               symbol                    :offset 756)
+   (in-tunnel               symbol                    :offset 760)
    (whoosh-time             time-frame)
    (parts                   sparticle-launch-control  4)
    (gravity-dir             vector                    :inline)
