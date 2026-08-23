@@ -586,6 +586,7 @@ This gives us more freedom to write code how we want.
 
 (defmacro game-options-pc-archipelagoal-3 ()
   `(progress-new-generic-link-to-scrolling-page (text-id progress-menu-archipelagoal-3)
+     (archipelagoal-3-warp-to)
      (archipelagoal-3-deathlink)
      (archipelagoal-3-item-messages)
      (archipelagoal-3-seed-options-link)
@@ -602,6 +603,128 @@ This gives us more freedom to write code how we want.
      (archipelagoal-3-completion-specific-mission)
      (archipelagoal-3-completion-value)
      )
+  )
+
+(defmacro archipelagoal-3-warp-to ()
+  '(new 'static 'menu-generic-carousel-option
+      :name (text-id progress-go-home)
+      :items (new 'static 'boxed-array :type text-id
+                  (text-id progress-menu-spargus)
+                  (text-id progress-menu-hip-hog)
+                  (text-id progress-menu-metal-head-city)
+                  (text-id progress-menu-power)
+                  (text-id progress-menu-industrial-section-b)
+                  (text-id progress-menu-tent)
+                  (text-id progress-menu-hq)
+                  (text-id progress-menu-outside-palace-ruins))
+      :get-item-index-fn (lambda ()
+        (cond
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "wasdoors-city"))
+          0)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "ctyport-hiphog"))
+          1)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "ctyinda-vinroom"))
+          2)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "mhcitya-near-ctyport"))
+          3)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "ctyindb-start"))
+          4)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "onintent-start"))
+          5)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "ctyslumc-freehq"))
+          6)
+          ((= (-> *game-info* current-continue)
+              (get-continue-by-name *game-info* "ctygenb-start"))
+          7)
+          (else
+          0)))
+      :on-confirm (lambda ((index int) (the-progress progress))
+        (case index
+          ((0)
+          (set! (-> *game-info* current-continue)
+            (get-continue-by-name *game-info* "wasdoors-city"))
+          (initialize! *game-info* 'die
+            (the-as game-save #f)
+            "wasdoors-city"
+            (the-as resetter-spec #f)))
+          ((1)
+          (if (ap-route-spargus-to-port?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "ctyport-hiphog"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "ctyport-hiphog"
+                (the-as resetter-spec #f)))))
+          ((2)
+          (if (ap-route-port-to-inda?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "ctyinda-vinroom"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "ctyinda-vinroom"
+                (the-as resetter-spec #f)))))
+          ((3)
+          (if (ap-route-port-to-metal-head-section?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "mhcitya-near-ctyport"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "mhcitya-near-ctyport"
+                (the-as resetter-spec #f)))))
+          ((4)
+          (if (ap-route-port-to-indb?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "ctyindb-start"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "ctyindb-start"
+                (the-as resetter-spec #f)))))
+          ((5)
+          (if (ap-route-port-to-hq?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "onintent-start"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "onintent-start"
+                (the-as resetter-spec #f)))))
+          ((6)
+          (if (ap-route-port-to-hq?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "ctyslumc-freehq"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "ctyslumc-freehq"
+                (the-as resetter-spec #f)))))
+          ((7)
+          (if (ap-route-port-to-ruins?)
+            (begin
+              (set! (-> *game-info* current-continue)
+                (get-continue-by-name *game-info* "ctygenb-start"))
+              (initialize! *game-info* 'die
+                (the-as game-save #f)
+                "ctygenb-start"
+                (the-as resetter-spec #f)))))
+          (else
+          (set! (-> *game-info* current-continue)
+            (get-continue-by-name *game-info* "wasdoors-city"))
+          (initialize! *game-info* 'die
+            (the-as game-save #f)
+            "wasdoors-city"
+            (the-as resetter-spec #f)))))
+      )
   )
 
 (defmacro archipelagoal-3-traps ()
