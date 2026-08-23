@@ -70,7 +70,7 @@
         )
   (none)
   )
-  
+
 ;; <ap:preserve-this> force-clear ctywide's borrow slot 4, to prevent multiple slot-4-dependent
 ;; missions from being loaded simultaneously due to AP's non-linear unlock order (root cause of
 ;; "could not find free borrow bank" crash).
@@ -761,6 +761,23 @@
       )
   )
 
+;; <ap:preserve-this> checks if any task completed within the last window-seconds,
+;; used to delay auto-save briefly after mission completion so we don't capture a
+;; stale resetter-node mid-transition between a closing and newly-opened task-manager.
+(defun ap-recent-task-completion? ((window-seconds float))
+  (let ((now (current-time))
+        (found #f))
+    (dotimes (i (-> *game-info* task-complete-time length))
+      (let ((tc (-> *game-info* task-complete-time i)))
+        (when (and (nonzero? tc) (< (- now tc) (the int (* window-seconds 300))))
+          (set! found #t)
+          )
+        )
+      )
+    found
+    )
+  )
+
 (defun ap-setup-options! ((options ap-seed-options))
   (ap-messenger-reset!)
   (set! (-> *ap-info-jak3* needs-item-replay) (the-as uint8 0))
@@ -797,7 +814,8 @@
              *target*
              (not (movie?))
              (not *progress-process*)
-             (time-elapsed? *ap-autosave-timer* (seconds 30)))
+             (time-elapsed? *ap-autosave-timer* (seconds 30))
+             (not (ap-recent-task-completion? 5.0)))
     (set! *ap-autosave-timer* (current-time))
     (ap-auto-save!))
   (none))

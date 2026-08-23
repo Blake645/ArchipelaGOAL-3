@@ -684,13 +684,13 @@ This gives us more freedom to write code how we want.
       (case (-> *ap-settings* completion-type)
         ((2) 0)  ;; mission-count
         ((1) 1)  ;; specific-mission
-        (else 0)))
+        (else 1)))
     :on-confirm (lambda ((index int) (the-progress progress))
       (set! (-> *ap-settings* completion-type)
         (the-as uint8 (case index
           ((0) 2)  ;; mission-count
           ((1) 1)  ;; specific-mission
-          (else 2))))
+          (else 1))))
       (ap-settings-update)
       (ap-settings-save))))
 
@@ -721,14 +721,14 @@ This gives us more freedom to write code how we want.
         ((34) 0)
         ((60) 1)
         ((71) 2)
-        (else 0)))
+        (else 1)))
     :on-confirm (lambda ((index int) (the-progress progress))
       (set! (-> *ap-settings* completion-value)
         (the-as uint8 (case index
           ((0) 34)
           ((1) 60)
           ((2) 71)
-          (else 34))))
+          (else 71))))
       (ap-settings-update)
       (ap-settings-save))))
 
