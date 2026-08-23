@@ -721,7 +721,7 @@ This gives us more freedom to write code how we want.
         ((34) 0)
         ((60) 1)
         ((71) 2)
-        (else 1)))
+        (else 2)))
     :on-confirm (lambda ((index int) (the-progress progress))
       (set! (-> *ap-settings* completion-value)
         (the-as uint8 (case index
