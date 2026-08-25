@@ -8,6 +8,7 @@
 (define-extern level-update-after-load (function level login-state level))
 (define-extern *level-type-list* type)
 (define-extern city-sound-expand-want-list (function none))
+(define-extern ap-clear-ctywide-borrow-slot-4! (function symbol none))
 
 (defglobalconstant NUM_LEVEL_PAGES 146)
 (defglobalconstant LEVEL_PAGE_SIZE_KB 126) ;; original value
@@ -2420,6 +2421,11 @@
       (set! *level-type-list* (the-as type 0))
       0
       )
+    ;; <ap:preserve-this> clear ctywide's borrow-slot-4 metadata if this level currently
+    ;; occupies it, since it's genuinely fully unloaded now (moved to the end of unload!,
+    ;; after heap/status reset, to avoid a race where the slot was freed before this
+    ;; level's memory was actually reclaimed).
+    (ap-clear-ctywide-borrow-slot-4! (-> this name))
     (assign-draw-indices *level*)
     )
   this

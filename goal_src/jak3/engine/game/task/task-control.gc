@@ -6,7 +6,7 @@
 ;; dgos: GAME
 
 (define-extern task-node-close-upwards (function (array game-task-node-info) int none))
-(define-extern ap-clear-ctywide-borrow-slot-4! (function none))
+(define-extern ap-clear-ctywide-borrow-slot-4! (function symbol none))
 
 ;; DECOMP BEGINS
 
@@ -1047,8 +1047,8 @@
                         (let ((entry (car b-list)))
                           (when (and (pair? entry)
                                      (= (car entry) 'ctywide)
-                                     (= (car (cdr entry)) 4))
-                            (ap-clear-ctywide-borrow-slot-4!)
+                                     (= (sar (the-as int (car (cdr entry))) 3) 4))
+                            (ap-clear-ctywide-borrow-slot-4! (the-as symbol (car (cdr (cdr entry)))))
                             )
                           )
                         (set! b-list (cdr b-list))

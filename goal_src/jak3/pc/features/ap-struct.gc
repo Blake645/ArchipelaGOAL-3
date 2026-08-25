@@ -74,11 +74,17 @@
 ;; <ap:preserve-this> force-clear ctywide's borrow slot 4, to prevent multiple slot-4-dependent
 ;; missions from being loaded simultaneously due to AP's non-linear unlock order (root cause of
 ;; "could not find free borrow bank" crash).
-(defun ap-clear-ctywide-borrow-slot-4! ()
+(defun ap-clear-ctywide-borrow-slot-4! ((expected-level symbol))
   (let ((ctywide-info (lookup-level-info 'ctywide)))
-    (when ctywide-info
+    (when (and ctywide-info
+               (-> ctywide-info borrow borrow-info 4)
+               (= (car (-> ctywide-info borrow borrow-info 4)) expected-level))
       (set! (-> ctywide-info borrow borrow-info 4) #f)
-      (set! (-> ctywide-info borrow borrow-size 4) (the-as uint16 0))
+      )
+    )
+  (let ((ctywide-live (level-get *level* 'ctywide)))
+    (when (and ctywide-live (-> ctywide-live borrow-level 4))
+      (set! (-> ctywide-live borrow-level 4) #f)
       )
     )
   (none)

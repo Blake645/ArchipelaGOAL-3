@@ -7392,7 +7392,7 @@
             :borrow '((ctywide 4 lsamos special))
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-spargus-to-port?)
-            (logtesta? (-> *game-info* features) (game-feature gun board)))
+            (logtesta? (-> *game-info* features) (game-feature board)))
             )
             :on-close #f
             :reset #f
@@ -7542,6 +7542,7 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-spargus-to-port?)
                  (logtest? (-> *game-info* features) (game-feature gun))
+                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -7641,8 +7642,10 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-            (ap-route-spargus-to-port?)
+            (and (ap-route-spargus-to-port?)
+                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
               )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8215,8 +8218,10 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-port-to-inda?)
+          (and (ap-route-port-to-inda?)
+               (task-node-closed? (game-task-node sewer-met-hum-resolution))
                )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -8470,6 +8475,7 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-metal-head-section?)
                 (logtest? (-> *game-info* features) (game-feature board))
+                (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -8798,6 +8804,7 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-metal-head-section?)
                  (logtesta? (-> *game-info* features) (game-feature gun pass-port-inda))
+                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -8897,6 +8904,7 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-indb?)
                 (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3))
+                (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -9558,8 +9566,10 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-port-to-indb?)
+          (and (ap-route-port-to-indb?)
+               (task-node-closed? (game-task-node sewer-met-hum-resolution))
               )
+            )
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -21180,7 +21190,9 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-port-to-hq?)
+          (and (ap-route-port-to-hq?)
+               (task-node-closed? (game-task-node sewer-met-hum-resolution))
+            )
             )
             :on-close #f
             :reset #f
@@ -21309,8 +21321,9 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-            (and  (ap-route-port-to-indb?)
-                (logtest? (-> *game-info* features) (game-feature board))
+            (and (ap-route-port-to-indb?)
+                 (logtest? (-> *game-info* features) (game-feature board))
+                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                 )
             )
             :on-close #f
@@ -21816,7 +21829,9 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (ap-route-port-to-hq?)
+          (and (ap-route-port-to-hq?)
+               (task-node-closed? (game-task-node sewer-met-hum-resolution))
+            )
             )
             :on-close #f
             :reset #f
@@ -23065,13 +23080,10 @@
             :on-open #f
             :manager #f
             :borrow '()
-            ;; <ap:preserve-this> require city-port-attack to be fully complete first - the two
-            ;; variants share the same lctypatk dead-pool and cannot be active at the same time.
-            ;; the normal parent-node dependency on city-port-attack-resolution doesn't enforce
-            ;; this by itself since it's a cross-task parent (see game-task-node-info-method-12).
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-port?)
                (task-node-closed? (game-task-node city-port-attack-resolution))
+               (task-node-closed? (game-task-node sewer-met-hum-resolution))
                )
             )
             :on-close #f
