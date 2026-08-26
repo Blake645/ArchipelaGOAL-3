@@ -18391,7 +18391,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-            (and  (ap-route-port-to-ruins?)
+            (and  (ap-route-port-to-hq?)
                 (logtest? (-> *game-info* features) (game-feature board))
                 )
             )
