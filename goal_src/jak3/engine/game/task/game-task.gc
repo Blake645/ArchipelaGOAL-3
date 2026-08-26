@@ -23257,6 +23257,7 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake))
                (logtest? (-> *game-info* items) (game-items pass-front-gate))
+               (task-node-closed? (game-task-node desert-rescue-resolution))
           )
             )
             :on-close #f

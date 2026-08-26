@@ -86,7 +86,7 @@ and neg-state is greater than or equal to neg.
     (draw-text (_type_) none)
     )
   )
-(defconstant talker-speech-length 1000) ;; <ap:preserve-this> bump length for new talkers.
+(defconstant talker-speech-length 1001) ;; <ap:preserve-this> bump length for new talkers.
 
 (define *talker-speech* (new 'static 'inline-array talker-speech-class talker-speech-length ;; <ap:preserve-this> use length from constant.
                           (new 'static 'talker-speech-class :name "none")
@@ -3774,6 +3774,14 @@ and neg-state is greater than or equal to neg.
                             :text-duration (seconds 5)
                             :neg #x1
                             :text-message (text-id mhcity-door-hint)
+                            :on-close #f
+                            :camera #f
+                            )
+                          (new 'static 'talker-speech-class
+                            :name "sig165"
+                            :channel (gui-channel sig)
+                            :speech #x18d
+                            :neg #x1
                             :on-close #f
                             :camera #f
                             )
