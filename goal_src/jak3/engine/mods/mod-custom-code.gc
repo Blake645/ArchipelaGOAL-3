@@ -521,6 +521,9 @@
      )
     )
   ))
+(overwrite-res-lump "precur-door-a-4" 'open-test 'begin '(
+  #t
+  ))
 ;; desert
       (let ((region-1203 (region-lookup-by-id 1203)))
         (when region-1203
