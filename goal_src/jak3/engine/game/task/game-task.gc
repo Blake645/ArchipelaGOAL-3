@@ -22198,13 +22198,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info)) #f)
-            :on-close '(begin
-               (task-open! "desert-bbush-total-air-time-introduction")
-               (task-open! "desert-bbush-jump-distance-introduction")
-               (task-open! "desert-bbush-total-jump-distance-introduction")
-               (task-open! "desert-bbush-roll-count-introduction")
-               )
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-x-ride v-fox v-mirage))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x4b
@@ -22326,13 +22325,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info)) #f)
-            :on-close '(begin
-               (task-open! "desert-bbush-air-time-introduction")
-               (task-open! "desert-bbush-jump-distance-introduction")
-               (task-open! "desert-bbush-total-jump-distance-introduction")
-               (task-open! "desert-bbush-roll-count-introduction")
-               )
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-x-ride v-fox v-mirage))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x4b
@@ -22454,13 +22452,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info)) #f)
-            :on-close '(begin
-               (task-open! "desert-bbush-air-time-introduction")
-               (task-open! "desert-bbush-total-air-time-introduction")
-               (task-open! "desert-bbush-total-jump-distance-introduction")
-               (task-open! "desert-bbush-roll-count-introduction")
-               )
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-x-ride v-fox v-mirage))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x4b
@@ -22582,13 +22579,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info)) #f)
-            :on-close '(begin
-               (task-open! "desert-bbush-air-time-introduction")
-               (task-open! "desert-bbush-total-air-time-introduction")
-               (task-open! "desert-bbush-jump-distance-introduction")
-               (task-open! "desert-bbush-roll-count-introduction")
-               )
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-x-ride v-fox v-mirage))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x4b
@@ -22710,13 +22706,12 @@
             :on-open #f
             :manager #f
             :borrow '()
-            :open? (lambda ((arg0 game-task-node-info)) #f)
-            :on-close '(begin
-               (task-open! "desert-bbush-air-time-introduction")
-               (task-open! "desert-bbush-total-air-time-introduction")
-               (task-open! "desert-bbush-jump-distance-introduction")
-               (task-open! "desert-bbush-total-jump-distance-introduction")
-               )
+            :open? (lambda ((arg0 game-task-node-info))
+          (and (logtest? (-> *game-info* vehicles) (game-vehicles v-snake v-x-ride v-fox v-mirage))
+               (logtest? (-> *game-info* items) (game-items pass-front-gate))
+          )
+            )
+            :on-close #f
             :reset #f
             :suck-death-count #xa5
             :command-index #x4b

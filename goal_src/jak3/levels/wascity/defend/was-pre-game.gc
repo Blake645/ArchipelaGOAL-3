@@ -2352,6 +2352,10 @@
          ;; og:preserve-this changed string from "power-game-2"
          (script-eval '(birth-pickup ("was-pre-game-2" "screen") skill FACT_SUPER_SKILL_INC flags (suck-in)))
          (task-node-close! (game-task-node wascity-pre-game-bronze) 'event)
+         ;; <ap:preserve-this> report bronze medal as an AP location check, if enabled.
+         (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+           (ap-medal-checked! (the-as uint 10))
+           )
          (set! (-> *game-info* goal) (game-info-method-31 *game-info* 1 2))
          (let ((v1-39 (the-as hud (handle->process (-> this hud-goal)))))
            (when v1-39
@@ -2372,6 +2376,10 @@
          ;; og:preserve-this changed string from "power-game-2"
          (script-eval '(birth-pickup ("was-pre-game-2" "screen") skill FACT_SUPER_SKILL_INC flags (suck-in)))
          (task-node-close! (game-task-node wascity-pre-game-silver) 'event)
+         ;; <ap:preserve-this> report silver medal as an AP location check, if enabled.
+         (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+           (ap-medal-checked! (the-as uint 11))
+           )
          (set! (-> *game-info* goal) (game-info-method-31 *game-info* 1 3))
          (let ((v1-53 (the-as hud (handle->process (-> this hud-goal)))))
            (when v1-53
@@ -2392,6 +2400,10 @@
          ;; og:preserve-this changed string from "power-game-2"
          (script-eval '(birth-pickup ("was-pre-game-2" "screen") skill FACT_SUPER_SKILL_INC flags (suck-in)))
          (task-node-close! (game-task-node wascity-pre-game-gold) 'event)
+         ;; <ap:preserve-this> report gold medal as an AP location check, if enabled.
+         (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+           (ap-medal-checked! (the-as uint 12))
+           )
          (send-event (handle->process (-> this hud-goal)) 'hide-and-die)
          )
        )

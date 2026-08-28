@@ -1597,6 +1597,10 @@
          (sound-play-by-spec (static-sound-spec "skill-pickup" :group 0 :fo-curve 1) (new-sound-id) (the-as vector #t))
          (script-eval '(birth-pickup ("power-game-player" "head") skill FACT_SUPER_SKILL_INC flags (suck-in)))
          (task-node-close! (game-task-node city-power-game-bronze) 'event)
+         ;; <ap:preserve-this> report bronze medal as an AP location check, if enabled.
+         (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+           (ap-medal-checked! (the-as uint 1))
+           )
          )
        )
       ((not (task-node-closed? (game-task-node city-power-game-silver)))
@@ -1604,6 +1608,10 @@
          (sound-play-by-spec (static-sound-spec "skill-pickup" :group 0 :fo-curve 1) (new-sound-id) (the-as vector #t))
          (script-eval '(birth-pickup ("power-game-player" "head") skill FACT_SUPER_SKILL_INC flags (suck-in)))
          (task-node-close! (game-task-node city-power-game-silver) 'event)
+         ;; <ap:preserve-this> report silver medal as an AP location check, if enabled.
+         (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+           (ap-medal-checked! (the-as uint 2))
+           )
          )
        )
       ((not (task-node-closed? (game-task-node city-power-game-gold)))
@@ -1611,6 +1619,10 @@
          (sound-play-by-spec (static-sound-spec "skill-pickup" :group 0 :fo-curve 1) (new-sound-id) (the-as vector #t))
          (script-eval '(birth-pickup ("power-game-player" "head") skill FACT_SUPER_SKILL_INC flags (suck-in)))
          (task-node-close! (game-task-node city-power-game-gold) 'event)
+         ;; <ap:preserve-this> report gold medal as an AP location check, if enabled.
+         (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+           (ap-medal-checked! (the-as uint 3))
+           )
          )
        )
       )

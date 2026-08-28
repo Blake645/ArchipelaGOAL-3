@@ -22,7 +22,7 @@
 ;; ****************************************************************************
 ;; **** This number must match expected_memory_version in MemoryReader.py! ****
 ;; ****************************************************************************
-(set! (-> *ap-info-jak3* version) 6)
+(set! (-> *ap-info-jak3* version) 7)
 
 ;; <ap:preserve-this> autosave timer for preventing progress loss on life resets
 (define *ap-autosave-timer* (the time-frame 0))
@@ -111,6 +111,29 @@
   (set! (-> *ap-info-jak3* side-missions-checked (-> *ap-info-jak3* next-side-mission-index)) side-mission-id)
   (+! (-> *ap-info-jak3* next-side-mission-index) 1))
 
+(defun ap-medal-checked! ((medal-id uint))
+  (format 0 "~%~%*************************************************~%")
+  (format 0 "*** ARCHIPELAGO MEDAL CHECK DETECTED ***~%")
+  (format 0 "*************************************************~%")
+  (format 0 "Medal ID: ~D~%" medal-id)
+  (format 0 "*************************************************~%~%")
+  (set! (-> *ap-info-jak3* medals-checked (-> *ap-info-jak3* next-medal-index)) medal-id)
+  (+! (-> *ap-info-jak3* next-medal-index) 1))
+
+(defun ap-gungame-medal-id ((node game-task-node))
+  (cond
+    ((= node (game-task-node city-gun-course-1-bronze)) (the-as uint 4))
+    ((= node (game-task-node city-gun-course-1-silver)) (the-as uint 5))
+    ((= node (game-task-node city-gun-course-1-gold)) (the-as uint 6))
+    ((= node (game-task-node city-gun-course-2-bronze)) (the-as uint 7))
+    ((= node (game-task-node city-gun-course-2-silver)) (the-as uint 8))
+    ((= node (game-task-node city-gun-course-2-gold)) (the-as uint 9))
+    ((= node (game-task-node wascity-gungame-bronze)) (the-as uint 13))
+    ((= node (game-task-node wascity-gungame-silver)) (the-as uint 14))
+    ((= node (game-task-node wascity-gungame-gold)) (the-as uint 15))
+    (else (the-as uint 0))
+    )
+  )
 (defun ap-set-connection-status! ((status ap-connection-status))
   "Set the Archipelago connection status. Returns the status that was set."
   (set! (-> *ap-info-jak3* connection-status) status)
@@ -809,6 +832,7 @@
   (set! (-> *ap-settings* trap-duration) (-> options trap-duration))
   (set! (-> *ap-settings* jak-is-jak2) (-> options jak-is-jak2))
   (set! (-> *ap-settings* randomize-bbush) (-> options randomize-bbush))
+  (set! (-> *ap-settings* minigame-medal-checks?) (if (nonzero? (-> options minigame-medal-checks)) #t #f))
   (when (nonzero? (-> options randomize-bbush))
     (set! (-> *ap-settings* bbush-cost-get-to) (-> options bbush-cost-get-to))
     (set! (-> *ap-settings* bbush-cost-race) (-> options bbush-cost-race))

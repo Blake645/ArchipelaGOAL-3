@@ -33,6 +33,7 @@
     (bbush-cost-get-to         float)
     (bbush-cost-race           float)
     (bbush-cost-other          float)
+    (minigame-medal-checks     uint8)
     ))
 
 (deftype ap-info-jak3 (structure)
@@ -68,6 +69,10 @@
     ;; Item Replay Flags
     (needs-item-replay               uint8)
     (initial-replay-done             uint8)
+
+    ;; Minigame Medal Information
+    (next-medal-index                uint)
+    (medals-checked                  uint32 30)
 
     ;; End Marker
     (end-marker           uint8 4)))
