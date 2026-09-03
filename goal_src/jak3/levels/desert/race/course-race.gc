@@ -776,6 +776,9 @@
   :virtual #t
   :code (behavior ()
     (task-node-close! (game-task-node desert-bbush-time-trial-1-resolution) 'event)
+    (let ((node-info (-> *game-info* sub-task-list (game-task-node desert-bbush-time-trial-1-resolution))))
+      (logclear! (-> node-info flags) (game-task-node-flag closed))
+      )
     (call-parent-state-handler code)
     )
   )
@@ -930,6 +933,9 @@
   :virtual #t
   :code (behavior ()
     (task-node-close! (game-task-node desert-bbush-rally-resolution) 'event)
+    (let ((node-info (-> *game-info* sub-task-list (game-task-node desert-bbush-rally-resolution))))
+      (logclear! (-> node-info flags) (game-task-node-flag closed))
+      )
     (call-parent-state-handler code)
     )
   )

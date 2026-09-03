@@ -1686,6 +1686,7 @@
   (talk-to-veger #x2193)
   (progress-buy-gems #x2194)
   (mhcity-door-hint #x2195)
+  (progress-menu-skip-replay-talkers #x2196)
 
   ;; mod text
   (pad-triangle #x2000)

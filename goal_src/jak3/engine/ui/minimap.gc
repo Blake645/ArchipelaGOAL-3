@@ -176,7 +176,7 @@
                                  )
                                (new 'static 'minimap-class-node
                                  :default-position (new 'static 'vector :x 3190784.0 :y 32768.0 :z 765952.0 :w 1.0)
-                                 :flags (minimap-flag trail bigmap)
+                                 :flags (minimap-flag trail bigmap local-only transport ctywide)
                                  :name "onintent"
                                  :scale 1.0
                                  :color (new 'static 'rgba :r #x80 :g #x80 :b #x80 :a #x80)
@@ -1199,8 +1199,8 @@
                                  :color (new 'static 'rgba :r #x40 :a #x80)
                                  )
                                (new 'static 'minimap-class-node
-                                 :default-position (new 'static 'vector :w 1.0)
-                                 :flags (minimap-flag clamp bigmap goal)
+                                 :default-position (new 'static 'vector :x -1269209.2500 :y 2618.8764 :z 2356241.0000 :w 1.0)
+                                 :flags (minimap-flag clamp bigmap local-only transport ctywide goal)
                                  :name "big-green-flashing-clamped-dot"
                                  :icon-xy (new 'static 'vector2ub :data (new 'static 'array uint8 2 #x0 #x4))
                                  :scale 1.0

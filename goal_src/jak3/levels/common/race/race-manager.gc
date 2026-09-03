@@ -996,6 +996,9 @@
         (let ((gp-0 (game-info-method-29 *game-info* (the-as int sv-16)))
               (s5-0 (get-highscore-rank *game-info* (the-as int sv-16) sv-20))
               )
+          (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+            (ap-race-medal-check! (the-as int sv-16) gp-0 s5-0)
+            )
           (let ((s4-0 (* (the-as uint (max 0 (- s5-0 gp-0))) (the-as uint (if (= sv-16 3)
                                                                               6
                                                                               3

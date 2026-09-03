@@ -1,6 +1,7 @@
 ;;-*-Lisp-*-
 (in-package goal)
-
+(define-extern ap-medal-checked! (function uint none))
+(define-extern ap-bbush-medal-id (function int int uint))
 ;; name: des-bbush-tasks.gc
 ;; name in dgo: des-bbush-tasks
 ;; dgos: LWASBBV
@@ -457,6 +458,7 @@
   )
 
 (defmethod award-skill ((this task-manager-vehicle-bbush) (arg0 float))
+(format 0 "AP DEBUG: award-skill called with score=~F~%" arg0)
   (let* ((s5-0 (-> this game-score))
          (s3-0 (game-info-method-29 *game-info* (the-as int s5-0)))
          (v1-2 (get-highscore-rank *game-info* (the-as int s5-0) arg0))
@@ -464,6 +466,17 @@
          )
     (game-info-method-27 *game-info* (the-as game-score s5-0) arg0)
     (give *game-info* 'skill (* (the float gp-1) (-> *FACT-bank* super-skill-inc)) (the-as handle #f))
+    (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+      (when (and (>= v1-2 1) (< s3-0 1))
+        (ap-medal-checked! (ap-bbush-medal-id (the-as int s5-0) 1))
+        )
+      (when (and (>= v1-2 2) (< s3-0 2))
+        (ap-medal-checked! (ap-bbush-medal-id (the-as int s5-0) 2))
+        )
+      (when (and (>= v1-2 3) (< s3-0 3))
+        (ap-medal-checked! (ap-bbush-medal-id (the-as int s5-0) 3))
+        )
+      )
     )
   0
   (none)
@@ -543,7 +556,11 @@
        (while (not (-> *setting-control* user-current speech-control))
          (suspend)
          )
+       (task-node-close! (-> self info final-node) 'event)
        (task-manager-vehicle-bbush-method-36 self)
+        (let ((node-info (-> *game-info* sub-task-list (-> self info final-node))))
+          (logclear! (-> node-info flags) (game-task-node-flag closed))
+          )
        (until #f
          (suspend)
          )

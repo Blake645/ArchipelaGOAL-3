@@ -481,9 +481,11 @@
              (< (vector-vector-distance (-> dark-eco-door extra trans) (-> *target* control trans)) (meters 10))
              (not (movie?))
              (let ((door-proc (-> dark-eco-door extra process)))
-               (or (not door-proc)
-                   (not (and (-> door-proc state) (= (-> door-proc state name) 'broken)))
-                   )))
+               (and door-proc
+                    (or (not (-> door-proc state))
+                        (not (= (-> door-proc state name) 'broken))
+                        )))
+             )
     (script-eval '(talker-spawn "hint01"))))
 (overwrite-res-lump "cty-door-3" 'on-activate 'begin '(
   (cond
@@ -523,6 +525,9 @@
   ))
 (overwrite-res-lump "precur-door-a-4" 'open-test 'begin '(
   #t
+  ))
+(overwrite-res-lump "com-airlock-outer-mhcity-1" 'on-notice 'begin '(
+  '(forestx)
   ))
 ;; desert
       (let ((region-1203 (region-lookup-by-id 1203)))

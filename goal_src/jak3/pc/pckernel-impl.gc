@@ -142,7 +142,8 @@
    (completion-mission-count   uint8)
    (completion-type            uint8)
    (jak-is-jak2                uint8)
-   (minigame-medal-checks?     symbol))
+   (minigame-medal-checks?     symbol)
+   (skip-replay-talkers?       symbol))
   (:methods
    (new (symbol type) _type_)
    (reset (_type_) none)

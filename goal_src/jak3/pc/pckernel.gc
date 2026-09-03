@@ -863,6 +863,7 @@
     (format file "  (completion-type ~D)~%" (-> obj completion-type))
     (format file "  (completion-value ~D)~%" (-> obj completion-value))
     (format file "  (completion-mission-count ~D)~%" (-> obj completion-mission-count))
+    (format file "  (skip-replay-talkers? ~A)~%" (-> obj skip-replay-talkers?))
     ;; file trailer
     (format file "  )~%")
     (file-stream-close file))
@@ -898,6 +899,7 @@
                (("completion-type") (set! (-> obj completion-type) (the-as uint8 (file-stream-read-int file))))
                (("completion-value") (set! (-> obj completion-value) (the-as uint8 (file-stream-read-int file))))
                (("completion-mission-count") (set! (-> obj completion-mission-count) (the-as uint8 (file-stream-read-int file))))
+               (("skip-replay-talkers?") (set! (-> obj skip-replay-talkers?) (file-stream-read-symbol file)))
                ))))))
     (inspect file)
     (file-stream-close file))

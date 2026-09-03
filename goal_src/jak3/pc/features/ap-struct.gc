@@ -22,7 +22,7 @@
 ;; ****************************************************************************
 ;; **** This number must match expected_memory_version in MemoryReader.py! ****
 ;; ****************************************************************************
-(set! (-> *ap-info-jak3* version) 7)
+(set! (-> *ap-info-jak3* version) 8)
 
 ;; <ap:preserve-this> autosave timer for preventing progress loss on life resets
 (define *ap-autosave-timer* (the time-frame 0))
@@ -41,10 +41,6 @@
         (false! *ap-auto-saving?*))))
   *ap-auto-saving?*)
 
-;; <ap:preserve-this> queue for important-item talker announcements, so multiple items received
-;; at the same time don't have their announcement text overwrite each other. Each talker entry
-;; has its own delay+text-duration (e.g. 3s delay + 5s display), so we cooldown between spawns
-;; rather than firing the instant the previous one is no longer "displayed".
 (define *ap-important-item-queue* '())
 (define *ap-talker-cooldown-timer* (the time-frame 0))
 
@@ -62,12 +58,16 @@
   )
 
 (defun queue-important-talker! ((speech-name string))
-  (set! *ap-important-item-queue*
-        (if (null? *ap-important-item-queue*)
-            (cons speech-name '())
-            (list-append! (the-as pair *ap-important-item-queue*) speech-name)
-            )
-        )
+  (when (not (and *ap-settings*
+                  (-> *ap-settings* skip-replay-talkers?)
+                  (nonzero? (-> *ap-info-jak3* is-replaying))))
+    (set! *ap-important-item-queue*
+          (if (null? *ap-important-item-queue*)
+              (cons speech-name '())
+              (list-append! (the-as pair *ap-important-item-queue*) speech-name)
+              )
+          )
+    )
   (none)
   )
 
@@ -118,7 +118,9 @@
   (format 0 "Medal ID: ~D~%" medal-id)
   (format 0 "*************************************************~%~%")
   (set! (-> *ap-info-jak3* medals-checked (-> *ap-info-jak3* next-medal-index)) medal-id)
-  (+! (-> *ap-info-jak3* next-medal-index) 1))
+  (+! (-> *ap-info-jak3* next-medal-index) 1)
+  (none)
+  )
 
 (defun ap-gungame-medal-id ((node game-task-node))
   (cond
@@ -133,6 +135,43 @@
     ((= node (game-task-node wascity-gungame-gold)) (the-as uint 15))
     (else (the-as uint 0))
     )
+  )
+(defun ap-bbush-medal-id ((game-score-idx int) (tier int))
+  (the-as uint
+    (+ (cond
+         ((= game-score-idx 4) 16)
+         ((= game-score-idx 5) 19)
+         ((= game-score-idx 6) 22)
+         ((= game-score-idx 7) 25)
+         ((= game-score-idx 8) 28)
+         ((= game-score-idx 16) 31)
+         (else 0)
+         )
+       (- tier 1)
+       )
+    )
+  )
+(defun ap-race-medal-check! ((game-score-idx int) (old-rank int) (new-rank int))
+  (let ((base (cond
+                ((= game-score-idx 2) 37)
+                ((= game-score-idx 3) 40)
+                (else -1)
+                )
+              )
+        )
+    (when (>= base 0)
+      (when (and (>= new-rank 1) (< old-rank 1))
+        (ap-medal-checked! (the-as uint base))
+        )
+      (when (and (>= new-rank 2) (< old-rank 2))
+        (ap-medal-checked! (the-as uint (+ base 1)))
+        )
+      (when (and (>= new-rank 3) (< old-rank 3))
+        (ap-medal-checked! (the-as uint (+ base 2)))
+        )
+      )
+    )
+  (none)
   )
 (defun ap-set-connection-status! ((status ap-connection-status))
   "Set the Archipelago connection status. Returns the status that was set."
@@ -833,6 +872,7 @@
   (set! (-> *ap-settings* jak-is-jak2) (-> options jak-is-jak2))
   (set! (-> *ap-settings* randomize-bbush) (-> options randomize-bbush))
   (set! (-> *ap-settings* minigame-medal-checks?) (if (nonzero? (-> options minigame-medal-checks)) #t #f))
+  (set! (-> *ap-settings* skip-replay-talkers?) (if (nonzero? (-> options skip-replay-talkers)) #t #f))
   (when (nonzero? (-> options randomize-bbush))
     (set! (-> *ap-settings* bbush-cost-get-to) (-> options bbush-cost-get-to))
     (set! (-> *ap-settings* bbush-cost-race) (-> options bbush-cost-race))
