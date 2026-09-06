@@ -589,7 +589,7 @@ This gives us more freedom to write code how we want.
      (archipelagoal-3-warp-to)
      (archipelagoal-3-deathlink)
      (archipelagoal-3-item-messages)
-     (archipelagoal-3-skip-replay-talkers)
+     ;;(archipelagoal-3-skip-replay-talkers)
      (archipelagoal-3-seed-options-link)
      )
   )
@@ -856,7 +856,7 @@ This gives us more freedom to write code how we want.
       (ap-settings-update)
       (ap-settings-save))))
 
-(defmacro archipelagoal-3-skip-replay-talkers ()
+#| (defmacro archipelagoal-3-skip-replay-talkers ()
   '(new 'static 'menu-generic-boolean-option
     :name (text-id progress-menu-skip-replay-talkers)
     :truthy-text (text-id progress-on)
@@ -866,7 +866,7 @@ This gives us more freedom to write code how we want.
       (set! (-> *ap-settings* skip-replay-talkers?) val)
       (ap-settings-update)
       (ap-settings-save))))
-
+|#
 (defmacro misc-options-pc-discord-rpc ()
   `(new 'static 'menu-generic-boolean-option
         :name (text-id progress-discord-rpc)
