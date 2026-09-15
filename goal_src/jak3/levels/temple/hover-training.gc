@@ -614,7 +614,7 @@
       )
     (set! (-> this sound-id) (new-sound-id))
     (set! (-> this camera-done?) (the-as uint 0))
-    (set! (-> this minimap) (add-icon! *minimap* this (the-as uint 132) (the-as int #f) (the-as vector #t) 0))
+    ;(set! (-> this minimap) (add-icon! *minimap* this (the-as uint 132) (the-as int #f) (the-as vector #t) 0))
     (if (task-node-closed? (game-task-node temple-tests-hover-training))
         (go (method-of-object this die-fast))
         (go (method-of-object this idle))

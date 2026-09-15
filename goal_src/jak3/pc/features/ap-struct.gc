@@ -58,9 +58,7 @@
   )
 
 (defun queue-important-talker! ((speech-name string))
-  (when (not (and *ap-settings*
-                  (-> *ap-settings* skip-replay-talkers?)
-                  (nonzero? (-> *ap-info-jak3* is-replaying))))
+  (when (zero? (-> *ap-info-jak3* is-replaying))
     (set! *ap-important-item-queue*
           (if (null? *ap-important-item-queue*)
               (cons speech-name '())
@@ -549,7 +547,6 @@
   #t
   )
 
-;; <ap:todo> deathlink will come later, leave this out for now
 
 (defun ap-deathlink-received! ((chosen-death symbol))
   (cond
@@ -872,7 +869,6 @@
   (set! (-> *ap-settings* jak-is-jak2) (-> options jak-is-jak2))
   (set! (-> *ap-settings* randomize-bbush) (-> options randomize-bbush))
   (set! (-> *ap-settings* minigame-medal-checks?) (if (nonzero? (-> options minigame-medal-checks)) #t #f))
-  (set! (-> *ap-settings* skip-replay-talkers?) (if (nonzero? (-> options skip-replay-talkers)) #t #f))
   (when (nonzero? (-> options randomize-bbush))
     (set! (-> *ap-settings* bbush-cost-get-to) (-> options bbush-cost-get-to))
     (set! (-> *ap-settings* bbush-cost-race) (-> options bbush-cost-race))

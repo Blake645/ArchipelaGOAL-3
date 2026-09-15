@@ -6067,7 +6067,7 @@
             :task (game-task desert-oasis-defense)
             :name "desert-oasis-defense-battle"
             :when-open #f
-            :flags (game-task-node-flag act1)
+            :flags (game-task-node-flag exclusive act1)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node desert-oasis-defense-meeting)
               (game-task-node none)

@@ -286,8 +286,8 @@
   "2121": "You received the Air Train Pass",
   "2122": "A crack has formed in the Metal Head Section Door...",
   "2123": "Industrial Section A Opened",
-  "2124": "Indurstrial Section B Opened",
-  "2125": "Slums/New Heaven Opened",
+  "2124": "Industrial Section B Opened",
+  "2125": "Slums/New Haven Opened",
   "2126": "Outside Palace Ruins Opened",
   "2127": "You received the Cypher Glyph",
   "05f2": "You received ~%<COLOR_CYAN>Light Regeneration",
@@ -341,7 +341,6 @@
   "2193": "Talk to Veger",
   "2194": "Buy 20 Skull Gems",
   "2195": "Use <COLOR_PINK>Dark Strike <COLOR_WHITE>to break the door",
-  "2196": "Replay Important Items Text on Reboot?",
 
   "2000": "<PAD_TRIANGLE>",
   "2001": "<PAD_CIRCLE>",

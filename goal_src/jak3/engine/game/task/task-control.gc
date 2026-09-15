@@ -707,6 +707,9 @@
                              (!= (-> s1-0 level) 'city)
                              (not (logtest? (-> s1-0 flags) (game-task-node-flag no-restart)))
                              (game-task-node-info-method-12 s1-0)
+                             ;; <ap:preserve-this> only restart missions actually started
+                             (-> s1-0 manager)
+                             (handle->process (-> s1-0 manager manager))
                              )
                         (set! s5-1 s1-0)
                         )
@@ -812,6 +815,9 @@
                              (!= (-> s0-0 level) 'city)
                              (not (logtest? (-> s0-0 flags) (game-task-node-flag no-restart)))
                              (game-task-node-info-method-12 s0-0)
+                             ;; <ap:preserve-this> only fail-into missions actually started
+                             (-> s0-0 manager)
+                             (handle->process (-> s0-0 manager manager))
                              )
                         (set! s4-1 s0-0)
                         )
