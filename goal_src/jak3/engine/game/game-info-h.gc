@@ -320,6 +320,7 @@
    (old-items               game-items)
    (secrets                 game-secrets)
    (purchase-secrets        game-secrets)
+   (ap-secrets-received     game-secrets)
    (gun-type                pickup-type)
    (gun-ammo                float          4)
    (shield                  float)

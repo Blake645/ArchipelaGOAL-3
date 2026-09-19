@@ -1684,8 +1684,16 @@
   (talk-to-onin #x2191)
   (talk-to-vin #x2192)
   (talk-to-veger #x2193)
-  (progress-buy-gems #x2194)
+  (progress-secrets-buy-gems #x2194)
   (mhcity-door-hint #x2195)
+  (progress-secrets-archipelago-shop #x2196)
+  (progress-secrets-yellow-ammo #x2197)
+  (progress-secrets-red-ammo #x2198)
+  (progress-secrets-blue-ammo #x2199)
+  (progress-secrets-dark-ammo #x2200)
+  (progress-secrets-light-eco-pill #x2201)
+  (progress-secrets-dark-eco-pill #x2202)
+  (progress-secrets-purchased #x2203)
 
   ;; mod text
   (pad-triangle #x2000)

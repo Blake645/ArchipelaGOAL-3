@@ -3411,6 +3411,28 @@
                  )
                )
              )
+            ((and (cpad-pressed? 0 circle) (= (-> this current-index) (-> this target-index)))
+             (logclear! (-> *cpad-list* cpads 0 button0-abs 0) (pad-buttons circle))
+             (logclear! (-> *cpad-list* cpads 0 button0-rel 0) (pad-buttons circle))
+             ;; <ap:preserve-this> allow buying (sending the AP check) even if the player
+             ;; already owns this secret via a received AP item, as long as it hasn't
+             ;; been purchased yet — separate from confirm's toggle behavior
+             (if (and (ap-secret-should-check? (-> s3-0 secret))
+                      (not (logtest? (-> *game-info* purchase-secrets) (-> s3-0 secret)))
+                      )
+                 (cond
+                   ((>= s2-0 (-> s3-0 cost))
+                    (sound-play "generic-beep")
+                    (set! (-> arg0 yes-no-choice) #f)
+                    (set! (-> this buy-menu) #t)
+                    )
+                   (else
+                     (sound-play "generic-beep" :pitch -0.6)
+                     )
+                   )
+                 (sound-play "generic-beep" :pitch -0.6)
+                 )
+             )
             )
           )
         )

@@ -296,6 +296,7 @@
   "05f5": "You received ~%<COLOR_CYAN>Light Flight",
   "0579": "You received Forearm Armor",
   "0639": "Talk to Tess",
+  "0834": "____~%Weapon Upgrades",
 
   "2128": "Go to...",
 
@@ -341,6 +342,14 @@
   "2193": "Talk to Veger",
   "2194": "Buy 20 Skull Gems",
   "2195": "Use <COLOR_PINK>Dark Strike <COLOR_WHITE>to break the door",
+  "2196": "Archipelago Shop",
+  "2197": "Buy Yellow Ammo",
+  "2198": "Buy Red Ammo",
+  "2199": "Buy Blue Ammo",
+  "2200": "Buy Dark Ammo",
+  "2201": "Buy Light Eco Pill",
+  "2202": "Buy Dark Eco Pill",
+  "2203": "Purchased",
 
   "2000": "<PAD_TRIANGLE>",
   "2001": "<PAD_CIRCLE>",

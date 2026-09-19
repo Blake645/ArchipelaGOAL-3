@@ -1719,9 +1719,9 @@
               )
             )
           (when *target*
-            (if (< 819200.0 (vector-vector-distance (-> s5-0 root trans) (target-pos 0)))
+            #|(if (< 819200.0 (vector-vector-distance (-> s5-0 root trans) (target-pos 0)))
                 (send-event this 'fail)
-                )
+                )|#
             (let ((s4-4 (handle->process (-> this vehicle))))
               (when s4-4
                 (cond

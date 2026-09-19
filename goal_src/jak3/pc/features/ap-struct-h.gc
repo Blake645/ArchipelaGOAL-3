@@ -78,6 +78,10 @@
     ;; Replay Status
     (is-replaying                    uint8)
 
+    ;; Secret Purchase Information
+    (next-secret-index               uint)
+    (secrets-checked                 uint32 40)
+
     ;; End Marker
     (end-marker           uint8 4)))
 

@@ -8,6 +8,9 @@
 ;; DECOMP BEGINS
 
 (define *progress-list-level* (new 'global 'progress-list-level))
+(define-extern ap-secret-should-check? (function game-secrets symbol))
+(define-extern ap-secret-id (function game-secrets uint))
+(define-extern ap-secret-checked! (function uint none))
 
 ;; WARN: disable def twice: 28. This may happen when a cond (no else) is nested inside of another conditional, but it should be rare.
 (defmethod length ((this progress-list-level))
@@ -3961,6 +3964,20 @@
     ((logtest? (-> this flags) (secret-item-option-flags sf0))
      5
      )
+    ((and (ap-secret-should-check? (-> this secret))
+          (logtest? (-> *game-info* ap-secrets-received) (-> this secret))
+          )
+     (if (logtest? (-> *game-info* secrets) (-> this secret))
+         1
+         2
+         )
+     )
+    ((and (logtest? (-> *game-info* purchase-secrets) (-> this secret))
+          (not (logtest? (-> *game-info* ap-secrets-received) (-> this secret)))
+          (ap-secret-should-check? (-> this secret))
+          )
+     3
+     )
     ((logtest? (-> *game-info* purchase-secrets) (-> this secret))
      (if (logtest? (-> *game-info* secrets) (-> this secret))
          1
@@ -3983,16 +4000,28 @@
 
 (defmethod secret-item-option-method-13 ((this secret-item-option))
   (local-vars (v0-1 game-vehicles))
-  (when (zero? (secret-item-option-method-12 this))
+  (when (or (zero? (secret-item-option-method-12 this))
+            (and (ap-secret-should-check? (-> this secret))
+                 (not (logtest? (-> *game-info* purchase-secrets) (-> this secret)))
+                 )
+            )
     (case (-> this secret)
       (((game-secrets hero-mode))
        (logior! (-> *game-info* purchase-secrets) (-> this secret))
        )
       (else
-        (logior! (-> *game-info* purchase-secrets) (-> this secret))
-        (set! (-> *game-info* secrets)
-              (logclear (logior (-> *game-info* secrets) (-> this secret)) (-> this mask-secrets))
+        (if (ap-secret-should-check? (-> this secret))
+            (begin
+              (logior! (-> *game-info* purchase-secrets) (-> this secret))
+              (ap-secret-checked! (ap-secret-id (-> this secret)))
               )
+            (begin
+              (logior! (-> *game-info* purchase-secrets) (-> this secret))
+              (set! (-> *game-info* secrets)
+                    (logclear (logior (-> *game-info* secrets) (-> this secret)) (-> this mask-secrets))
+                    )
+              )
+            )
         )
       )
     (case (-> this secret)
@@ -4015,6 +4044,42 @@
        (give *game-info* 'gem 20.0 (the-as handle #f))
        (logclear! (-> *game-info* secrets) (game-secrets gs21))
        (logclear! (-> *game-info* purchase-secrets) (game-secrets gs21))
+       v0-1
+       )
+      (((game-secrets gs58))
+       (give *game-info* 'ammo-yellow 10.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs58))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs58))
+       v0-1
+       )
+      (((game-secrets gs59))
+       (give *game-info* 'ammo-red 5.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs59))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs59))
+       v0-1
+       )
+      (((game-secrets gs60))
+       (give *game-info* 'ammo-blue 10.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs60))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs60))
+       v0-1
+       )
+      (((game-secrets gs61))
+       (give *game-info* 'ammo-dark 1.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs61))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs61))
+       v0-1
+       )
+      (((game-secrets gs62))
+       (give *game-info* 'eco-pill-light 5.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs62))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs62))
+       v0-1
+       )
+      (((game-secrets gs63))
+       (give *game-info* 'eco-pill-dark 5.0 (the-as handle #f))
+       (logclear! (-> *game-info* secrets) (game-secrets gs63))
+       (logclear! (-> *game-info* purchase-secrets) (game-secrets gs63))
        v0-1
        )
       )
