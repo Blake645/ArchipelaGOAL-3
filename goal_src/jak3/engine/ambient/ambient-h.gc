@@ -1155,7 +1155,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x6c
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1168,7 +1168,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup002"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x6d
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1181,7 +1181,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup003"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x6e
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1194,7 +1194,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup004"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x6f
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1207,7 +1207,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup005"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x70
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1220,7 +1220,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup006"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x71
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1233,7 +1233,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup007"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x72
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1246,7 +1246,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup008"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x73
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1259,7 +1259,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup009"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exitslide-in)
                             :speech #x74
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1272,7 +1272,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup010"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x75
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1285,7 +1285,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup011"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x76
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1298,7 +1298,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup012"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x77
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1311,7 +1311,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup013"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x78
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1324,7 +1324,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup014"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x79
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1337,7 +1337,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup015"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x7a
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1350,7 +1350,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup016"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x7b
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1363,7 +1363,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup017"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x7c
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1376,7 +1376,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup018"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x7d
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1389,7 +1389,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup019"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x7e
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1402,7 +1402,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup020"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x7f
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1415,7 +1415,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup021"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x80
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1428,7 +1428,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup022"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x81
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1454,7 +1454,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup024"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x83
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1467,7 +1467,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup025"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x84
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1480,7 +1480,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup026"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x85
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -1493,7 +1493,7 @@ and neg-state is greater than or equal to neg.
                           (new 'static 'talker-speech-class
                             :name "powup099"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x86
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3435,7 +3435,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x170
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3447,7 +3447,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car002"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x171
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3459,7 +3459,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car003"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x172
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3471,7 +3471,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car004"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x173
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3483,7 +3483,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car005"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x174
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3495,7 +3495,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car006"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x175
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3507,7 +3507,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car007"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x176
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3519,7 +3519,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "car008"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x177
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3531,7 +3531,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "red001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x178
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3543,7 +3543,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "turret001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x179
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3555,7 +3555,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "dark001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x17a
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3567,7 +3567,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "dark002"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x17b
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3579,7 +3579,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "dark003"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x17c
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3591,7 +3591,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "dark004"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x17d
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3603,7 +3603,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "dark005"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x17e
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3615,7 +3615,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "shine001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x17f
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3627,7 +3627,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "amulet001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x180
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3639,7 +3639,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "amulet002"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x181
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3651,7 +3651,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "amulet003"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x182
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3663,7 +3663,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "gate001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x183
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3675,7 +3675,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "train001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x184
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3687,7 +3687,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "pass001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x185
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3699,7 +3699,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "pass002"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x186
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3711,7 +3711,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "pass003"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x187
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3723,7 +3723,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "pass004"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x188
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3735,7 +3735,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "pass005"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x189
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3747,7 +3747,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "item001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x18a
                             :text-duration (seconds 5)
                             :delay (seconds 3)
@@ -3759,7 +3759,7 @@ and neg-state is greater than or equal to neg.
                             (new 'static 'talker-speech-class
                             :name "seal001"
                             :channel (gui-channel alert)
-                            :flags (talker-flags reduce-volume slide-in)
+                            :flags (talker-flags reduce-volume auto-save-once-on-exit slide-in)
                             :speech #x18b
                             :text-duration (seconds 5)
                             :delay (seconds 3)

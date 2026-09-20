@@ -10206,7 +10206,6 @@
                 :action (game-task-action say)
                 :tex (game-task-icon gaticon-02)
                 :scene "desert-artifact-race-2-intro"
-                :distance (meters 20)
                 )
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
