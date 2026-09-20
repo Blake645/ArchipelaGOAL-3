@@ -420,6 +420,30 @@
       )
   )
 
+(if (= 'debug *cheat-mode*)
+    (let ((region-954 (region-lookup-by-id 954)))
+      (if region-954
+          (let ((hud-map-proc (process-by-name "hud-map" *active-pool*)))
+            (when hud-map-proc
+              (send-event hud-map-proc 'force-hide)
+              )
+            )
+          (let ((hud-map-proc (process-by-name "hud-map" *active-pool*)))
+            (when hud-map-proc
+              (send-event hud-map-proc 'force-show)
+              )
+            )
+          )
+      (let ((gp-0 (new 'stack 'font-context *font-default-matrix* 10 300 0.0 (font-color default) (font-flags shadow kerning))))
+        (let ((v1-12 gp-0)) (set! (-> v1-12 width) (the float 500)))
+        (let ((v1-13 gp-0)) (set! (-> v1-13 height) (the float 80)))
+        (set! (-> gp-0 flags) (font-flags shadow kerning middle middle-vert large))
+        (format (clear *temp-string*) "WELCOME TO ARCHIPELAGOAL 3! PLEASE WAIT FOR THE TITLE SCREEN!~%")
+        (print-game-text *temp-string* gp-0 #f 44 (bucket-id hud-draw-hud-alpha))
+        )
+      )
+    )
+
 (load-levels-in-bubble! 4124.84 44.50 4431.53 40.0 'templed 'templeb 'templea) ;; load (templed, templeb, templea) in pole room
 (when (and (task-node-open? (game-task-node temple-tests-resolution))
            (not (process-by-name "tpl-break-bridge" *active-pool*)))
