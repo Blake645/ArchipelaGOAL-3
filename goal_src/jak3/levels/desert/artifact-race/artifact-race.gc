@@ -740,9 +740,9 @@
          )
        )
      )
-    ((= arg0 (+ (-> this max-count) -1))
+    #|((= arg0 (+ (-> this max-count) -1))
      (talker-spawn-func (-> *talker-speech* 129) *entity-pool* (target-pos 0) (the-as region #f))
-     )
+     )|#
     ((and (= arg0 (+ (-> this max-count) -2)) (< (rand-vu) 0.5))
      (talker-spawn-func (-> *artifact-race-speech-list* 23) *entity-pool* (target-pos 0) (the-as region #f))
      )
