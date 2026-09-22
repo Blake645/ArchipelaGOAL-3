@@ -214,13 +214,30 @@
         (pc-encode-utf8-string msg *pc-encoded-temp-string*)
         (draw-message *pc-encoded-temp-string* bottom i)))))
 
+(defbehavior ap-messenger-text-y ap-messenger ()
+  (if (and *target*
+           (focus-test? *target* pilot-riding)
+           (let ((v (handle->process (-> *target* pilot vehicle))))
+             (and v (or (type? v v-turtle)
+                        (type? v v-snake)
+                        (type? v v-scorpion)
+                        (type? v v-toad)
+                        (type? v v-fox)
+                        (type? v v-rhino)
+                        (type? v v-mirage)
+                        (type? v v-x-ride)
+                        (type? v h-sled)
+                        (type? v v-faccar)))))
+    320.0
+    400.0))
+
 (defstate ap-messenger-show (ap-messenger)
   :code (behavior ()
     (loop
       (when (and (not (paused?))
                  (-> *ap-settings* item-messages?)
                  (not (eq? (current-level-name) 'wasintro)))
-        (draw-messages (if (and *target* (focus-test? *target* pilot-riding)) 320.0 400.0)))
+        (draw-messages (ap-messenger-text-y)))
       (when (or (paused?) (not (-> *ap-settings* item-messages?)))
         (go ap-messenger-hide))
       ;; if messages fit within show window, just update last-index
@@ -260,7 +277,7 @@
              (go ap-messenger-show)))
           (else
            (when (not (eq? (current-level-name) 'wasintro))
-             (draw-messages (+ (if (and *target* (focus-test? *target* pilot-riding)) 320.0 400.0) y))))))
+             (draw-messages (+ (ap-messenger-text-y) y))))))
       (suspend))))
 
 (defun ap-messenger-run ()
