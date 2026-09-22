@@ -74,7 +74,7 @@
     ;; Minigame Medal Information
     (next-medal-index                uint)
     (medals-checked                  uint32 30)
-    
+
     ;; Replay Status
     (is-replaying                    uint8)
 

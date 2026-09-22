@@ -339,165 +339,165 @@
     )
   (none)
   )
-    (defun runs-every-frame ()
+(defun runs-every-frame ()
 
-       ;; Transfer important settings to ap-info struct
-      (ap-settings-update)
+  ;; Transfer important settings to ap-info struct
+  (ap-settings-update)
 
-      ;; Draw Archipelago connection status
-      (ap-draw-connection-status)
-      ;; <ap:note> comment this out/in to show to testers.
-(when (and *debug-segment* *show-test-build-info*)
-  (format *stdcon0* "~%~4LArchipelaGOAL 3 - Test Build~0L~%")
-  (format *stdcon* "Found a bug? Send us a screenshot!~%")
-  (format *stdcon0* "Toggle this text in Debug Menu (L3 + Start) > Modding Tools.~%~%")
-  (format *stdcon0* "~4Lgame features:~0L ~S~%"
-    (begin
-      (clear *temp-string*)
-      (bit-enum->string game-feature (-> *game-info* features) *temp-string*)
-      *temp-string*
-      )
-    )
-  (format *stdcon0* "~4Lgame items:~0L ~S~%"
-    (begin
-      (clear *temp-string*)
-      (bit-enum->string game-items (-> *game-info* items) *temp-string*)
-      *temp-string*
-      )
-    )
-  (format *stdcon0* "~4Lgame vehicles:~0L ~S~%"
-    (begin
-      (clear *temp-string*)
-      (bit-enum->string game-vehicles (-> *game-info* vehicles) *temp-string*)
-      *temp-string*
-      )
-    )
-  (format *stdcon0* "~4Lcurrent level:~0L ~S~%~4Ltask masks:~0L    ~S~%"
-    (current-level-name)
-    (begin
-      (clear *temp-string*)
-      (bit-enum->string task-mask (-> (level-get-target-inside *level*) task-mask) *temp-string*)
-      *temp-string*
-      )
-    )
-(format *stdcon0* "~4Lcurrent mission:~0L ~S~%~%"
-  (let ((subtasks (-> *game-info* sub-task-list))
-        (found (the-as string #f)))
-    (dotimes (i (-> subtasks length))
-      (when (and (not found) (nonzero? i))
-        (let ((subtask (-> subtasks i)))
-          (when (and (-> subtask manager)
-                     (handle->process (-> subtask manager manager)))
-            (set! found (-> subtask name))
-            )
-          )
+  ;; Draw Archipelago connection status
+  (ap-draw-connection-status)
+  ;; <ap:note> comment this out/in to show to testers.
+  (when (and *debug-segment* *show-test-build-info*)
+    (format *stdcon0* "~%~4LArchipelaGOAL 3 - Test Build~0L~%")
+    (format *stdcon* "Found a bug? Send us a screenshot!~%")
+    (format *stdcon0* "Toggle this text in Debug Menu (L3 + Start) > Modding Tools.~%~%")
+    (format *stdcon0* "~4Lgame features:~0L ~S~%"
+      (begin
+        (clear *temp-string*)
+        (bit-enum->string game-feature (-> *game-info* features) *temp-string*)
+        *temp-string*
         )
       )
-    (or found "none")
-    )
-  )
-  (format *stdcon0* "~4Lcurrent tasks:~0L~%~%")
-  (let ((level (level-get-target-inside *level*)))
-    (when level
-      (let ((lvlname (-> level info taskname))
-            (subtasks (-> *game-info* sub-task-list)))
+    (format *stdcon0* "~4Lgame items:~0L ~S~%"
+      (begin
+        (clear *temp-string*)
+        (bit-enum->string game-items (-> *game-info* items) *temp-string*)
+        *temp-string*
+        )
+      )
+    (format *stdcon0* "~4Lgame vehicles:~0L ~S~%"
+      (begin
+        (clear *temp-string*)
+        (bit-enum->string game-vehicles (-> *game-info* vehicles) *temp-string*)
+        *temp-string*
+        )
+      )
+    (format *stdcon0* "~4Lcurrent level:~0L ~S~%~4Ltask masks:~0L    ~S~%"
+      (current-level-name)
+      (begin
+        (clear *temp-string*)
+        (bit-enum->string task-mask (-> (level-get-target-inside *level*) task-mask) *temp-string*)
+        *temp-string*
+        )
+      )
+    (format *stdcon0* "~4Lcurrent mission:~0L ~S~%~%"
+      (let ((subtasks (-> *game-info* sub-task-list))
+            (found (the-as string #f)))
         (dotimes (i (-> subtasks length))
-          (when (nonzero? i)
+          (when (and (not found) (nonzero? i))
             (let ((subtask (-> subtasks i)))
-              (when (and (= (-> subtask type) game-task-node-info)
-                         (= (-> subtask level) lvlname))
-                (case lvlname
-                  (('city 'desert 'wascity)
-                    (if (game-task-node-info-method-12 subtask)
-                      (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name))))
-                  (else
-                    (cond
-                      ((logtest? (-> subtask flags) (game-task-node-flag closed))
-                        (format *stdcon0* "  ~15L~S~0L~%" (-> subtask name)))
-                      ((game-task-node-info-method-12 subtask)
-                        (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name)))
-                      (else
-                        (format *stdcon0* "  ~19L~S~0L~%" (-> subtask name)))))))))))
-      )
-    )
-  )
-(when (and (not (null? *ap-important-item-queue*))
-           (not (talker-displayed?))
-           (time-elapsed? *ap-talker-cooldown-timer* (seconds 8.5))
-           (not (eq? (current-level-name) 'wasintro))
-           )
-  (if (nonzero? (-> *ap-info-jak3* is-replaying))
-      ;; <ap:preserve-this> discard entirely during boot replay, don't play later either
-      (set! *ap-important-item-queue* '())
-      (let ((next-speech (car *ap-important-item-queue*)))
-        (set! *ap-important-item-queue* (cdr *ap-important-item-queue*))
-        (set-time! *ap-talker-cooldown-timer*)
-        (script-eval (list 'talker-spawn next-speech))
-        )
-      )
-  )
-
-(if (= 'debug *cheat-mode*)
-    (let ((region-954 (region-lookup-by-id 954)))
-      (if region-954
-          (let ((hud-map-proc (process-by-name "hud-map" *active-pool*)))
-            (when hud-map-proc
-              (send-event hud-map-proc 'force-hide)
-              )
-            )
-          (let ((hud-map-proc (process-by-name "hud-map" *active-pool*)))
-            (when hud-map-proc
-              (send-event hud-map-proc 'force-show)
+              (when (and (-> subtask manager)
+                         (handle->process (-> subtask manager manager)))
+                (set! found (-> subtask name))
+                )
               )
             )
           )
-      (let ((gp-0 (new 'stack 'font-context *font-default-matrix* 10 300 0.0 (font-color default) (font-flags shadow kerning))))
-        (let ((v1-12 gp-0)) (set! (-> v1-12 width) (the float 500)))
-        (let ((v1-13 gp-0)) (set! (-> v1-13 height) (the float 80)))
-        (set! (-> gp-0 flags) (font-flags shadow kerning middle middle-vert large))
-        (format (clear *temp-string*) "WELCOME TO ARCHIPELAGOAL 3! PLEASE WAIT FOR THE TITLE SCREEN!~%")
-        (print-game-text *temp-string* gp-0 #f 44 (bucket-id hud-draw-hud-alpha))
+        (or found "none")
+        )
+      )
+    (format *stdcon0* "~4Lcurrent tasks:~0L~%~%")
+    (let ((level (level-get-target-inside *level*)))
+      (when level
+        (let ((lvlname (-> level info taskname))
+              (subtasks (-> *game-info* sub-task-list)))
+          (dotimes (i (-> subtasks length))
+            (when (nonzero? i)
+              (let ((subtask (-> subtasks i)))
+                (when (and (= (-> subtask type) game-task-node-info)
+                           (= (-> subtask level) lvlname))
+                  (case lvlname
+                    (('city 'desert 'wascity)
+                      (if (game-task-node-info-method-12 subtask)
+                        (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name))))
+                    (else
+                      (cond
+                        ((logtest? (-> subtask flags) (game-task-node-flag closed))
+                          (format *stdcon0* "  ~15L~S~0L~%" (-> subtask name)))
+                        ((game-task-node-info-method-12 subtask)
+                          (format *stdcon0* "  ~17L~S~0L~%" (-> subtask name)))
+                        (else
+                          (format *stdcon0* "  ~19L~S~0L~%" (-> subtask name)))))))))))
         )
       )
     )
+  (when (and (not (null? *ap-important-item-queue*))
+             (not (talker-displayed?))
+             (time-elapsed? *ap-talker-cooldown-timer* (seconds 8.5))
+             (not (eq? (current-level-name) 'wasintro))
+             )
+    (if (nonzero? (-> *ap-info-jak3* is-replaying))
+        ;; <ap:preserve-this> discard entirely during boot replay, don't play later either
+        (set! *ap-important-item-queue* '())
+        (let ((next-speech (car *ap-important-item-queue*)))
+          (set! *ap-important-item-queue* (cdr *ap-important-item-queue*))
+          (set-time! *ap-talker-cooldown-timer*)
+          (script-eval (list 'talker-spawn next-speech))
+          )
+        )
+    )
 
-(load-levels-in-bubble! 4124.84 44.50 4431.53 40.0 'templed 'templeb 'templea) ;; load (templed, templeb, templea) in pole room
-(when (and (task-node-open? (game-task-node temple-tests-resolution))
-           (not (process-by-name "tpl-break-bridge" *active-pool*)))
-  (clear-entity-kill-mask "tpl-break-bridge-1")
-  (clear-entity-kill-mask "light-eco-vent-32")
-  (clear-entity-kill-mask "light-eco-vent-33")
-)
-(when (= (level-status? *level* 'ctyinda #f) 'active)
-  (clear-entity-kill-mask "krimson-wall-4")
-  (clear-entity-kill-mask "krimson-wall-5")
-  (clear-entity-kill-mask "krimson-wall-7")
-  (clear-entity-kill-mask "krimson-wall-8")
-  (clear-entity-kill-mask "krimson-wall-9")
-  (clear-entity-kill-mask "krimson-wall-10")
-)
-(when (= (level-status? *level* 'ctyindb #f) 'active)
-  (clear-entity-kill-mask "krimson-wall-2")
-  (clear-entity-kill-mask "krimson-wall-3")
-  (clear-entity-kill-mask "krimson-wall-6")
-)
-      ;; <ap:preserve-this> allows vinroom to be open when jak is near
-    (let ((door (entity-by-name "vin-door-ctyinda-1")))
-      (when door
-        (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
+  (if (= 'debug *cheat-mode*)
+      (let ((region-954 (region-lookup-by-id 954)))
+        (if region-954
+            (let ((hud-map-proc (process-by-name "hud-map" *active-pool*)))
+              (when hud-map-proc
+                (send-event hud-map-proc 'force-hide)
+                )
+              )
+            (let ((hud-map-proc (process-by-name "hud-map" *active-pool*)))
+              (when hud-map-proc
+                (send-event hud-map-proc 'force-show)
+                )
+              )
+            )
+        (let ((gp-0 (new 'stack 'font-context *font-default-matrix* 10 300 0.0 (font-color default) (font-flags shadow kerning))))
+          (let ((v1-12 gp-0)) (set! (-> v1-12 width) (the float 500)))
+          (let ((v1-13 gp-0)) (set! (-> v1-13 height) (the float 80)))
+          (set! (-> gp-0 flags) (font-flags shadow kerning middle middle-vert large))
+          (format (clear *temp-string*) "WELCOME TO ARCHIPELAGOAL 3! PLEASE WAIT FOR THE TITLE SCREEN!~%")
+          (print-game-text *temp-string* gp-0 #f 44 (bucket-id hud-draw-hud-alpha))
+          )
+        )
+      )
+
+  (load-levels-in-bubble! 4124.84 44.50 4431.53 40.0 'templed 'templeb 'templea) ;; load (templed, templeb, templea) in pole room
+  (when (and (task-node-open? (game-task-node temple-tests-resolution))
+             (not (process-by-name "tpl-break-bridge" *active-pool*)))
+    (clear-entity-kill-mask "tpl-break-bridge-1")
+    (clear-entity-kill-mask "light-eco-vent-32")
+    (clear-entity-kill-mask "light-eco-vent-33")
+    )
+  (when (= (level-status? *level* 'ctyinda #f) 'active)
+    (clear-entity-kill-mask "krimson-wall-4")
+    (clear-entity-kill-mask "krimson-wall-5")
+    (clear-entity-kill-mask "krimson-wall-7")
+    (clear-entity-kill-mask "krimson-wall-8")
+    (clear-entity-kill-mask "krimson-wall-9")
+    (clear-entity-kill-mask "krimson-wall-10")
+    )
+  (when (= (level-status? *level* 'ctyindb #f) 'active)
+    (clear-entity-kill-mask "krimson-wall-2")
+    (clear-entity-kill-mask "krimson-wall-3")
+    (clear-entity-kill-mask "krimson-wall-6")
+    )
+  ;; <ap:preserve-this> allows vinroom to be open when jak is near
+  (let ((door (entity-by-name "vin-door-ctyinda-1")))
+    (when door
+      (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
       )
     )
-(let ((gundoor (entity-by-name "hip-door-a-10")))
-  (when gundoor
-    (set! (cdr (res-lump-struct gundoor 'on-notice pair)) '((#t '(gungame))))
-  )
-)
-    (let ((platform (entity-by-name "wstd-arena-plat-10")))
-      (when platform
-        (set! (cdr (res-lump-struct platform 'on-activate pair))  '(
+  (let ((gundoor (entity-by-name "hip-door-a-10")))
+    (when gundoor
+      (set! (cdr (res-lump-struct gundoor 'on-notice pair)) '((#t '(gungame))))
+      )
+    )
+  (let ((platform (entity-by-name "wstd-arena-plat-10")))
+    (when platform
+      (set! (cdr (res-lump-struct platform 'on-activate pair))  '(
         ((or (task-open? "desert-catch-lizards-introduction")
-        ;;(task-open? "wascity-chase-introduction")
-        ;;(task-open? "wascity-chase-resolution")
+        (task-open? "wascity-chase-introduction")
+        (task-open? "wascity-chase-resolution")
         (task-open? "arena-fight-2-resolution")
         (task-open? "arena-fight-3-introduction")) 'wait)
         ((or (task-open? "arena-fight-2-fight")) 'wait-end)
@@ -506,422 +506,429 @@
       )
     ;; <ap:preserve-this> allows wascity garage door to open when you have the pass for it
     (let ((wascity-garage-door-front (entity-by-name "wascity-airlock-4")))
-          (when wascity-garage-door-front
-            (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
-            )
-    )
+      (when wascity-garage-door-front
+        (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
+        )
+      )
     (let ((wascity-small-door (entity-by-name "wascity-airlock-small-1")))
-          (when wascity-small-door
-            (set! (cdr (res-lump-struct wascity-small-door 'on-notice pair)) '((#t '(wasdoors))))
-            )
-    )
+      (when wascity-small-door
+        (set! (cdr (res-lump-struct wascity-small-door 'on-notice pair)) '((#t '(wasdoors))))
+        )
+      )
     (let ((temple-door (entity-by-name "tpl-inner-airlock-door-1")))
-          (when temple-door
-            (set! (cdr (res-lump-struct temple-door 'on-notice pair)) '((#t '(templea templex))))
-            )
-    )
+      (when temple-door
+        (set! (cdr (res-lump-struct temple-door 'on-notice pair)) '((#t '(templea templex))))
+        )
+      )
     (let ((parking-spot (entity-by-name "w-parking-spot-3")))
-          (when parking-spot
-            (set! (cdr (res-lump-struct parking-spot 'on-activate pair)) '(#t))
-            )
-  )
-;; parking-spot auto-spawn: duplicate safe spawn logic from w-parking-spot
-(let ((spot (the-as w-parking-spot (process-by-name "w-parking-spot-3" *active-pool*))))
-  (when (and spot (not (handle->process (-> spot vehicle))))
-    (w-parking-spot-method-23 spot)
-  )
-)
-;; <ap:preserve-this> hint text for metal head city dark eco door
-(let ((dark-eco-door (entity-by-name "mhcity-dark-eco-door-1")))
-  (when (and dark-eco-door
-             *target*
-             (logtest? (-> *game-info* features) (game-feature pass-port-mh))
-             (< (vector-vector-distance (-> dark-eco-door extra trans) (-> *target* control trans)) (meters 10))
-             (not (movie?))
-             (let ((door-proc (-> dark-eco-door extra process)))
-               (and door-proc
-                    (or (not (-> door-proc state))
-                        (not (= (-> door-proc state name) 'broken))
-                        )))
-             )
-    (script-eval '(talker-spawn "hint01"))))
+      (when parking-spot
+        (set! (cdr (res-lump-struct parking-spot 'on-activate pair)) '(#t))
+        )
+      )
+    ;; parking-spot auto-spawn: duplicate safe spawn logic from w-parking-spot
+    (let ((spot (the-as w-parking-spot (process-by-name "w-parking-spot-3" *active-pool*))))
+      (when (and spot (not (handle->process (-> spot vehicle))))
+        (w-parking-spot-method-23 spot)
+        )
+      )
+    ;; <ap:preserve-this> hint text for metal head city dark eco door
+    (let ((dark-eco-door (entity-by-name "mhcity-dark-eco-door-1")))
+      (when (and dark-eco-door
+                 *target*
+                 (logtest? (-> *game-info* features) (game-feature pass-port-mh))
+                 (< (vector-vector-distance (-> dark-eco-door extra trans) (-> *target* control trans)) (meters 10))
+                 (not (movie?))
+                 (let ((door-proc (-> dark-eco-door extra process)))
+                   (and door-proc
+                        (or (not (-> door-proc state))
+                            (not (= (-> door-proc state name) 'broken))
+                            )))
+                 )
+        (script-eval '(talker-spawn "hint01"))))
 
-(overwrite-res-lump "cty-door-3" 'on-notice 'begin '(
-  (cond
-    ((and (task-closed? "factory-sky-battle-introduction")
-          (not (task-closed? "factory-sky-battle-resolution"))
-          (or (eq? (level-status? 'lfacrm1) 'loaded) (eq? (level-status? 'lfacrm1) 'active))
+    (overwrite-res-lump "cty-door-3" 'on-notice 'begin '(
+      (cond
+        ((and (task-closed? "factory-sky-battle-introduction")
+              (not (task-closed? "factory-sky-battle-resolution"))
+              (or (eq? (level-status? 'lfacrm1) 'loaded) (eq? (level-status? 'lfacrm1) 'active))
+              )
+         '(ctyslumc factorya)
+         )
+        ((task-closed? "tower-destroy-resolution")
+         '(ctyslumc factorya)
+         )
+        ((and (task-closed? "factory-sky-battle-resolution") (< (send-event self 'distance) 483840))
+         '(ctyslumc towerc)
+         )
+        )
+      ))
+    (overwrite-res-lump "precur-door-a-4" 'open-test 'begin '(
+      #t
+      ))
+    (overwrite-res-lump "com-airlock-outer-mhcity-1" 'on-notice 'begin '(
+      '(forestx)
+      ))
+    ;; desert
+    (let ((region-1203 (region-lookup-by-id 1203)))
+      (when region-1203
+        (set! (-> region-1203 on-enter)
+          '(begin
+            (when (task-open? "desert-artifact-race-1-race") (talker-spawn "vehic03"))
           )
-     '(ctyslumc factorya)
-     )
-    ((task-closed? "tower-destroy-resolution")
-     '(ctyslumc factorya)
-     )
-    ((and (task-closed? "factory-sky-battle-resolution") (< (send-event self 'distance) 483840))
-     '(ctyslumc towerc)
-     )
+          )
+        )
+      )
+    ;; mhacity/tower
+    (let ((region-1280 (region-lookup-by-id 1280)))
+      (when region-1280
+        (set! (-> region-1280 on-enter)
+          '(begin
+            (when (task-closed? "city-start-resolution") (want-load 'ctywide-mh 'mhcityb 'towera))
+          )
+          )
+        )
+      )
+    (let ((region-1277 (region-lookup-by-id 1277)))
+      (when region-1277
+        (set! (-> region-1277 on-enter)
+          '(begin
+            (when (task-closed? "city-start-resolution") (want-display 'towera 'display))
+          )
+          )
+        (set! (-> region-1277 on-exit)
+          '(begin
+            (when (task-closed? "city-start-resolution") (want-display 'towera #f))
+          )
+          )
+        )
+      )
+    (let ((region-1757 (region-lookup-by-id 1757)))
+      (when region-1757
+        (set! (-> region-1757 on-enter)
+          '(begin
+            (when (task-open? "tower-destroy-introduction") (task-close! "tower-destroy-introduction") (want-sound 'tower1 'tower2 'tower3))
+          )
+          )
+        )
+      )
+    ;; monk temple
+    (let ((alcove (entity-by-name "tpl-break-alcove-1")))
+      (when alcove
+        (set! (cdr (res-lump-struct alcove 'on-activate pair)) '(
+          #f
+          ))
+        (set! (cdr (res-lump-struct alcove 'on-exit pair)) '(
+          (when (task-open? "temple-defend-door-2")
+                (task-close! "temple-defend-door-2"))
+          ))
+        )
+      )
+
+    (let ((eye (entity-by-name "tpl-holo-eye-1")))
+      (when eye
+        (set! (cdr (res-lump-struct eye 'on-deactivate pair)) '())
+        )
+      )
+
+    (let ((temdoor (entity-by-name "tpl-outer-airlock-door-2")))
+      (when temdoor
+        (set! (cdr (res-lump-struct temdoor 'on-notice pair)) '(
+          (or (task-open? "temple-oracle-introduction")
+              (task-open? "temple-tests-introduction")
+              (task-open? "temple-defend-introduction")
+              (task-closed? "temple-oracle-introduction")
+              (task-closed? "temple-tests-introduction")
+              (task-closed? "temple-defend-introduction"))
+          '(templea templex)))
+        (set! (cdr (res-lump-struct temdoor 'on-enter pair)) '(
+          (begin
+            (want-display 'templex 'display)
+            (send-event "tpl-holo-eye-1" 'kill)
+            (cond
+            ((task-open? "temple-oracle-introduction")
+              (task-close! "temple-oracle-introduction"))))
+          ))
+        )
+      )
+    (let ((temdoor-1 (entity-by-name "tpl-break-door-a-1")))
+      (when temdoor-1
+        (set! (cdr (res-lump-struct temdoor-1 'on-activate pair)) '(
+          #f
+          ))
+        (set! (cdr (res-lump-struct temdoor-1 'on-exit pair)) '(
+          (when (task-open? "temple-defend-door-3")
+                (task-close! "temple-defend-door-3"))
+          ))
+        )
+      )
+    (let ((tempdoor-2 (entity-by-name "tpl-door-a-5")))
+      (when tempdoor-2
+        (set! (cdr (res-lump-struct tempdoor-2 'on-exit pair)) '(
+          (when (task-open? "temple-defend-door-4")
+                (task-close! "temple-defend-door-4"))
+          ))
+        )
+      )
+    (let ((region-1691 (region-lookup-by-id 1691)))
+      (when region-1691
+        (set! (-> region-1691 on-enter)
+          '(begin
+            (when (task-closed? "temple-climb-introduction") (task-close! "temple-climb-resolution"))
+            (when (task-open? "desert-glide-introduction") (scene-play "temple-climb-res")))
+          )
+        )
+      )
+    (let ((region-1528 (region-lookup-by-id 1528)))
+      (when region-1528
+        (set! (-> region-1528 on-enter)
+          '(begin
+            (when (task-open? "temple-climb-introduction") (scene-play "temple-climb-intro")) (want-sound wasall1 temple1 temple6))
+          )
+        )
+      )
+    (let ((region-1675 (region-lookup-by-id 1675)))
+      (when region-1675
+        (set! (-> region-1675 on-enter)
+          '(begin
+            (when (task-open? "temple-oracle-stairs") (task-close! "temple-oracle-stairs"))
+          )
+          )
+        )
+      )
+    (let ((region-1504 (region-lookup-by-id 1504)))
+      (when region-1504
+        (set! (-> region-1504 on-enter)
+          '(begin
+            (when (task-open? "temple-tests-introduction") (scene-play "temple-tests-intro"))
+          )
+          )
+        )
+      )
+    (let ((region-1557 (region-lookup-by-id 1557)))
+      (when region-1557
+        (set! (-> region-1557 on-enter)
+          '(begin
+            (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-enter))
+          )
+          )
+        (set! (-> region-1557 on-exit)
+          '(begin
+            (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-exit))
+          )
+          )
+        )
+      )
+    (let ((region-1556 (region-lookup-by-id 1556)))
+      (when region-1556
+        (set! (-> region-1556 on-enter)
+          '(begin
+            (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-on))
+          )
+          )
+        (set! (-> region-1556 on-exit)
+          '(begin
+            (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-off))
+          )
+          )
+        )
+      )
+    (let ((region-1592 (region-lookup-by-id 1592)))
+      (when region-1592
+        (set! (-> region-1592 on-enter)
+          '(begin
+            (when (task-open? "temple-oracle-pre-pole-room") (send-event "tpl-gate-3" 'trigger))
+          )
+          )
+        )
+      )
+    (let ((region-1505 (region-lookup-by-id 1505)))
+      (when region-1505
+        (set! (-> region-1505 on-enter)
+          '(begin
+            (when (task-open? "temple-oracle-meeting") (scene-play "temple-oracle-intro"))
+          )
+          )
+        )
+      )
+    (let ((region-1506 (region-lookup-by-id 1506)))
+      (when region-1506
+        (set! (-> region-1506 on-enter)
+          '(begin
+            (when (task-open? "temple-oracle-powerup") (scene-play "temple-oracle-res"))
+          )
+          )
+        )
+      )
+    (let ((region-1507 (region-lookup-by-id 1507)))
+      (when region-1507
+        (set! (-> region-1507 on-enter)
+          '(begin
+            (when (task-open? "temple-tests-oracle") (task-closed? "temple-tests-hover-training") (scene-play "temple-tests-res-a"))
+          )
+          )
+        )
+      )
+    (let ((region-1761 (region-lookup-by-id 1761)))
+      (when region-1761
+        (set! (-> region-1761 on-enter)
+          '(begin
+            (when (task-open? "temple-tests-door-1") (send-event *target) 'end-mode 'freeze #t)
+          )
+          )
+        )
+      )
+    (let ((region-1699 (region-lookup-by-id 1699)))
+      (when region-1699
+        (set! (-> region-1699 on-enter)
+          '(begin
+            (when (task-closed? "temple-defend-introduction") (send-event *target) 'end-mode 'freeze #t)
+          )
+          )
+        )
+      )
+    (let ((region-1938 (region-lookup-by-id 1938)))
+      (when region-1938
+        (set! (-> region-1938 on-enter)
+          '(begin
+            (when (task-open? "temple-defend-resolution") (endlessfall))
+          )
+          )
+        )
+      )
+    ;; nest
+    (let ((region-1155 (region-lookup-by-id 1155)))
+      (when region-1155
+        (set! (-> region-1155 on-enter)
+          '(begin
+            (when (task-closed? "nest-eggs-wall") (task-close! "nest-eggs-tunnel"))
+          )
+          )
+        )
+      )
+    ;; mines
+    (let ((region-1852 (region-lookup-by-id 1852)))
+      (when region-1852
+        (set! (-> region-1852 on-enter)
+          '(begin
+            (when (task-open? "mine-explore-introduction") (scene-play "catacombs-travel-res"))
+          )
+          )
+        )
+      )
+    ;; genb
+    (let ((region-102 (region-lookup-by-id 102)))
+      (when region-102
+        (set! (-> region-102 on-enter)
+          '(begin
+            (if (task-open? "sewer-met-hum-introduction") (want-load 'slumbset 'ctygenb 'ctywide-ff) (want-load 'ctyslumb 'ctygenb 'ctywide-ff))
+          )
+          )
+        )
+      )
+    (let ((region-101 (region-lookup-by-id 101)))
+      (when region-101
+        (set! (-> region-101 on-enter)
+          '(begin
+            (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset 'display) (want-display 'ctyslumb 'display))
+          )
+          )
+        )
+      )
+    (let ((region (region-lookup-by-id 101)))
+      (when region
+        (set! (-> region on-exit)
+          '(begin
+            (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset #f) (want-display 'ctyslumb #f))
+          )
+          )
+        )
+      )
+    ;; ruins
+    (let ((region-1500 (region-lookup-by-id 1500)))
+      (when region-1500
+        (set! (-> region-1500 on-enter)
+          '(begin
+            (when (task-open? "palace-ruins-patrol-stadium") (scene-play "palace-ruins-patrol-intro"))
+          )
+          )
+        )
+      )
+    (let ((region-1391 (region-lookup-by-id 1391)))
+      (when region-1391
+        (set! (-> region-1391 on-enter)
+          '(begin
+            (when (task-closed? "palace-ruins-patrol-stadium") (task-close! "palace-ruins-patrol-resolution")
+                  (task-open? "palace-ruins-attack-introduction") (scene-play "palace-ruins-attack-intro"))
+          )
+          )
+        )
+      )
+    (if *show-input-display*
+      (input-display-on)
+      (input-display-off)
+      )
+
+    (when *debug-segment*
+      (orb-placer-maintenance)
+      )
+  (when (and *ap-settings*
+             (-> *ap-settings* item-messages?)
+             (not (process-by-name "ap-messenger" *active-pool*)))
+    (set! *ap-messenger* (the (pointer ap-messenger) (ap-messenger-run))))
+  (none)
+  )
+
+(defun runs-on-orb-pickup ((orb-id uint) (parent process-tree))
+  ;; Code here runs on any precursor orb pickup
+
+  (none)
+  )
+
+
+(defun runs-on-gem-pickup ()
+  ;; Code here runs on any scout fly pickup
+
+  (none)
+  )
+
+(defun runs-on-task-close ()
+
+
+  (none)
+  )
+
+(defun runs-on-eco-pickup ((eco-type pickup-type) (parent process-tree))
+  (let* ((from-vent? #f))
+    ;; Code here runs as soon as you pickup ANY eco
+
+    (case eco-type
+      (((pickup-type eco-yellow))
+        ;; Code here runs as soon as you pickup yellow eco
+
+        )
+      (((pickup-type eco-red))
+        ;; Code here runs as soon as you pickup red eco
+
+        )
+      (((pickup-type eco-blue))
+        ;; Code here runs as soon as you pickup blue eco
+
+        )
+
+      (((pickup-type eco-green))
+        ;; Code here runs as soon as you pickup big green eco
+
+        )
+      )
+
+    (when from-vent?
+      ;; Code here runs only if the eco was picked up from a vent
+
+      )
     )
-  ))
-(overwrite-res-lump "precur-door-a-4" 'open-test 'begin '(
-  #t
-  ))
-(overwrite-res-lump "com-airlock-outer-mhcity-1" 'on-notice 'begin '(
-  '(forestx)
-  ))
-;; desert
-      (let ((region-1203 (region-lookup-by-id 1203)))
-        (when region-1203
-          (set! (-> region-1203 on-enter)
-            '(begin
-              (when (task-open? "desert-artifact-race-1-race") (talker-spawn "vehic03"))
-            )
-          )
-        )
-      )
-;; mhacity/tower
-      (let ((region-1280 (region-lookup-by-id 1280)))
-        (when region-1280
-          (set! (-> region-1280 on-enter)
-            '(begin
-              (when (task-closed? "city-start-resolution") (want-load 'ctywide-mh 'mhcityb 'towera))
-            )
-          )
-        )
-      )
-      (let ((region-1277 (region-lookup-by-id 1277)))
-        (when region-1277
-          (set! (-> region-1277 on-enter)
-            '(begin
-              (when (task-closed? "city-start-resolution") (want-display 'towera 'display))
-            )
-          )
-          (set! (-> region-1277 on-exit)
-            '(begin
-              (when (task-closed? "city-start-resolution") (want-display 'towera #f))
-            )
-        )
-      )
-    )
-      (let ((region-1757 (region-lookup-by-id 1757)))
-        (when region-1757
-          (set! (-> region-1757 on-enter)
-            '(begin
-              (when (task-open? "tower-destroy-introduction") (task-close! "tower-destroy-introduction") (want-sound 'tower1 'tower2 'tower3))
-            )
-          )
-      )
-    )
-;; monk temple
-(let ((alcove (entity-by-name "tpl-break-alcove-1")))
-  (when alcove
-    (set! (cdr (res-lump-struct alcove 'on-activate pair)) '(
-      #f
-    ))
-    (set! (cdr (res-lump-struct alcove 'on-exit pair)) '(
-      (when (task-open? "temple-defend-door-2")
-            (task-close! "temple-defend-door-2"))
-    ))
+
+  (none)
   )
-)
-
-(let ((eye (entity-by-name "tpl-holo-eye-1")))
-  (when eye
-    (set! (cdr (res-lump-struct eye 'on-deactivate pair)) '())
-  )
-)
-
-(let ((temdoor (entity-by-name "tpl-outer-airlock-door-2")))
-  (when temdoor
-    (set! (cdr (res-lump-struct temdoor 'on-notice pair)) '(
-      (or (task-open? "temple-oracle-introduction")
-          (task-open? "temple-tests-introduction")
-          (task-open? "temple-defend-introduction")
-          (task-closed? "temple-oracle-introduction")
-          (task-closed? "temple-tests-introduction")
-          (task-closed? "temple-defend-introduction"))
-      '(templea templex)))
-    (set! (cdr (res-lump-struct temdoor 'on-enter pair)) '(
-      (begin
-        (want-display 'templex 'display)
-        (send-event "tpl-holo-eye-1" 'kill)
-        (cond
-        ((task-open? "temple-oracle-introduction")
-          (task-close! "temple-oracle-introduction"))))
-    ))
-  )
-)
-(let ((temdoor-1 (entity-by-name "tpl-break-door-a-1")))
-  (when temdoor-1
-    (set! (cdr (res-lump-struct temdoor-1 'on-activate pair)) '(
-      #f
-    ))
-    (set! (cdr (res-lump-struct temdoor-1 'on-exit pair)) '(
-      (when (task-open? "temple-defend-door-3")
-            (task-close! "temple-defend-door-3"))
-    ))
-  )
-)
-(let ((tempdoor-2 (entity-by-name "tpl-door-a-5")))
-  (when tempdoor-2
-    (set! (cdr (res-lump-struct tempdoor-2 'on-exit pair)) '(
-      (when (task-open? "temple-defend-door-4")
-            (task-close! "temple-defend-door-4"))
-    ))
-  )
-)
-      (let ((region-1691 (region-lookup-by-id 1691)))
-        (when region-1691
-          (set! (-> region-1691 on-enter)
-            '(begin
-              (when (task-closed? "temple-climb-introduction") (task-close! "temple-climb-resolution"))
-              (when (task-open? "desert-glide-introduction") (scene-play "temple-climb-res")))
-            )
-          )
-        )
-        (let ((region-1528 (region-lookup-by-id 1528)))
-        (when region-1528
-          (set! (-> region-1528 on-enter)
-            '(begin
-              (when (task-open? "temple-climb-introduction") (scene-play "temple-climb-intro")) (want-sound wasall1 temple1 temple6))
-            )
-          )
-        )
-      (let ((region-1675 (region-lookup-by-id 1675)))
-        (when region-1675
-          (set! (-> region-1675 on-enter)
-            '(begin
-              (when (task-open? "temple-oracle-stairs") (task-close! "temple-oracle-stairs"))
-            )
-          )
-        )
-      )
-      (let ((region-1504 (region-lookup-by-id 1504)))
-        (when region-1504
-          (set! (-> region-1504 on-enter)
-            '(begin
-              (when (task-open? "temple-tests-introduction") (scene-play "temple-tests-intro"))
-            )
-          )
-        )
-      )
-      (let ((region-1557 (region-lookup-by-id 1557)))
-        (when region-1557
-          (set! (-> region-1557 on-enter)
-            '(begin
-              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-enter))
-            )
-          )
-          (set! (-> region-1557 on-exit)
-            '(begin
-              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'inside-exit))
-            )
-        )
-      )
-      )
-      (let ((region-1556 (region-lookup-by-id 1556)))
-        (when region-1556
-          (set! (-> region-1556 on-enter)
-            '(begin
-              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-on))
-            )
-          )
-          (set! (-> region-1556 on-exit)
-            '(begin
-              (when (task-open? "temple-oracle-watchers-complete") (send-event "tpl-watcher-manager-1" 'trigger-off))
-            )
-        )
-      )
-      )
-      (let ((region-1592 (region-lookup-by-id 1592)))
-        (when region-1592
-          (set! (-> region-1592 on-enter)
-            '(begin
-              (when (task-open? "temple-oracle-pre-pole-room") (send-event "tpl-gate-3" 'trigger))
-            )
-          )
-        )
-      )
-      (let ((region-1505 (region-lookup-by-id 1505)))
-        (when region-1505
-          (set! (-> region-1505 on-enter)
-            '(begin
-              (when (task-open? "temple-oracle-meeting") (scene-play "temple-oracle-intro"))
-            )
-          )
-        )
-      )
-      (let ((region-1506 (region-lookup-by-id 1506)))
-        (when region-1506
-          (set! (-> region-1506 on-enter)
-            '(begin
-              (when (task-open? "temple-oracle-powerup") (scene-play "temple-oracle-res"))
-            )
-          )
-        )
-      )
-      (let ((region-1507 (region-lookup-by-id 1507)))
-        (when region-1507
-          (set! (-> region-1507 on-enter)
-            '(begin
-              (when (task-open? "temple-tests-oracle") (task-closed? "temple-tests-hover-training") (scene-play "temple-tests-res-a"))
-            )
-          )
-        )
-      )
-      (let ((region-1761 (region-lookup-by-id 1761)))
-        (when region-1761
-          (set! (-> region-1761 on-enter)
-            '(begin
-              (when (task-open? "temple-tests-door-1") (send-event *target) 'end-mode 'freeze #t)
-            )
-          )
-        )
-      )
-      (let ((region-1699 (region-lookup-by-id 1699)))
-        (when region-1699
-          (set! (-> region-1699 on-enter)
-            '(begin
-              (when (task-closed? "temple-defend-introduction") (send-event *target) 'end-mode 'freeze #t)
-            )
-          )
-        )
-      )
-      (let ((region-1938 (region-lookup-by-id 1938)))
-        (when region-1938
-          (set! (-> region-1938 on-enter)
-            '(begin
-              (when (task-open? "temple-defend-resolution") (endlessfall))
-            )
-          )
-        )
-      )
-  ;; nest
-        (let ((region-1155 (region-lookup-by-id 1155)))
-        (when region-1155
-          (set! (-> region-1155 on-enter)
-            '(begin
-              (when (task-closed? "nest-eggs-wall") (task-close! "nest-eggs-tunnel"))
-            )
-          )
-        )
-        )
-  ;; mines
-        (let ((region-1852 (region-lookup-by-id 1852)))
-        (when region-1852
-          (set! (-> region-1852 on-enter)
-            '(begin
-              (when (task-open? "mine-explore-introduction") (scene-play "catacombs-travel-res"))
-            )
-          )
-        )
-        )
-  ;; genb
-        (let ((region-102 (region-lookup-by-id 102)))
-        (when region-102
-          (set! (-> region-102 on-enter)
-            '(begin
-              (if (task-open? "sewer-met-hum-introduction") (want-load 'slumbset 'ctygenb 'ctywide-ff) (want-load 'ctyslumb 'ctygenb 'ctywide-ff))
-            )
-          )
-        )
-        )
-        (let ((region-101 (region-lookup-by-id 101)))
-        (when region-101
-          (set! (-> region-101 on-enter)
-            '(begin
-              (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset 'display) (want-display 'ctyslumb 'display))
-            )
-          )
-        )
-        )
-        (let ((region (region-lookup-by-id 101)))
-        (when region
-          (set! (-> region on-exit)
-            '(begin
-              (if (task-open? "sewer-met-hum-introduction") (want-display 'slumbset #f) (want-display 'ctyslumb #f))
-            )
-          )
-        )
-        )
-        ;; ruins
-        (let ((region-1500 (region-lookup-by-id 1500)))
-        (when region-1500
-          (set! (-> region-1500 on-enter)
-            '(begin
-              (when (task-open? "palace-ruins-patrol-stadium") (scene-play "palace-ruins-patrol-intro"))
-            )
-          )
-        )
-        )
-        (let ((region-1391 (region-lookup-by-id 1391)))
-        (when region-1391
-          (set! (-> region-1391 on-enter)
-            '(begin
-              (when (task-closed? "palace-ruins-patrol-stadium") (task-close! "palace-ruins-patrol-resolution")
-                    (task-open? "palace-ruins-attack-introduction") (scene-play "palace-ruins-attack-intro"))
-            )
-          )
-        )
-        )
-      (if *show-input-display*
-        (input-display-on)
-        (input-display-off)
-        )
-
-      (when *debug-segment*
-        (orb-placer-maintenance)
-        )
-(when (and *ap-settings*
-           (-> *ap-settings* item-messages?)
-           (not (process-by-name "ap-messenger" *active-pool*)))
-  (set! *ap-messenger* (the (pointer ap-messenger) (ap-messenger-run))))
-    (none)
-    )
-
-    (defun runs-on-gem-pickup ()
-      ;; Code here runs on any scout fly pickup
-
-      (none)
-      )
-
-    (defun runs-on-task-close ()
-
-
-      (none)
-      )
-
-    (defun runs-on-eco-pickup ((eco-type pickup-type) (parent process-tree))
-      (let* ((from-vent? #f))
-        ;; Code here runs as soon as you pickup ANY eco
-
-        (case eco-type
-          (((pickup-type eco-yellow))
-            ;; Code here runs as soon as you pickup yellow eco
-
-            )
-          (((pickup-type eco-red))
-            ;; Code here runs as soon as you pickup red eco
-
-            )
-          (((pickup-type eco-blue))
-            ;; Code here runs as soon as you pickup blue eco
-
-            )
-
-          (((pickup-type eco-green))
-            ;; Code here runs as soon as you pickup big green eco
-
-            )
-          )
-
-        (when from-vent?
-          ;; Code here runs only if the eco was picked up from a vent
-
-          )
-        )
-
-      (none)
-      )
 
 (defun runs-on-jak-spawn ()
   (when (and (not (eq? (current-level-name) 'wasintro))
