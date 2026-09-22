@@ -220,7 +220,7 @@
       (when (and (not (paused?))
                  (-> *ap-settings* item-messages?)
                  (not (eq? (current-level-name) 'wasintro)))
-        (draw-messages 400.0))
+        (draw-messages (if (and *target* (focus-test? *target* pilot-riding)) 320.0 400.0)))
       (when (or (paused?) (not (-> *ap-settings* item-messages?)))
         (go ap-messenger-hide))
       ;; if messages fit within show window, just update last-index
@@ -260,7 +260,7 @@
              (go ap-messenger-show)))
           (else
            (when (not (eq? (current-level-name) 'wasintro))
-             (draw-messages (+ 400.0 y))))))
+             (draw-messages (+ (if (and *target* (focus-test? *target* pilot-riding)) 320.0 400.0) y))))))
       (suspend))))
 
 (defun ap-messenger-run ()

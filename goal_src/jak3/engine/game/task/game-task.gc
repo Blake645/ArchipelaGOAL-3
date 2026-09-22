@@ -13085,7 +13085,6 @@
                 :action (game-task-action say)
                 :tex (game-task-icon gaticon-02)
                 :scene "temple-defend-intro"
-                :distance (meters 25)
                 )
               (new 'static 'game-task-event
                 :actor (game-task-actor pecker)
@@ -13102,7 +13101,7 @@
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
                 :action (game-task-action show)
-                :tex (game-task-icon gaticon-18)
+                :tex (game-task-icon gaticon-123)
                 :scene #f
                 )
               )
@@ -13116,7 +13115,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'wasall
-              :type-to-spawn 'task-manager-temple-tests
+              :type-to-spawn #f
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
@@ -13129,7 +13128,7 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-monk-temple?)
-               (logtesta? (-> *game-info* features) (game-feature artifact-invis gun darkjak darkjak-smack lightjak lightjak-swoop))
+               (logtesta? (-> *game-info* features) (game-feature pass-air-train pass-port-inda pass-inda-indb pass-indb-sluma artifact-invis gun darkjak darkjak-smack lightjak lightjak-swoop))
           )
             )
             :on-close #f
@@ -13238,7 +13237,7 @@
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)
                 :action (game-task-action show)
-                :tex (game-task-icon gaticon-18)
+                :tex (game-task-icon gaticon-32)
                 :scene #f
                 )
               (new 'static 'game-task-event
