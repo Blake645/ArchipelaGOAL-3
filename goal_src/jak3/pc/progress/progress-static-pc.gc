@@ -595,6 +595,8 @@ This gives us more freedom to write code how we want.
 
 (defmacro archipelagoal-3-seed-options-link ()
   '(progress-new-generic-link-to-scrolling-page (text-id progress-menu-seed-options)
+     (archipelagoal-3-orbsanity-option)
+     (archipelagoal-3-orbsanity-bundle) 
      (archipelagoal-3-traps)
      (archipelagoal-3-bbush-cost-get-to)
      (archipelagoal-3-bbush-cost-race)
@@ -739,6 +741,37 @@ This gives us more freedom to write code how we want.
       (set! (-> *ap-settings* trap-duration) val)
       (ap-settings-update)
       (ap-settings-save))))
+
+(defmacro archipelagoal-3-orbsanity-option ()
+  '(new 'static 'menu-generic-boolean-option
+    :name (text-id progress-menu-orbsanity)
+    :truthy-text (text-id progress-on)
+    :falsey-text (text-id progress-off)
+    :get-value-fn (lambda () (-> *ap-settings* orbsanity?))
+    :should-disable? (lambda () #t)))
+
+(defmacro archipelagoal-3-orbsanity-bundle ()
+  '(new 'static 'menu-generic-carousel-option
+    :name (text-id progress-menu-orbsanity-bundle)
+    :items (new 'static 'boxed-array :type text-id
+                (text-id progress-menu-orbsanity-1orb)
+                (text-id progress-menu-orbsanity-10orbs)
+                (text-id progress-menu-orbsanity-12orbs)
+                (text-id progress-menu-orbsanity-20orbs)
+                (text-id progress-menu-orbsanity-25orbs)
+                (text-id progress-menu-orbsanity-40orbs)
+                (text-id progress-menu-orbsanity-50orbs)
+                (text-id progress-menu-orbsanity-75orbs)
+                (text-id progress-menu-orbsanity-100orbs)
+                (text-id progress-menu-orbsanity-120orbs)
+                (text-id progress-menu-orbsanity-200orbs))
+    :get-item-index-fn (lambda ()
+      (case (-> *ap-settings* orbs-per-bundle)
+        ((1) 0) ((10) 1) ((12) 2) ((20) 3) ((25) 4)
+        ((40) 5) ((50) 6) ((75) 7) ((100) 8) ((120) 9)
+        ((200) 10)
+        (else 0)))
+    :should-disable? (lambda () #t)))
 
 (defmacro archipelagoal-3-bbush-cost-get-to ()
   '(new 'static 'menu-generic-slider-option

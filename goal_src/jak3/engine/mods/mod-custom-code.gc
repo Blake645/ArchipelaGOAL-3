@@ -874,14 +874,14 @@
   (none)
   )
 
-(defun runs-on-orb-pickup ((parent process-tree))
+(defun runs-on-orb-pickup ((parent process-tree) (orb-amount int))
   ;; Code here runs on any precursor orb pickup
 
-  (when (and *ap-settings* (> (-> *ap-settings* orbs-per-bundle) 0))
-    (-! (-> *game-info* skill) 1.0)
-    (-! (-> *game-info* skill-total) 1.0)
+  (when (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+    (-! (-> *game-info* skill) (the float orb-amount))
+    (-! (-> *game-info* skill-total) (the float orb-amount))
 
-    (+! (-> *ap-info-jak3* orbs-found) (the-as uint32 1))
+    (+! (-> *ap-info-jak3* orbs-found) (the-as uint32 orb-amount))
     (let ((bundle-size (the int (-> *ap-settings* orbs-per-bundle)))
           (orbs-found-now (the int (-> *ap-info-jak3* orbs-found))))
       (when (and (> orbs-found-now 0) (zero? (mod orbs-found-now bundle-size)))

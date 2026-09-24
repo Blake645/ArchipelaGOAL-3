@@ -143,7 +143,8 @@
    (completion-type            uint8)
    (jak-is-jak2                uint8)
    (minigame-medal-checks?     symbol)
-   (orbs-per-bundle            uint8))
+   (orbs-per-bundle            uint8)
+   (orbsanity?                 symbol))
   (:methods
    (new (symbol type) _type_)
    (reset (_type_) none)
@@ -275,6 +276,7 @@
   (set! (-> obj completion-type) 1)
   (set! (-> obj completion-value) 60)
   (set! (-> obj orbs-per-bundle) 20)
+  (set! (-> obj orbsanity?) #f)
   (none))
 
 

@@ -239,6 +239,14 @@
   (none)
   )
 
+(defun ap-track-orb-spend! ((amount int))
+  (+! (-> *ap-info-jak3* orbs-spent) (the uint amount))
+  (none))
+
+(defun ap-track-gem-spend! ((amount int))
+  (+! (-> *ap-info-jak3* gems-spent) (the uint amount))
+  (none))
+
 (defun ap-set-connection-status! ((status ap-connection-status))
   "Set the Archipelago connection status. Returns the status that was set."
   (set! (-> *ap-info-jak3* connection-status) status)
@@ -1072,6 +1080,7 @@
   (set! (-> *ap-settings* randomize-bbush) (-> options randomize-bbush))
   (set! (-> *ap-settings* minigame-medal-checks?) (if (nonzero? (-> options minigame-medal-checks)) #t #f))
   (set! (-> *ap-settings* orbs-per-bundle) (-> options orbs-per-bundle))
+  (set! (-> *ap-settings* orbsanity?) (if (nonzero? (-> options orbsanity)) #t #f))
   (when (nonzero? (-> options randomize-bbush))
     (set! (-> *ap-settings* bbush-cost-get-to) (-> options bbush-cost-get-to))
     (set! (-> *ap-settings* bbush-cost-race) (-> options bbush-cost-race))

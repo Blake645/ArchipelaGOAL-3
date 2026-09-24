@@ -2958,7 +2958,10 @@
             (send-event this 'fail)
             )
            (else
-             (give *game-info* 'skill f30-0 (the-as handle #f))
+             (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+                 (runs-on-orb-pickup (the-as process-tree #f) (the int f30-0))
+                 (give *game-info* 'skill f30-0 (the-as handle #f))
+                 )
              (until (time-elapsed? (-> this state-time) (the int (* 45.0 f30-0)))
                (suspend)
                )

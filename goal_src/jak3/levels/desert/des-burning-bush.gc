@@ -414,6 +414,7 @@
                   (-> (get-current-task-event (-> self task)) tex))))
       (format 0 "skull-cost: ~d~%" gp-0)
       (set! (-> *target* game gem) (- (-> *target* game gem) (the float gp-0)))
+      (ap-track-gem-spend! gp-0)
       (until (time-elapsed? (-> self state-time) (* 45 (the-as int gp-0)))
         (suspend)
         )

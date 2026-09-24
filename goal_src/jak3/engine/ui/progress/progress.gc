@@ -3280,6 +3280,7 @@
               ((-> arg0 yes-no-choice)
                (secret-item-option-method-13 s3-0)
                (set! (-> *game-info* skill) (- (-> *game-info* skill) (the float (-> s3-0 cost))))
+               (ap-track-orb-spend! (-> s3-0 cost))
                (sound-play "upgrade-buy")
                (set! (-> this buy-menu) #f)
                (cond

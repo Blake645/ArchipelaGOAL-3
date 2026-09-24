@@ -864,6 +864,7 @@
     (format file "  (completion-value ~D)~%" (-> obj completion-value))
     (format file "  (completion-mission-count ~D)~%" (-> obj completion-mission-count))
     (format file "  (orbs-per-bundle ~D)~%" (-> obj orbs-per-bundle))
+    (format file "  (orbsanity? ~A)~%" (-> obj orbsanity?))
     ;; file trailer
     (format file "  )~%")
     (file-stream-close file))
@@ -900,6 +901,7 @@
                (("completion-value") (set! (-> obj completion-value) (the-as uint8 (file-stream-read-int file))))
                (("completion-mission-count") (set! (-> obj completion-mission-count) (the-as uint8 (file-stream-read-int file))))
                (("orbs-per-bundle") (set! (-> obj orbs-per-bundle) (the-as uint8 (file-stream-read-int file))))
+               (("orbsanity?") (set! (-> obj orbsanity?) (file-stream-read-symbol file)))
                ))))))
     (inspect file)
     (file-stream-close file))
