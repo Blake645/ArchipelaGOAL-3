@@ -863,6 +863,7 @@
     (format file "  (completion-type ~D)~%" (-> obj completion-type))
     (format file "  (completion-value ~D)~%" (-> obj completion-value))
     (format file "  (completion-mission-count ~D)~%" (-> obj completion-mission-count))
+    (format file "  (orbs-per-bundle ~D)~%" (-> obj orbs-per-bundle))
     ;; file trailer
     (format file "  )~%")
     (file-stream-close file))
@@ -898,6 +899,7 @@
                (("completion-type") (set! (-> obj completion-type) (the-as uint8 (file-stream-read-int file))))
                (("completion-value") (set! (-> obj completion-value) (the-as uint8 (file-stream-read-int file))))
                (("completion-mission-count") (set! (-> obj completion-mission-count) (the-as uint8 (file-stream-read-int file))))
+               (("orbs-per-bundle") (set! (-> obj orbs-per-bundle) (the-as uint8 (file-stream-read-int file))))
                ))))))
     (inspect file)
     (file-stream-close file))

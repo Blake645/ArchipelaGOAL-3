@@ -142,7 +142,8 @@
    (completion-mission-count   uint8)
    (completion-type            uint8)
    (jak-is-jak2                uint8)
-   (minigame-medal-checks?     symbol))
+   (minigame-medal-checks?     symbol)
+   (orbs-per-bundle            uint8))
   (:methods
    (new (symbol type) _type_)
    (reset (_type_) none)
@@ -263,7 +264,7 @@
   ((obj ap-settings))
   "Set the default settings for archipelago"
   (format 0 "Resetting archipelago settings~%")
-  (set! (-> obj version) 1)
+  (set! (-> obj version) 2)
   (set! (-> obj deathlink?) #f)
   (set! (-> obj item-messages?) #t)
   (set! (-> obj bbush-cost-get-to) 4.0)
@@ -273,6 +274,7 @@
   (set! (-> obj trap-duration) 30.0)
   (set! (-> obj completion-type) 1)
   (set! (-> obj completion-value) 60)
+  (set! (-> obj orbs-per-bundle) 20)
   (none))
 
 

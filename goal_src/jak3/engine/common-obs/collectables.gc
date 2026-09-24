@@ -4,7 +4,7 @@
 ;; name: collectables.gc
 ;; name in dgo: collectables
 ;; dgos: GAME
-
+(define-extern runs-on-orb-pickup (function process-tree none))
 ;; +++collectable-flag
 (defenum collectable-flag
   :type uint32
@@ -1480,6 +1480,7 @@
   :virtual #t
   :code (behavior ((arg0 symbol) (arg1 handle))
     (process-entity-status! self (entity-perm-status dead) #t)
+    (runs-on-orb-pickup (ppointer->process (-> self parent))) ;; trigger hook for mod base
     )
   )
 
