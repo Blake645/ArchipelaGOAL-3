@@ -9,6 +9,9 @@
 (define-extern *was-pre-game* (pointer was-pre-game))
 (declare-type power-game process-drawable)
 (define-extern *power-game* (pointer power-game))
+(define *ap-important-item-queue* '())
+(define *ap-talker-cooldown-timer* (the time-frame 0))
+(define *ap-suppress-initial-talkers?* #t)
 
 (define *ap-info-jak3* (new 'static 'ap-info-jak3))
 (pc-get-archipelago-struct)
@@ -58,12 +61,14 @@
   )
 
 (defun queue-important-talker! ((speech-name string))
-  (set! *ap-important-item-queue*
-        (if (null? *ap-important-item-queue*)
-            (cons speech-name '())
-            (list-append! (the-as pair *ap-important-item-queue*) speech-name)
-            )
-        )
+  (when (not *ap-suppress-initial-talkers?*)
+    (set! *ap-important-item-queue*
+          (if (null? *ap-important-item-queue*)
+              (cons speech-name '())
+              (list-append! (the-as pair *ap-important-item-queue*) speech-name)
+              )
+          )
+    )
   (none)
   )
 

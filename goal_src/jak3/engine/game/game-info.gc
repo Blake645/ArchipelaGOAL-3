@@ -15,6 +15,7 @@
 (define-extern override-player-controls (function cpad-info int))
 (define-extern *highscore-info-array* (array highscore-info))
 (define-extern *user* symbol)
+(define-extern *ap-info-jak3* ap-info-jak3)
 
 ;; DECOMP BEGINS
 
@@ -510,10 +511,14 @@
      (set! (-> this eco-pill-dark-total) 0.0)
      (set! (-> this eco-pill-light) 0.0)
      (set! (-> this eco-pill-light-total) 0.0)
-     (set! (-> this gem) 0.0)
-     (set! (-> this gem-total) 0.0)
-     (set! (-> this skill) 0.0)
-     (set! (-> this skill-total) 0.0)
+    (if (= (-> *ap-info-jak3* connection-status) (ap-connection-status default))
+        (begin
+          (set! (-> this gem) 0.0)
+          (set! (-> this gem-total) 0.0)
+          (set! (-> this skill) 0.0)
+          (set! (-> this skill-total) 0.0)
+        )
+    )
      (set! (-> this skill-high-watermark) 0.0)
      (set! (-> this light-crystal) 0.0)
      (set! (-> this dark-crystal) 0.0)
