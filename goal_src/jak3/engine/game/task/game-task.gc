@@ -6687,7 +6687,7 @@
             :open? (lambda ((arg0 game-task-node-info))
               (and (ap-route-spargus-to-monk-temple?)
                    (logtest? (-> *game-info* items) (game-items seal-of-mar))
-                   (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
+                   (logtesta? (-> *game-info* features) (game-feature artifact-invis board lightjak lightjak-freeze))
                    )
               )
             :on-close #f
@@ -7161,7 +7161,6 @@
             :task (game-task mine-blow)
             :name "mine-blow-resolution"
             :when-open #f
-              )
             :flags (game-task-node-flag close-task act1)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node mine-blow-elevator)
