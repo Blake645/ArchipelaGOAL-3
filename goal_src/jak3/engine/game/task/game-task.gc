@@ -10619,7 +10619,7 @@
             :on-open #f
             :manager (new 'static 'task-manager-info
               :level 'wasall
-              :type-to-spawn 'task-manager-desert-beast-battle-intro
+              :type-to-spawn #f ;;'task-manager-desert-beast-battle-intro
               :intro-scene #f
               :resolution-scene #f
               :resolution-scene-continue #f
