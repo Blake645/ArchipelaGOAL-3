@@ -1217,35 +1217,18 @@
                   (set-scale! arg1 0.6)
                   (set-color! arg1 (font-color font-color-32))
                   (adjust-font-origin-y arg0 arg1 0.675)
+                  (set-flags! arg1 (font-flags kerning middle large))
+                  (set! (-> arg1 origin x) (adjust-x-if-needed (-> s3-1 x)))
+                  (set-width! arg1 (the int (- (-> s3-1 z) (-> s3-1 x))))
+                  (format (clear *temp-string*) "~G" (-> *ap-slot-peek* slots arg2 slot-name))
+                  (print-game-text *temp-string* arg1 #f 44 (bucket-id hud-draw-hud-alpha))
+                  (adjust-font-origin-y arg0 arg1 0.75)
+                  (set! (-> arg1 origin x) (adjust-x-if-needed (-> s3-1 x)))
+                  (set-width! arg1 (the int (- (-> s3-1 z) (-> s3-1 x))))
+                  (format (clear *temp-string*) "Seed: ~G" (-> *ap-slot-peek* slots arg2 slot-seed))
+                  (print-game-text *temp-string* arg1 #f 44 (bucket-id hud-draw-hud-alpha))
                   (set-flags! arg1 (font-flags kerning right large))
-                  (let* ((v1-91 (-> s2-0 file arg2 game-time0))
-                         (v1-92 (logior (shl (-> s2-0 file arg2 game-time1) 32) v1-91)))
-                    (set! (-> arg1 origin x) (adjust-x-if-needed (+ (-> s3-1 x) (* 0.675 (- (-> s3-1 z) (-> s3-1 x))))))
-                    (string-format "~2,'0D:~2,'0D" (/ (the-as int v1-92) #x107ac0) (/ (mod (the-as int v1-92) #x107ac0) #x4650))
-                    )
-                  (print-game-text *temp-string* arg1 #f 44 (bucket-id hud-draw-hud-alpha))
-                  (draw-icon-array!
-                    (-> *progress-icon-arrays* 66)
-                    (the int (adjust-x-if-needed (+ 10.0 (* 0.4 (- (-> s3-1 z) (-> s3-1 x))) (-> s3-1 x))))
-                    (the int (-> arg1 origin y))
-                    0.65
-                    0.65
-                    (new 'static 'rgba :r #x80 :g #x80 :b #x80 :a #x80)
-                    f30-0
-                    )
-                  (set! (-> arg1 origin x) (adjust-x-if-needed (+ (- (+ -10.0 (-> s3-1 z)) (-> s3-1 x)) (-> s3-1 x))))
-                  (string-format "~D%" (the int (-> s2-0 file arg2 completion-percentage)))
-                  (print-game-text *temp-string* arg1 #f 44 (bucket-id hud-draw-hud-alpha))
-                  (draw-icon-array!
-                    (-> *progress-icon-arrays* 67)
-                    (the int (adjust-x-if-needed (+ -8.0 (* 0.75 (- (-> s3-1 z) (-> s3-1 x))) (-> s3-1 x))))
-                    (the int (-> arg1 origin y))
-                    0.7
-                    0.7
-                    (new 'static 'rgba :r #x80 :g #x80 :b #x80 :a #x80)
-                    f30-0
-                    )
-                  (adjust-font-origin-y arg0 arg1 0.83)
+                  (adjust-font-origin-y arg0 arg1 0.9)
                   (set! (-> arg1 origin x) (adjust-x-if-needed (+ (-> s3-1 x) (* 0.675 (- (-> s3-1 z) (-> s3-1 x))))))
                   (string-format "~D" (the int (-> s2-0 file arg2 skill-count)))
                   (print-game-text *temp-string* arg1 #f 44 (bucket-id hud-draw-hud-alpha))

@@ -215,7 +215,7 @@
     (static-taskable-menu-entry
       :task-node (game-task-node wascity-leaper-race-introduction)
       :event-idx 0
-      :continue #f
+      :continue "wascitya-flut-racer"
       :text-id (text-id progress-missions-wascity-leaper-race)
       :allow-when (lambda ()
         (or (task-node-open? (game-task-node wascity-leaper-race-introduction))

@@ -767,6 +767,7 @@
          )
         (('select-save 'select-load)
          (set! (-> this next-option-index) (max 0 (-> v1-7 last-slot-saved)))
+         (ap-peek-save-slot-names! (the-as int (-> *progress-save-info* handle)))
          )
         (('card-removed)
          (set! (-> v1-7 last-slot-saved) 0)
