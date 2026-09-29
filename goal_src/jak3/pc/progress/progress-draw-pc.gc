@@ -1216,7 +1216,7 @@
                     f30-0)
                   (set-scale! arg1 0.6)
                   (set-color! arg1 (font-color font-color-32))
-                  (adjust-font-origin-y arg0 arg1 0.675)
+                  (adjust-font-origin-y arg0 arg1 0.66)
                   (set-flags! arg1 (font-flags kerning middle large))
                   (set! (-> arg1 origin x) (adjust-x-if-needed (-> s3-1 x)))
                   (set-width! arg1 (the int (- (-> s3-1 z) (-> s3-1 x))))
