@@ -891,7 +891,20 @@
     )
   (none)
   )
-
+  
+(defun runs-on-orb-reward ((parent process-tree) (orb-amount int))
+  ;; Code here runs when a side-mission/task grants a lump-sum orb reward (not a real-world orb pickup)
+  (when (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+    (+! (-> *ap-info-jak3* orbs-found) (the-as uint32 orb-amount))
+    (let ((bundle-size (the int (-> *ap-settings* orbs-per-bundle)))
+          (orbs-found-now (the int (-> *ap-info-jak3* orbs-found))))
+      (when (and (> orbs-found-now 0) (zero? (mod orbs-found-now bundle-size)))
+        (ap-orb-bundle-checked! (the-as uint (/ orbs-found-now bundle-size)))
+        )
+      )
+    )
+  (none)
+  )
 
 (defun runs-on-gem-pickup ()
   ;; Code here runs on any scout fly pickup
