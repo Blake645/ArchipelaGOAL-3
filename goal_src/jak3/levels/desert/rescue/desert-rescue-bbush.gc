@@ -261,7 +261,11 @@
   :event task-manager-event-handler
   :code (behavior ()
     ;; og:preserve-this pass handle to task-manager for money-per-level tracking
-    (give *game-info* 'skill (the float (-> self info user-count)) (process->handle self))
+    ;; <ap:preserve-this> with orbsanity, route the award through the bundle check instead of giving orbs directly.
+    (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+        (runs-on-orb-reward (the-as process-tree #f) (the int (-> self info user-count)))
+        (give *game-info* 'skill (the float (-> self info user-count)) (process->handle self))
+        )
     (until (< (* 45 (-> self info user-count)) (- (current-time) (-> self state-time)))
       (suspend)
       )

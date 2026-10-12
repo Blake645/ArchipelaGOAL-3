@@ -454,15 +454,30 @@
   )
 
 (defmethod award-skill ((this task-manager-vehicle-bbush) (arg0 float))
-(format 0 "AP DEBUG: award-skill called with score=~F~%" arg0)
   (let* ((s5-0 (-> this game-score))
          (s3-0 (get-best-rank *game-info* s5-0))
          (v1-2 (get-rank-for-score *game-info* s5-0 arg0))
          (gp-1 (max 0 (- v1-2 s3-0)))
          )
+    ;; <ap:preserve-this> report bbush challenge medals as AP location checks for each newly reached rank, if enabled.
+    (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+      (when (and (>= v1-2 1) (< s3-0 1))
+        (ap-medal-checked! (ap-bbush-medal-id (the-as int s5-0) 1))
+        )
+      (when (and (>= v1-2 2) (< s3-0 2))
+        (ap-medal-checked! (ap-bbush-medal-id (the-as int s5-0) 2))
+        )
+      (when (and (>= v1-2 3) (< s3-0 3))
+        (ap-medal-checked! (ap-bbush-medal-id (the-as int s5-0) 3))
+        )
+      )
     (update-high-score! *game-info* s5-0 arg0)
     ;; og:preserve-this pass handle to task-manager for money-per-level tracking
-    (give *game-info* 'skill (* (the float gp-1) (-> *FACT-bank* super-skill-inc)) (process->handle this))
+    ;; <ap:preserve-this> with orbsanity, route the award through the bundle check instead of giving orbs directly.
+    (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+        (runs-on-orb-reward (the-as process-tree #f) (the int (* (the float gp-1) (-> *FACT-bank* super-skill-inc))))
+        (give *game-info* 'skill (* (the float gp-1) (-> *FACT-bank* super-skill-inc)) (process->handle this))
+        )
     )
   0
   (none)

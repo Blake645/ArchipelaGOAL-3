@@ -2364,18 +2364,42 @@
     )
   (when (and (>= (-> this goal-amount) 1) (not (task-node-closed? (the-as game-task-node (-> this task-bronze)))))
     (task-node-close! (the-as game-task-node (-> this task-bronze)) 'event)
+    ;; <ap:preserve-this> report bronze medal as an AP location check, if enabled.
+    (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+      (ap-medal-checked! (ap-gungame-medal-id (the-as game-task-node (-> this task-bronze))))
+      )
     ;; og:preserve-this pass handle to task-manager for money-per-level tracking
-    (give *game-info* 'skill (the float (-> this info user-count)) (process->handle this))
+    ;; <ap:preserve-this> with orbsanity, route the award through the bundle check instead of giving orbs directly.
+    (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+        (runs-on-orb-reward (the-as process-tree #f) (the int (-> this info user-count)))
+        (give *game-info* 'skill (the float (-> this info user-count)) (process->handle this))
+        )
     )
   (when (and (>= (-> this goal-amount) 2) (not (task-node-closed? (the-as game-task-node (-> this task-silver)))))
     (task-node-close! (the-as game-task-node (-> this task-silver)) 'event)
+    ;; <ap:preserve-this> report silver medal as an AP location check, if enabled.
+    (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+      (ap-medal-checked! (ap-gungame-medal-id (the-as game-task-node (-> this task-silver))))
+      )
     ;; og:preserve-this pass handle to task-manager for money-per-level tracking
-    (give *game-info* 'skill (the float (-> this info user-count)) (process->handle this))
+    ;; <ap:preserve-this> with orbsanity, route the award through the bundle check instead of giving orbs directly.
+    (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+        (runs-on-orb-reward (the-as process-tree #f) (the int (-> this info user-count)))
+        (give *game-info* 'skill (the float (-> this info user-count)) (process->handle this))
+        )
     )
   (when (and (>= (-> this goal-amount) 3) (not (task-node-closed? (the-as game-task-node (-> this task-gold)))))
     (task-node-close! (the-as game-task-node (-> this task-gold)) 'event)
+    ;; <ap:preserve-this> report gold medal as an AP location check, if enabled.
+    (when (and *ap-settings* (-> *ap-settings* minigame-medal-checks?))
+      (ap-medal-checked! (ap-gungame-medal-id (the-as game-task-node (-> this task-gold))))
+      )
     ;; og:preserve-this pass handle to task-manager for money-per-level tracking
-    (give *game-info* 'skill (the float (-> this info user-count)) (process->handle this))
+    ;; <ap:preserve-this> with orbsanity, route the award through the bundle check instead of giving orbs directly.
+    (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+        (runs-on-orb-reward (the-as process-tree #f) (the int (-> this info user-count)))
+        (give *game-info* 'skill (the float (-> this info user-count)) (process->handle this))
+        )
     )
   (none)
   )

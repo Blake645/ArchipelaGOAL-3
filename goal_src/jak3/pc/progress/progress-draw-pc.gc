@@ -437,7 +437,8 @@
                           (set-width! font-ctx (the int secret-text-width))
                           (let ((v1-148 sv-288))
                             (cond
-                              ((or (= v1-148 4) (= v1-148 3))
+                              ;; <ap:preserve-this> status 2 (AP-locked) is greyed out like 3 and 4
+                              ((or (= v1-148 4) (= v1-148 3) (= v1-148 2))
                                 (set-flags! font-ctx (font-flags kerning large ff7))
                                 (set-color! font-ctx (font-color font-color-44))
                               )
@@ -460,18 +461,30 @@
                                 (set! sv-352 (lookup-text! *common-text* (text-id progress-on) #f))
                                 (set! sv-368 (lookup-text! *common-text* (text-id progress-off) #f))
                                 (cond
-                                  ((or (zero? sv-288) (= sv-288 3))
+                                  ((zero? sv-288)
                                     (string-format "~d" (-> s0-6 cost))
                                     (print-game-text *temp-string* font-ctx #f 40 (bucket-id hud-draw-hud-alpha))
                                   )
+                                  ;; <ap:preserve-this> status 3 shows "purchased" instead of the cost
+                                  ((= sv-288 3)
+                                    (string-format "~S" (lookup-text! *common-text* (text-id progress-secrets-purchased) #f))
+                                    (print-game-text *temp-string* font-ctx #f 40 (bucket-id hud-draw-hud-alpha))
+                                  )
+                                  ;; <ap:preserve-this> statuses 1 and 2 show the cost until the secret is purchased
                                   ((= sv-288 1)
                                     (cond
                                       ((logtest? (-> *menu-secrets-array* s1-5 flags) (secret-item-option-flags sf1))
-                                        (string-format "~32L~S~44L ~S" sv-352 sv-368)
+                                        (if (not (logtest? (-> *game-info* purchase-secrets) (-> s0-6 secret)))
+                                            (string-format "~32L~S~44L ~S (~D)" sv-352 sv-368 (-> s0-6 cost))
+                                            (string-format "~32L~S~44L ~S" sv-352 sv-368)
+                                            )
                                         (print-game-text *temp-string* font-ctx #f 40 (bucket-id hud-draw-hud-alpha))
                                       )
                                       (else
-                                        (string-format "~S" sv-352)
+                                        (if (not (logtest? (-> *game-info* purchase-secrets) (-> s0-6 secret)))
+                                            (string-format "~S (~D)" sv-352 (-> s0-6 cost))
+                                            (string-format "~S" sv-352)
+                                            )
                                         (print-game-text *temp-string* font-ctx #f 40 (bucket-id hud-draw-hud-alpha))
                                       )
                                     )
@@ -479,11 +492,17 @@
                                   ((= sv-288 2)
                                   (cond
                                     ((logtest? (-> *menu-secrets-array* s1-5 flags) (secret-item-option-flags sf1))
-                                      (string-format "~44L~S ~32L~S~1L" sv-352 sv-368)
+                                      (if (not (logtest? (-> *game-info* purchase-secrets) (-> s0-6 secret)))
+                                          (string-format "~44L~S ~32L~S~1L (~D)" sv-352 sv-368 (-> s0-6 cost))
+                                          (string-format "~44L~S ~32L~S~1L" sv-352 sv-368)
+                                          )
                                       (print-game-text *temp-string* font-ctx #f 40 (bucket-id hud-draw-hud-alpha))
                                       )
                                     (else
-                                      (string-format "~S" sv-368)
+                                      (if (not (logtest? (-> *game-info* purchase-secrets) (-> s0-6 secret)))
+                                          (string-format "~S (~D)" sv-368 (-> s0-6 cost))
+                                          (string-format "~S" sv-368)
+                                          )
                                       (print-game-text *temp-string* font-ctx #f 40 (bucket-id hud-draw-hud-alpha))
                                       )
                                     )
@@ -1226,38 +1245,22 @@
                     (static-rgba #x80 #x80 #x80 #x80)
                     f30-0
                   )
+                  ;; <ap:preserve-this> show the AP slot name and seed in place of play time and completion percentage.
                   (set-scale! font-ctx 0.6)
                   (set-color! font-ctx (font-color font-color-32))
-                  (adjust-font-origin-y arg0 font-ctx 0.675)
+                  (adjust-font-origin-y arg0 font-ctx 0.66)
+                  (set-flags! font-ctx (font-flags kerning middle large))
+                  (set! (-> font-ctx origin x) (adjust-x-if-needed (-> s3-1 x)))
+                  (set-width! font-ctx (the int (- (-> s3-1 z) (-> s3-1 x))))
+                  (format (clear *temp-string*) "~G" (-> *ap-slot-peek* slots arg2 slot-name))
+                  (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
+                  (adjust-font-origin-y arg0 font-ctx 0.75)
+                  (set! (-> font-ctx origin x) (adjust-x-if-needed (-> s3-1 x)))
+                  (set-width! font-ctx (the int (- (-> s3-1 z) (-> s3-1 x))))
+                  (format (clear *temp-string*) "Seed: ~G" (-> *ap-slot-peek* slots arg2 slot-seed))
+                  (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
                   (set-flags! font-ctx (font-flags kerning right large))
-                  (let* ((v1-91 (-> s2-0 file arg2 game-time0))
-                         (v1-92 (logior (shl (-> s2-0 file arg2 game-time1) 32) v1-91)))
-                    (set! (-> font-ctx origin x) (adjust-x-if-needed (+ (-> s3-1 x) (* 0.675 (- (-> s3-1 z) (-> s3-1 x))))))
-                    (string-format "~2,'0D:~2,'0D" (/ (the-as int v1-92) #x107ac0) (/ (mod (the-as int v1-92) #x107ac0) #x4650))
-                    )
-                  (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
-                  (draw-icon-array!
-                    (-> *progress-icon-arrays* 66)
-                    (the int (adjust-x-if-needed (+ 10.0 (* 0.4 (- (-> s3-1 z) (-> s3-1 x))) (-> s3-1 x))))
-                    (the int (-> font-ctx origin y))
-                    0.65
-                    0.65
-                    (new 'static 'rgba :r #x80 :g #x80 :b #x80 :a #x80)
-                    f30-0
-                  )
-                  (set! (-> font-ctx origin x) (adjust-x-if-needed (+ (- (+ -10.0 (-> s3-1 z)) (-> s3-1 x)) (-> s3-1 x))))
-                  (string-format "~D%" (the int (-> s2-0 file arg2 completion-percentage)))
-                  (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
-                  (draw-icon-array!
-                    (-> *progress-icon-arrays* 67)
-                    (the int (adjust-x-if-needed (+ -8.0 (* 0.75 (- (-> s3-1 z) (-> s3-1 x))) (-> s3-1 x))))
-                    (the int (-> font-ctx origin y))
-                    0.7
-                    0.7
-                    (new 'static 'rgba :r #x80 :g #x80 :b #x80 :a #x80)
-                    f30-0
-                  )
-                  (adjust-font-origin-y arg0 font-ctx 0.83)
+                  (adjust-font-origin-y arg0 font-ctx 0.9)
                   (set! (-> font-ctx origin x) (adjust-x-if-needed (+ (-> s3-1 x) (* 0.675 (- (-> s3-1 z) (-> s3-1 x))))))
                   (string-format "~D" (the int (-> s2-0 file arg2 skill-count)))
                   (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
@@ -1270,7 +1273,7 @@
                     (new 'static 'rgba :r #x80 :g #x80 :b #x80 :a #x80)
                     f30-0
                   )
-                  (set! (-> font-ctx origin x) (adjust-x-if-needed (- (-> s3-1 z) 10.0)))
+                  (set! (-> font-ctx origin x) (adjust-x-if-needed (+ (- (+ -10.0 (-> s3-1 z)) (-> s3-1 x)) (-> s3-1 x))))
                   (string-format "~D" (the int (-> s2-0 file arg2 gem-count)))
                   (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
                   (draw-icon-array!

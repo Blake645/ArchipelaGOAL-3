@@ -2948,7 +2948,11 @@
             )
            (else
              ;; og:preserve-this pass handle to task-manager for money-per-level tracking
-             (give *game-info* 'skill f30-0 (process->handle this))
+             ;; <ap:preserve-this> with orbsanity, route the award through the bundle check instead of giving orbs directly.
+             (if (and *ap-settings* (-> *ap-settings* orbsanity?) (> (-> *ap-settings* orbs-per-bundle) 0))
+                 (runs-on-orb-reward (the-as process-tree #f) (the int f30-0))
+                 (give *game-info* 'skill f30-0 (process->handle this))
+                 )
              (until (time-elapsed? (-> this state-time) (the int (* 45.0 f30-0)))
                (suspend)
                )
