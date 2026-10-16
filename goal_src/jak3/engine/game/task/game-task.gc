@@ -8816,7 +8816,7 @@
               (ctywide-kg alias ctywide copy ctypesc auto ctycara special ctycarb auto ctypepc special)
               )
             :open? #f
-            :on-close '(task-close! "city-gun-course-1-tess")
+            :on-close #f ;'(task-close! "city-gun-course-1-tess") 
             :reset (new 'static 'task-reset-info
               :restart-info #f
               :quit-info #f

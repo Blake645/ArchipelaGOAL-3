@@ -165,6 +165,7 @@
                 (10000
                   (send-event self 'user-data-set! (task-closed? "city-gun-course-1-resolution"))
                   (task-close! "city-gun-course-1-resolution")
+                  (task-close! "city-gun-course-1-tess")
                   )
                 )
               :cut-list '(39 91 144 334 365)
