@@ -15183,7 +15183,7 @@
             :task (game-task desert-final-boss)
             :name "desert-final-boss-walker"
             :when-open #f
-            :flags (game-task-node-flag save-on-life act3)
+            :flags (game-task-node-flag save-on-life act3 exclusive)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node desert-final-boss-introduction)
               (game-task-node none)
@@ -15254,7 +15254,7 @@
             :task (game-task desert-final-boss)
             :name "desert-final-boss-climb"
             :when-open #f
-            :flags (game-task-node-flag save-on-life act3)
+            :flags (game-task-node-flag save-on-life act3 exclusive)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node desert-final-boss-walker)
               (game-task-node none)

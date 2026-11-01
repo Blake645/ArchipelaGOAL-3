@@ -130,9 +130,10 @@
     )
   :enter (behavior ()
     (set! (-> self draw force-lod) 0)
-    (if (task-node-closed? (game-task-node volcano-darkeco-resolution))
-        (go-virtual broken)
-        )
+    ;; <ap:preserve-this> remove the that makes the tarp be broken after completing.
+    ;;(if (task-node-closed? (game-task-node volcano-darkeco-resolution))
+        ;;(go-virtual broken)
+        ;;)
     )
   :code (behavior ()
     (ja :group! (get-art-by-name (-> self draw art-group) "idle" art-joint-anim) :num! min)
