@@ -542,7 +542,8 @@
           "tpl-hide-sunken-brick-01.mb"
           "tpl-hide-collision-01.mb"
           )
-       (task-node-closed? (game-task-node temple-defend-introduction))
+          ;; <ap:preserve-this> change this task to have these appear after completing temple tests. this is to avoid players doing the the rescue seem mission then being unable to finish the temple tests.
+       (task-node-closed? (game-task-node temple-tests-resolution))
        this
        )
      (prototypes-game-visible-set!

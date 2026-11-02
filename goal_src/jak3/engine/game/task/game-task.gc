@@ -6172,7 +6172,7 @@
             :open? (lambda ((arg0 game-task-node-info))
               (and (ap-route-spargus-to-monk-temple?)
                    (logtest? (-> *game-info* items) (game-items seal-of-mar))
-                   (logtesta? (-> *game-info* features) (game-feature artifact-invis board lightjak lightjak-freeze))
+                   (logtesta? (-> *game-info* features) (game-feature board lightjak lightjak-freeze))
                    (task-node-closed? (game-task-node temple-oracle-resolution))
                    )
               )

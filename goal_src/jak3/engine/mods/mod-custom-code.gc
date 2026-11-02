@@ -801,6 +801,16 @@
           )
         )
       )
+    ;; comb
+    (let ((region-1386 (region-lookup-by-id 1386)))
+      (when region-1386
+        (set! (-> region-1386 on-enter)
+          '(begin
+            (when (task-open? "comb-travel-introduction") (scene-play "temple-tests-res-b"))
+          )
+          )
+        )
+      )
     ;; mines
     (let ((region-1852 (region-lookup-by-id 1852)))
       (when region-1852
