@@ -3247,12 +3247,13 @@
           (s2-0 (the int (-> *game-info* skill)))
           (s3-0 (-> *menu-secrets-array* (-> this selected-index)))
           )
-      (if (or (nonzero? (-> *setting-control* user-current subtitle-language))
+      ;; <ap:preserve-this> remove this as it ties to commentary and is not needed for the secret menu.
+      #| (if (or (nonzero? (-> *setting-control* user-current subtitle-language))
               (nonzero? (-> *setting-control* user-current language))
               (nonzero? (-> *setting-control* user-current audio-language))
               )
           (+! a0-1 -1)
-          )
+          )|# 
       (set! (-> this selected-index) (min (-> this selected-index) a0-1))
       (cond
         ((-> this available-title)
