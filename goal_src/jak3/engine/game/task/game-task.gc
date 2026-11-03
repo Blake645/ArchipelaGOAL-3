@@ -8840,7 +8840,7 @@
             :task (game-task city-hijack-vehicle)
             :name "city-hijack-vehicle-introduction"
             :when-open #f
-            :flags (game-task-node-flag save-on-life city-wait exclusive act2)
+            :flags (game-task-node-flag save-on-life city-wait act2)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node city-destroy-grid-resolution)
               (game-task-node none)
