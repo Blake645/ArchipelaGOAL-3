@@ -7506,7 +7506,6 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-spargus-to-port?)
                  (logtest? (-> *game-info* features) (game-feature gun))
-                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -7606,9 +7605,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-            (and (ap-route-spargus-to-port?)
-                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
-              )
+            (ap-route-spargus-to-port?)
             )
             :on-close #f
             :reset #f
@@ -8182,9 +8179,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (ap-route-port-to-inda?)
-               (task-node-closed? (game-task-node sewer-met-hum-resolution))
-               )
+          (ap-route-port-to-inda?)
             )
             :on-close #f
             :reset #f
@@ -8439,7 +8434,6 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-metal-head-section?)
                 (logtest? (-> *game-info* features) (game-feature board))
-                (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -8775,7 +8769,6 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-metal-head-section?)
                  (logtesta? (-> *game-info* features) (game-feature gun pass-port-inda))
-                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -8847,7 +8840,7 @@
             :task (game-task city-hijack-vehicle)
             :name "city-hijack-vehicle-introduction"
             :when-open #f
-            :flags (game-task-node-flag save-on-life city-wait act2)
+            :flags (game-task-node-flag save-on-life city-wait exclusive act2)
             :parent-node (new 'static 'array game-task-node 4
               (game-task-node city-destroy-grid-resolution)
               (game-task-node none)
@@ -8875,7 +8868,6 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-indb?)
                 (logtest? (-> *game-info* features) (game-feature gun-yellow-1 gun-yellow-2 gun-blue-1 gun-blue-2 gun-blue-3))
-                (task-node-closed? (game-task-node sewer-met-hum-resolution))
                  )
               )
             :on-close #f
@@ -9539,7 +9531,6 @@
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-port-to-indb?)
-               (task-node-closed? (game-task-node sewer-met-hum-resolution))
               )
             )
             :on-close #f
@@ -21173,9 +21164,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (ap-route-port-to-hq?)
-               (task-node-closed? (game-task-node sewer-met-hum-resolution))
-            )
+          (ap-route-port-to-hq?)
             )
             :on-close #f
             :reset #f
@@ -21306,7 +21295,6 @@
             :open? (lambda ((arg0 game-task-node-info))
             (and (ap-route-port-to-indb?)
                  (logtest? (-> *game-info* features) (game-feature board))
-                 (task-node-closed? (game-task-node sewer-met-hum-resolution))
                 )
             )
             :on-close #f
@@ -21812,9 +21800,7 @@
             :manager #f
             :borrow '()
             :open? (lambda ((arg0 game-task-node-info))
-          (and (ap-route-port-to-hq?)
-               (task-node-closed? (game-task-node sewer-met-hum-resolution))
-            )
+          (ap-route-port-to-hq?)
             )
             :on-close #f
             :reset #f
@@ -23061,7 +23047,6 @@
             :open? (lambda ((arg0 game-task-node-info))
           (and (ap-route-spargus-to-port?)
                (task-node-closed? (game-task-node city-port-attack-resolution))
-               (task-node-closed? (game-task-node sewer-met-hum-resolution))
                )
             )
             :on-close #f

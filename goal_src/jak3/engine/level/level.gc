@@ -3319,6 +3319,26 @@
   (none)
   )
 
+;; <ap:preserve-this> helper function to check if a borrow slot is busy
+(defun ap-borrow-slot-busy? ((name symbol))
+  (dotimes (i (-> *level* length))
+    (let ((host (-> *level* level i)))
+      (when (and (or (= (-> host status) 'active) (= (-> host status) 'loaded)) (-> host info borrow))
+        (dotimes (slot 5)
+          (when (and (-> host info borrow borrow-info slot)
+                     (= (car (-> host info borrow borrow-info slot)) name)
+                     (nonzero? (-> host info borrow borrow-size slot))
+                     (-> host borrow-level slot)
+                     (!= (-> host borrow-level slot name) name))
+            (return #t)
+            )
+          )
+        )
+      )
+    )
+  #f
+  )
+
 (defmethod update! ((this load-state))
   (local-vars (a0-11 symbol))
   (if (-> this update-callback)
@@ -3398,7 +3418,8 @@
           )
         (let ((s4-1 -1))
           (dotimes (a0-21 10)
-            (when (-> v1-11 a0-21)
+          ;; <ap:preserve-this> skip borrow levels whose slot is still taken, so they wait instead of crashing.
+            (when (and (-> v1-11 a0-21) (not (ap-borrow-slot-busy? (-> v1-11 a0-21))))
               (set! s4-1 a0-21)
               (goto cfg-53)
               )

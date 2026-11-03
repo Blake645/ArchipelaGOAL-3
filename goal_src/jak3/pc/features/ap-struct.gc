@@ -72,20 +72,12 @@
   (none)
   )
 
-;; <ap:preserve-this> force-clear ctywide's borrow slot 4, to prevent multiple slot-4-dependent
-;; missions from being loaded simultaneously due to AP's non-linear unlock order (root cause of
-;; "could not find free borrow bank" crash).
 (defun ap-clear-ctywide-borrow-slot-4! ((expected-level symbol))
   (let ((ctywide-info (lookup-level-info 'ctywide)))
     (when (and ctywide-info
                (-> ctywide-info borrow borrow-info 4)
                (= (car (-> ctywide-info borrow borrow-info 4)) expected-level))
       (set! (-> ctywide-info borrow borrow-info 4) #f)
-      )
-    )
-  (let ((ctywide-live (level-get *level* 'ctywide)))
-    (when (and ctywide-live (-> ctywide-live borrow-level 4))
-      (set! (-> ctywide-live borrow-level 4) #f)
       )
     )
   (none)
@@ -246,6 +238,22 @@
 (defun ap-track-gem-spend! ((amount int))
   (+! (-> *ap-info-jak3* gems-spent) (the uint amount))
   (none))
+
+;; <ap:preserve-this> scouted contents of each secret's AP location, indexed by secret id (1-33).
+(define *ap-secret-scout-item* (new 'global 'boxed-array string 34))
+(define *ap-secret-scout-player* (new 'global 'boxed-array string 34))
+(dotimes (i 34)
+  (set! (-> *ap-secret-scout-item* i) (new 'global 'string 48 (the-as string #f)))
+  (set! (-> *ap-secret-scout-player* i) (new 'global 'string 20 (the-as string #f)))
+  )
+
+(defun ap-set-secret-scout! ((id int) (item string) (player string))
+  (when (and (> id 0) (< id 34))
+    (copy-string<-string (-> *ap-secret-scout-item* id) item)
+    (copy-string<-string (-> *ap-secret-scout-player* id) player)
+    )
+  (none)
+  )
 
 (defun ap-set-connection-status! ((status ap-connection-status))
   "Set the Archipelago connection status. Returns the status that was set."
