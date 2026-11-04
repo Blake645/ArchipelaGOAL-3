@@ -3361,6 +3361,8 @@
                  )
                 (else
                   (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
+                  (when (zero? (-> arg1 deathlink-death))
+                    (runs-on-jak-death 'endlessfall))
                   (go target-death (-> gp-0 mode))
                   )
                 )
@@ -3382,7 +3384,11 @@
                 )
               (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
               (if (= (-> self game mode) 'play)
-                  (go target-death (-> gp-0 mode))
+                  (begin
+                    (when (zero? (-> arg1 deathlink-death))
+                      (runs-on-jak-death (-> gp-0 mode)))
+                    (go target-death (-> gp-0 mode))
+                    )
                   )
               )
              (('death)
@@ -3425,7 +3431,11 @@
         (target-hit-move gp-0 (target-hit-orient gp-0 s5-0) target-board-falling-anim-trans (-> gp-0 speed))
         )
       (if (and (= (-> self game mode) 'play) (>= 0.0 (-> self fact health)))
-          (go target-death (-> gp-0 mode))
+          (begin
+            (when (zero? (-> arg1 deathlink-death))
+              (runs-on-jak-death (-> gp-0 mode)))
+            (go target-death (-> gp-0 mode))
+            )
           )
       )
     enter-state

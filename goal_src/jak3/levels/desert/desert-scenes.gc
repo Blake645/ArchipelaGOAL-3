@@ -6282,6 +6282,7 @@
                        ()
                        (when (-> self aborted?)
                          (disable *screen-filter*)
+                         (task-close! "desert-final-boss-resolution")
                          (task-close! "city-win-introduction")
                          )
                        (none)

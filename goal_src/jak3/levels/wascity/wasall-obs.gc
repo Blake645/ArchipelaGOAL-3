@@ -1297,7 +1297,7 @@
       (5380)
       (5390 (fadeout (frame-time-30 10)))
       (10000)
-      (10000 (task-close! "city-win-introduction"))
+      (10000 (task-close! "desert-final-boss-resolution") (task-close! "city-win-introduction"))
       )
     :cut-list '(208
        327

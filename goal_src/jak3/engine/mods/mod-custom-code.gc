@@ -58,7 +58,10 @@
   )
 (define-extern *vehicle-info* vehicle-info)
 (defun ap-deathlink-vehicle-check! ()
-  (when (!= (-> *game-info* current-vehicle) (vehicle-type-u8 vt27))
+  (when (and *target*
+             (focus-test? *target* pilot)
+             (nonzero? *vehicle-info*)
+             (!= (-> *game-info* current-vehicle) (vehicle-type-u8 vt27)))
     (let ((proc (handle->process (-> *vehicle-info* handle-by-vehicle-type (-> *game-info* current-vehicle)))))
       (when proc
         (if (and *target* (nonzero? (-> (the-as target *target*) pilot)))
