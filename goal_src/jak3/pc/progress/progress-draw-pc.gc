@@ -1,6 +1,13 @@
 ;;-*-Lisp-*-
 (in-package goal)
 
+(define-extern *ap-secret-scout-item* (array string))
+(define-extern *ap-secret-scout-player* (array string))
+(define-extern ap-secret-id (function game-secrets uint))
+(define-extern ap-secret-should-check? (function game-secrets symbol))
+(define *ap-secret-hover-index* -1)
+(define *ap-secret-hover-time* (the-as time-frame 0))
+(define *ap-secret-hover-last-draw* (the-as time-frame 0))
 #|
 
   Additional PC port specific file for overriding/expanding the progress menu
@@ -250,6 +257,32 @@
         (draw-highlight-bar arg0 arg1 (the int (+ 2.0 (-> arg1 origin y))) (the int (+ -1.0 f0-3)) f30-0))))
   (none))
 
+(define *ap-secret-hint-string* (new 'global 'string 80 (the-as string #f)))
+
+;; <ap:preserve-this> returns the AP hint text for secret row `idx` if it has been hovered long enough, else #f.
+(defun ap-secret-hover-hint ((idx int))
+  (let* ((entry (-> *menu-secrets-array* idx))
+         (secret-id (the int (ap-secret-id (-> entry secret))))
+         )
+    (when (and (= idx *ap-secret-hover-index*)
+               (>= (mod (the int (- (-> *display* real-clock frame-counter) *ap-secret-hover-time*)) (the int (seconds 2.0)))
+                   (the int (seconds 1.0)))
+               (ap-secret-should-check? (-> entry secret))
+               (!= (secret-item-option-method-12 entry) 4)
+               (not (logtest? (-> *game-info* purchase-secrets) (-> entry secret)))
+               (nonzero? (length (-> *ap-secret-scout-item* secret-id)))
+               )
+      (if (nonzero? (length (-> *ap-secret-scout-player* secret-id)))
+          (format (clear *ap-secret-hint-string*) "~S (~S)" (-> *ap-secret-scout-item* secret-id) (-> *ap-secret-scout-player* secret-id))
+          (format (clear *ap-secret-hint-string*) "~S" (-> *ap-secret-scout-item* secret-id))
+          )
+      (pc-encode-utf8-string *ap-secret-hint-string* *pc-encoded-temp-string*)
+      (return *pc-encoded-temp-string*)
+      )
+    )
+  (the-as string #f)
+  )
+
 (defmethod draw-option ((this menu-secret-option) (arg0 progress) (font-ctx font-context) (arg2 int) (arg3 symbol))
   (local-vars
     (sv-16 float)
@@ -415,6 +448,12 @@
                           (set! sv-240 (lookup-text! *common-text* sv-208 #f))
                         )
                       )
+                      ;; <ap:preserve-this> show what this secret sends in place of its name after hovering it.
+                      (let ((ap-hint (ap-secret-hover-hint s1-5)))
+                        (if ap-hint
+                            (set! sv-240 ap-hint)
+                            )
+                        )
                       (cond
                         ((logtest? (-> *menu-secrets-array* s1-5 flags) (secret-item-option-flags sf0))
                           (set! (-> font-ctx origin x) (adjust-x-if-needed (+ 10.0 (-> s3-3 x))))
@@ -530,6 +569,15 @@
           (draw-bg-box-outline arg0 (-> *progress-work* sub-header) (* 128.0 sv-16))
           (draw-bg-box-alpha-2 arg0 (-> *progress-work* footer) (* 64.0 sv-16))
           (draw-bg-box-outline arg0 (-> *progress-work* footer) (* 128.0 sv-16))
+          ;; <ap:preserve-this> track how long the current secret has been hovered, for the AP hint.
+          (let ((now (-> *display* real-clock frame-counter)))
+            (when (or (!= (-> this selected-index) *ap-secret-hover-index*)
+                      (< (seconds 0.1) (- now *ap-secret-hover-last-draw*)))
+              (set! *ap-secret-hover-index* (-> this selected-index))
+              (set! *ap-secret-hover-time* now)
+              )
+            (set! *ap-secret-hover-last-draw* now)
+            )
           (progress-method-47
             arg0
             font-ctx
