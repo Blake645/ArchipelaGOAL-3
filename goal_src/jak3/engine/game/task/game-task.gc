@@ -4364,7 +4364,10 @@
             :borrow '((wasstada 0 wasstadc display))
             ;; <ap:preserve-this> added open hook to check for archipelago items.
             :open? (lambda ((arg0 game-task-node-info))
-              (logtest? (-> *game-info* features) (game-feature gun)))
+              (and (logtest? (-> *game-info* features) (game-feature gun))
+                   (task-node-closed? (game-task-node arena-fight-2-resolution))
+              )
+            )
             :on-close #f
             :reset (new 'static 'task-reset-info
               :restart-info (new 'static 'resetter-params
