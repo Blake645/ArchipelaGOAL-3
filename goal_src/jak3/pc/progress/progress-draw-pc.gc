@@ -605,6 +605,7 @@
     (sv-256 string)
     (sv-272 game-task-node-info)
     (sv-288 text-id)
+    (prev-task game-task) ;; <ap:preserve-this> store the task from the previous row.
     )
   (set! sv-176 (fmax 0.0 (* 2.0 (- 0.5 (-> arg0 menu-transition)))))
   (set! sv-180 (new 'stack 'game-task-node-info))
@@ -618,6 +619,10 @@
   (set! (-> arg0 num-closed-tasks-found) 0)
   (set! (-> font-ctx alpha) sv-176)
   (set! (-> *game-info* mission-list 0) sv-180)
+  ;; <ap:preserve-this> these dummy nodes serve as the menu's in progress/completed headers.
+  ;; give them game-task none so it's easier to figure out which nodes are real and which ones are dummies.
+  (set! (-> sv-180 task) (game-task none))
+  (set! (-> sv-184 task) (game-task none))
   (set! (-> sv-180 description) (text-id progress-missions-todo))
   (set! (-> sv-184 description) (text-id progress-missions-completed))
   (progress-method-33 arg0 (-> *progress-work* body-footer))
@@ -636,6 +641,12 @@
             )
           (set! (-> sv-216 sv-192) v0-6)
           (1+! sv-192)
+          ;; <ap:preserve-this> duplicate each open node.
+          ;; the first will show the full task name. the second will show the node description.
+          (when (not (logtest? (-> v0-6 flags) (game-task-node-flag closed)))
+            (set! (-> sv-216 sv-192) v0-6)
+            (1+! sv-192)
+            )
           )
         )
       )
@@ -653,11 +664,19 @@
       (let ((s2-2 (-> *game-info* mission-list))
             (s1-2 (max 0 (the int (-> this current-index))))
             )
+        ;; <ap:preserve-this> start from the task of the row above the first visible row,
+        ;; so a scrolled-to duplicate row still knows it's the second copy.
+        (set! prev-task (if (> s1-2 0) (-> s2-2 (+ s1-2 -1) task) (game-task none)))
         (let* ((s0-1 (-> s2-2 s1-2))
                 (a1-10
                   (if (and (logtest? (-> s0-1 flags) (game-task-node-flag closed)) (task-complete? *game-info* (-> s0-1 task)))
                     (-> *game-info* play-list (-> s0-1 task) text-name)
-                    (-> s0-1 description)
+                    ;; <ap:preserve-this> identify duplicate or dummy nodes.
+                    (if (or (= (-> s0-1 task) prev-task)
+                            (= (-> s0-1 task) (game-task none)))
+                        (-> s0-1 description)
+                        (-> *game-info* play-list (-> s0-1 task) text-name)
+                        )
                   )
                 )
               )
@@ -679,12 +698,22 @@
             (set! sv-272 (-> s2-2 s1-2))
             (if (and (logtest? (-> sv-272 flags) (game-task-node-flag closed)) (task-complete? *game-info* (-> sv-272 task)))
                 (set! sv-288 (-> *game-info* play-list (-> sv-272 task) text-name))
-                (set! sv-288 (-> sv-272 description))
+                ;; <ap:preserve-this> identify duplicate or dummy nodes.
+                (if (or (= (-> sv-272 task) prev-task)
+                        (= (-> sv-272 task) (game-task none)))
+                    (set! sv-288 (-> sv-272 description))
+                    (set! sv-288 (-> *game-info* play-list (-> sv-272 task) text-name))
+                    )
             )
             (set! (-> font-ctx origin x) text-start-x)
             (cond
               ((or (= sv-288 (text-id progress-missions-todo)) (= sv-288 (text-id progress-missions-completed)))
                 (set! (-> font-ctx color) (font-color font-color-34))
+              )
+              ;; <ap:preserve-this> don't show an icon for the duplicate (description) row, just indent it under the name.
+              ((= (-> sv-272 task) prev-task)
+                (set-color! font-ctx (font-color font-color-32))
+                (set! (-> font-ctx origin x) (+ mission-circle-icon-width (adjust-x-if-needed (+ 14.0 (-> s3-0 x)))))
               )
               (else
                 (string-format "~S" (lookup-text! *common-text*
@@ -703,6 +732,7 @@
               (string-format "~S" (lookup-text! *common-text* sv-288 #f))
               (set! (-> font-ctx origin y) (+ f26-0 (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))))
             )
+            (set! prev-task (-> sv-272 task)) ;; <ap:preserve-this>
             (1+! s1-2)
           )
           (set! (-> this on-screen) (< (-> font-ctx origin y) (-> s3-0 w)))
@@ -725,62 +755,7 @@
   (none)
   )
 
-(defmethod draw-option ((this menu-highscores-option) (arg0 progress) (arg1 font-context) (arg2 int) (arg3 symbol))
-  (let ((f30-0 (fmax 0.0 (* 2.0 (- 0.5 (-> arg0 menu-transition)))))
-        (s4-0 *progress-work*)
-        )
-    (set! (-> arg1 alpha) f30-0)
-    (set-flags! arg1 (font-flags kerning middle large))
-    (progress-method-33 arg0 (-> s4-0 body-footer))
-    (progress-method-53 arg0 arg1)
-    (let ((f28-0 (the float (menu-highscores-option-method-12 this))))
-      (let* ((f0-2 (-> this current-index))
-             (f26-0 (- f0-2 (* (the float (the int (/ f0-2 f28-0))) f28-0)))
-             (f0-4 (+ 1.0 f26-0))
-             (f0-5 (- f0-4 (* (the float (the int (/ f0-4 f28-0))) f28-0)))
-             (s2-0 (-> this pages (the int f26-0)))
-             (s3-1 (-> this pages (the int f0-5)))
-             (s1-0 (get-scissor-stack-top arg0))
-             (f0-8 (- (-> s1-0 z) (-> s1-0 x)))
-             )
-        (when (!= f28-0 0.0)
-          (let ((f26-1 (* (- 1.0 (- f26-0 (* (the float (the int (/ f26-0 1.0))) 1.0))) f0-8)))
-            (set! (-> arg1 origin x) (+ (- f26-1 f0-8) (-> s1-0 x)))
-            (highscore-page-info-method-9
-             (the highscore-page-info s2-0)
-             arg0
-             arg1
-             (- f26-1 f0-8)
-             f30-0
-             )
-            (when (< 1.0 f28-0)
-              (set! (-> arg1 origin x) (+ f26-1 (-> s1-0 x)))
-              (highscore-page-info-method-9
-               (the highscore-page-info s3-1)
-               arg0
-               arg1
-               f26-1
-               f30-0
-               )
-              )
-            )
-          )
-        )
-      (progress-method-34 arg0)
-      (draw-header arg0 arg1 f30-0 (text-id progress-highscores))
-      (cond
-        ((< 1.0 f28-0)
-         (draw-prev-next-footer arg0 arg1 f30-0)
-         )
-        (else
-          (draw-bg-box-alpha-2 arg0 (-> s4-0 footer) (* 64.0 f30-0))
-          (draw-bg-box-outline arg0 (-> s4-0 footer) (* 128.0 f30-0))
-          )
-        )
-      )
-    )
-  (none)
-  )
+
 
 (defmethod highscore-page-info-method-9 ((this highscore-page-info) (arg0 progress) (arg1 font-context) (arg2 float) (arg3 float))
   (local-vars
