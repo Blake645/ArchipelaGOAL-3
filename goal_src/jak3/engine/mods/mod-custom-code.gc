@@ -470,92 +470,85 @@
     (clear-entity-kill-mask "krimson-wall-6")
     )
   ;; <ap:preserve-this> allows vinroom to be open when jak is near
-  (let ((door (entity-by-name "vin-door-ctyinda-1")))
-    (when door
-      (set! (cdr (res-lump-struct door 'on-notice pair)) '(#t '(vinroom)))
+  (overwrite-res-lump "vin-door-ctyinda-1" 'on-notice 'begin '(
+    '(vinroom)
+    ))
+  (overwrite-res-lump "hip-door-a-10" 'on-notice 'begin '(
+    '(gungame)
+    ))
+  (overwrite-res-lump "wstd-arena-plat-10" 'on-activate 'cond '(
+    ((or (task-open? "desert-catch-lizards-introduction")
+         ;;(task-open? "wascity-chase-introduction")
+         ;;(task-open? "wascity-chase-resolution")
+         (task-open? "arena-fight-2-resolution")
+         (task-open? "arena-fight-3-introduction"))
+     'wait)
+    ((or (task-open? "arena-fight-2-fight")) 'wait-end)
+    ((or (task-open? "arena-training-1-collect")) 'wait-show)
+    (else #f)
+    ))
+  ;; <ap:preserve-this> allows wascity garage door to open when you have the pass for it
+  (overwrite-res-lump "wascity-airlock-4" 'on-notice 'cond '(
+    ((game-item? pass-front-gate) '(desert-game desertb))
+    (else #f)
+    ))
+  (overwrite-res-lump "wascity-airlock-small-1" 'on-notice 'begin '(
+    '(wasdoors)
+    ))
+  (overwrite-res-lump "tpl-inner-airlock-door-1" 'on-notice 'begin '(
+    '(templea templex)
+    ))
+  (overwrite-res-lump "w-parking-spot-3" 'on-activate 'begin '(
+    #t
+    ))
+  ;; parking-spot auto-spawn: duplicate safe spawn logic from w-parking-spot
+  (let ((spot (the-as w-parking-spot (process-by-name "w-parking-spot-3" *active-pool*))))
+    (when (and spot (not (handle->process (-> spot vehicle))))
+      (w-parking-spot-method-23 spot)
       )
     )
-  (let ((gundoor (entity-by-name "hip-door-a-10")))
-    (when gundoor
-      (set! (cdr (res-lump-struct gundoor 'on-notice pair)) '((#t '(gungame))))
-      )
-    )
-  (let ((platform (entity-by-name "wstd-arena-plat-10")))
-    (when platform
-      (set! (cdr (res-lump-struct platform 'on-activate pair))  '(
-        ((or (task-open? "desert-catch-lizards-introduction")
-        ;;(task-open? "wascity-chase-introduction")
-        ;;(task-open? "wascity-chase-resolution")
-        (task-open? "arena-fight-2-resolution")
-        (task-open? "arena-fight-3-introduction")) 'wait)
-        ((or (task-open? "arena-fight-2-fight")) 'wait-end)
-        ((or (task-open? "arena-training-1-collect")) 'wait-show)
-        (else #f))))
-      )
-    ;; <ap:preserve-this> allows wascity garage door to open when you have the pass for it
-    (let ((wascity-garage-door-front (entity-by-name "wascity-airlock-4")))
-      (when wascity-garage-door-front
-        (set! (cdr (res-lump-struct wascity-garage-door-front 'on-notice pair)) '(((game-item? pass-front-gate) '(desert-game desertb)) (else #f)))
-        )
-      )
-    (let ((wascity-small-door (entity-by-name "wascity-airlock-small-1")))
-      (when wascity-small-door
-        (set! (cdr (res-lump-struct wascity-small-door 'on-notice pair)) '((#t '(wasdoors))))
-        )
-      )
-    (let ((temple-door (entity-by-name "tpl-inner-airlock-door-1")))
-      (when temple-door
-        (set! (cdr (res-lump-struct temple-door 'on-notice pair)) '((#t '(templea templex))))
-        )
-      )
-    (let ((parking-spot (entity-by-name "w-parking-spot-3")))
-      (when parking-spot
-        (set! (cdr (res-lump-struct parking-spot 'on-activate pair)) '(#t))
-        )
-      )
-    ;; parking-spot auto-spawn: duplicate safe spawn logic from w-parking-spot
-    (let ((spot (the-as w-parking-spot (process-by-name "w-parking-spot-3" *active-pool*))))
-      (when (and spot (not (handle->process (-> spot vehicle))))
-        (w-parking-spot-method-23 spot)
-        )
-      )
-    ;; <ap:preserve-this> hint text for metal head city dark eco door
-    (let ((dark-eco-door (entity-by-name "mhcity-dark-eco-door-1")))
-      (when (and dark-eco-door
-                 *target*
-                 (logtest? (-> *game-info* features) (game-feature pass-port-mh))
-                 (< (vector-vector-distance (-> dark-eco-door extra trans) (-> *target* control trans)) (meters 10))
-                 (not (movie?))
-                 (let ((door-proc (-> dark-eco-door extra process)))
-                   (and door-proc
-                        (or (not (-> door-proc state))
-                            (not (= (-> door-proc state name) 'broken))
-                            )))
-                 )
-        (script-eval '(talker-spawn "hint01"))))
+  ;; <ap:preserve-this> hint text for metal head city dark eco door
+  (let ((dark-eco-door (entity-by-name "mhcity-dark-eco-door-1")))
+    (when (and dark-eco-door
+               *target*
+               (logtest? (-> *game-info* features) (game-feature pass-port-mh))
+               (< (vector-vector-distance (-> dark-eco-door extra trans) (-> *target* control trans)) (meters 10))
+               (not (movie?))
+               (let ((door-proc (-> dark-eco-door extra process)))
+                 (and door-proc
+                      (or (not (-> door-proc state))
+                          (not (= (-> door-proc state name) 'broken))
+                          )))
+               )
+      (script-eval '(talker-spawn "hint01"))))
 
-    (overwrite-res-lump "cty-door-3" 'on-notice 'begin '(
-      (cond
-        ((and (task-closed? "factory-sky-battle-introduction")
-              (not (task-closed? "factory-sky-battle-resolution"))
-              (or (eq? (level-status? 'lfacrm1) 'loaded) (eq? (level-status? 'lfacrm1) 'active))
-              )
-         '(ctyslumc factorya)
-         )
-        ((task-closed? "tower-destroy-resolution")
-         '(ctyslumc factorya)
-         )
-        ((and (task-closed? "factory-sky-battle-resolution") (< (send-event self 'distance) 483840))
-         '(ctyslumc towerc)
-         )
-        )
-      ))
-    (overwrite-res-lump "precur-door-a-4" 'open-test 'begin '(
-      #t
-      ))
-    (overwrite-res-lump "com-airlock-outer-mhcity-1" 'on-notice 'begin '(
-      '(forestx)
-      ))
+  (overwrite-res-lump "cty-door-3" 'on-notice 'begin '(
+    (cond
+      ((and (task-closed? "factory-sky-battle-introduction")
+            (not (task-closed? "factory-sky-battle-resolution"))
+            (or (eq? (level-status? 'lfacrm1) 'loaded) (eq? (level-status? 'lfacrm1) 'active))
+            )
+       '(ctyslumc factorya)
+       )
+      ((task-closed? "tower-destroy-resolution")
+       '(ctyslumc factorya)
+       )
+      ((and (task-closed? "factory-sky-battle-resolution") (< (send-event self 'distance) 483840))
+       '(ctyslumc towerc)
+       )
+      )
+    ))
+  (overwrite-res-lump "precur-door-a-4" 'open-test 'begin '(
+    #t
+    ))
+  (overwrite-res-lump "com-airlock-outer-mhcity-1" 'on-notice 'begin '(
+    '(forestx)
+    ))
+
+  (overwrite-res-lump "tpl-mardoor-4" 'on-notice 'when '(
+    (task-closed? "temple-tests-introduction")
+    '(templea templec)
+    ))
     ;; desert
     (let ((region-1203 (region-lookup-by-id 1203)))
       (when region-1203
