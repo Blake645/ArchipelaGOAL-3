@@ -521,7 +521,14 @@
        )
      )
     (('desertg)
-     (prototypes-game-visible-set! '("des-egg.mb") (not (task-node-closed? (game-task-node nest-eggs-wall))) this)
+     (prototypes-game-visible-set!
+       '("des-egg.mb")
+       (not (or (task-node-closed? (game-task-node nest-eggs-wall))
+                (task-node-closed? (game-task-node nest-hunt-introduction))
+                )
+            )
+       this
+       )
      )
     (('wasstada)
      (prototypes-game-visible-set!
@@ -531,7 +538,14 @@
        )
      )
     (('desertg)
-     (prototypes-game-visible-set! '("des-egg.mb") (not (task-node-closed? (game-task-node nest-eggs-wall))) this)
+     (prototypes-game-visible-set!
+       '("des-egg.mb")
+       (not (or (task-node-closed? (game-task-node nest-eggs-wall))
+                (task-node-closed? (game-task-node nest-hunt-introduction))
+                )
+            )
+       this
+       )
      )
     (('templea 'templed)
      (prototypes-game-visible-set!

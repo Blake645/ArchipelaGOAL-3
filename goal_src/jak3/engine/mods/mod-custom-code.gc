@@ -781,6 +781,7 @@
       (when region-1155
         (set! (-> region-1155 on-enter)
           '(begin
+            (when (and (task-open? "nest-eggs-wall") (task-closed? "nest-hunt-introduction")) (task-close! "nest-eggs-wall"))
             (when (task-closed? "nest-eggs-wall") (task-close! "nest-eggs-tunnel"))
           )
           )

@@ -132,7 +132,9 @@
     (transform-post)
     )
   :trans (behavior ()
-    (if (task-node-closed? (-> self task-node))
+    (if (or (task-node-closed? (-> self task-node))
+            (task-node-closed? (game-task-node nest-hunt-introduction))
+            )
         (go-virtual die)
         )
     )
@@ -150,7 +152,9 @@
   "Set up a newly created process from the entity that created it."
   (set! (-> this task-node) (game-task-node nest-eggs-wall))
   (cond
-    ((task-node-closed? (-> this task-node))
+    ((or (task-node-closed? (-> this task-node))
+         (task-node-closed? (game-task-node nest-hunt-introduction))
+         )
      (go (method-of-object this die))
      )
     (else

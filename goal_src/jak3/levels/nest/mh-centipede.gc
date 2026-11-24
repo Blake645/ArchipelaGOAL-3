@@ -706,7 +706,7 @@
              )
         (when a0-4
           (when (send-event a0-4 'complete)
-            (talker-spawn-func (-> *talker-speech* 133) *entity-pool* (target-pos 0) (the-as region #f))
+            ;;(talker-spawn-func (-> *talker-speech* 133) *entity-pool* (target-pos 0) (the-as region #f))
             (cleanup-for-death self)
             (go-virtual wait-for-children)
             )

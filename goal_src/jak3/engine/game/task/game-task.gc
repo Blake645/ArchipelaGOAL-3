@@ -10382,10 +10382,7 @@
             :borrow '()
             ;; <ap:preserve-this> added open hook to check for archipelago items and features.
             :open? (lambda ((arg0 game-task-node-info))
-          (and (ap-route-spargus-to-nest?)
-                (logtest? (-> *game-info* items) (game-items amulet0))
-              )
-            )
+            (ap-route-spargus-to-nest?))
             :on-close #f
             :reset #f
             :suck-death-count #xa5
@@ -10403,7 +10400,6 @@
                 :action (game-task-action say)
                 :tex (game-task-icon gaticon-02)
                 :scene "nest-hunt-intro"
-                :distance (meters 70)
                 )
               (new 'static 'game-task-event
                 :actor (game-task-actor minimap)

@@ -182,6 +182,7 @@
     )
   (if (or (logtest? (-> this entity extra perm status) (entity-perm-status subtask-complete))
           (or (task-node-closed? (game-task-node nest-eggs-resolution))
+              (task-node-closed? (game-task-node nest-hunt-sig))
               (task-closed? (the-as string ((method-of-type res-lump get-property-struct)
                                             (-> this entity)
                                             'task-name
@@ -993,6 +994,7 @@
   (set! (-> this minimap) #f)
   (if (or (logtest? (-> this entity extra perm status) (entity-perm-status subtask-complete))
           (or (task-node-closed? (game-task-node nest-eggs-resolution))
+              (task-node-closed? (game-task-node nest-hunt-sig))
               (task-closed?
                 (the-as
                   string
