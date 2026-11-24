@@ -1065,6 +1065,7 @@
                              (send-event *target* 'get-pickup (pickup-type fuel-cell) (the float (-> arg0 task)))
                              (give *game-info* 'fuel-cell (the float (-> arg0 task)) (the-as handle #f))
                              )
+                             (logior! (-> *game-info* task-perm-list data (-> arg0 task) status) (entity-perm-status complete))
                          )
                        arg0
                        )

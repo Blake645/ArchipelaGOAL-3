@@ -2417,6 +2417,7 @@
       (suspend)
       )
     (task-node-close! (game-task-node desert-rescue-resolution) 'event)
+    (task-node-close! (game-task-node desert-rescue-hold-doors) 'event)
     (send-event self 'complete)
     )
   )
