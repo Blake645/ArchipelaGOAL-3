@@ -2347,14 +2347,22 @@
   this
   )
 
+(define-perm *ap-slot-peek-buffer* pointer (the-as pointer 0))
+
 (defun ap-peek-save-slot-names! ((card-handle int))
   "Read just the ap-slot-name/ap-slot-seed tags out of each of the 4 save files,
    without touching gameplay state. Populates *ap-slot-peek*."
+  (when (zero? *ap-slot-peek-buffer*)
+    (set! *ap-slot-peek-buffer*
+          (the-as pointer (malloc (if *debug-segment* 'debug 'global) (the-as int (+ (-> game-save size) #x1e000 16))))
+          )
+    )
   (dotimes (slot-idx 4)
     (let ((peek (-> *ap-slot-peek* slots slot-idx)))
       (set! (-> peek valid?) #f)
-      (when (= (-> *progress-save-info* file slot-idx present) 1)
-        (let ((buf (the-as pointer (malloc 'debug (the-as int (+ (-> game-save size) #x8000))))))
+      (when (and (nonzero? *ap-slot-peek-buffer*)
+                 (= (-> *progress-save-info* file slot-idx present) 1))
+        (let ((buf *ap-slot-peek-buffer*))
           (mc-load card-handle slot-idx buf)
           (let ((result (mc-status-code busy))
                 (spin-count 0)
