@@ -592,6 +592,120 @@
   (none)
 )
 
+;; <ap:preserve-this> side missions in the missions menu.
+;; vanilla side missions (bbush tasks 73-137) have no :description/:text-name, so the menu can't name them.
+;; names here match the apworld's location names, indexed by (task - 73). 135 is city-gun-course-play-for-fun (not a side mission).
+(define *ap-side-mission-names*
+  (new 'static 'boxed-array :type string
+    "Desert Orb Search 1" ;; 73
+    "Desert Orb Search 2" ;; 74
+    "Desert Orb Search 3" ;; 75
+    "Desert Orb Search 4" ;; 76
+    "Desert Orb Search 5" ;; 77
+    "Desert Orb Search 6" ;; 78
+    "Desert Orb Search 7" ;; 79
+    "Desert Orb Search 8" ;; 80
+    "Desert Orb Search 9" ;; 81
+    "Desert Orb Search 10" ;; 82
+    "Desert Orb Search 11" ;; 83
+    "Desert Orb Search 12" ;; 84
+    "Desert Orb Search 13" ;; 85
+    "Desert Orb Search 14" ;; 86
+    "Spargus Orb Search 1" ;; 87
+    "Spargus Orb Search 2" ;; 88
+    "Spargus Orb Search 3" ;; 89
+    "Spargus Orb Search 4" ;; 90
+    "Spargus Orb Search 5" ;; 91
+    "Spargus Orb Search 6" ;; 92
+    "Spargus Orb Search 7" ;; 93
+    "Spargus Orb Search 8" ;; 94
+    "City Orb Search 1 (Outside Palace Ruins Section)" ;; 95
+    "City Orb Search 2 (Slums/New Haven Section)" ;; 96
+    "City Orb Search 3 (Outside Palace Ruins Section)" ;; 97
+    "City Orb Search 4 (Outside Palace Ruins Section)" ;; 98
+    "City Orb Search 5 (Outside Palace Ruins Section)" ;; 99
+    "City Orb Search 6 (Slums/New Haven Section)" ;; 100
+    "City Orb Search 7 (Slums/New Haven Section)" ;; 101
+    "City Orb Search 8 (Slums/New Haven Section)" ;; 102
+    "City Orb Search 9 (Slums/New Haven Section)" ;; 103
+    "City Orb Search 10 (Slums/New Haven Section)" ;; 104
+    "City Orb Search 11 (Industrial Section B)" ;; 105
+    "City Orb Search 12 (Industrial Section B)" ;; 106
+    "City Orb Search 13 (Industrial Section A)" ;; 107
+    "City Orb Search 14 (Industrial Section A)" ;; 108
+    "City Orb Search 15 (Industrial Section A)" ;; 109
+    "City Orb Search 16 (Port)" ;; 110
+    "City Orb Search 17 (Port)" ;; 111
+    "City Orb Search 18 (Port)" ;; 112
+    "City Orb Search 19 (Port)" ;; 113
+    "Ring Race #1 (Desert)" ;; 114
+    "Ring Race #2 (Desert)" ;; 115
+    "Ring Race #3 (Spargus)" ;; 116
+    "Ring Race #4 (Spargus)" ;; 117
+    "Ring Race #5 (Slums/New Haven Section)" ;; 118
+    "Ring Race #6 (Industrial Section A)" ;; 119
+    "Destroy Egg Spiders (Desert)" ;; 120
+    "Spirit Chase #1 (Desert)" ;; 121
+    "Spirit Chase #2 (Spargus)" ;; 122
+    "Spirit Chase #3 (Slums/New Haven Section)" ;; 123
+    "Chase Timer Challenge #1 (Desert)" ;; 124
+    "Chase Timer Challenge #2 (Spargus)" ;; 125
+    "Air Time Challenge (Desert)" ;; 126
+    "Total Air Time Challenge (Desert)" ;; 127
+    "Jump Distance Challenge (Desert)" ;; 128
+    "Total Jump Distance Challenge (Desert)" ;; 129
+    "Roll Count Challenge (Desert)" ;; 130
+    "Desert Time Trial" ;; 131
+    "Desert Rally Side Mission" ;; 132
+    "City Port Attack Side Mission" ;; 133
+    "Desert Rescue Side Mission" ;; 134
+    "" ;; 135
+    "JET-Board Side Mission (Industrial Section A)" ;; 136
+    "Destroy Marauders Side Mission (Desert)" ;; 137
+    )
+  )
+
+(defun ap-side-mission-task? ((task game-task))
+  (let ((task-num (the-as int task)))
+    (and (>= task-num 73) (<= task-num 137) (!= task-num 135))
+    )
+  )
+
+(defun ap-side-mission-done? ((task game-task))
+  "True if this side mission's AP check has been sent."
+  (let ((found #f))
+    (dotimes (i (the-as int (-> *ap-info-jak3* next-side-mission-index)))
+      (if (= (-> *ap-info-jak3* side-missions-checked i) (the-as uint task))
+          (set! found #t)
+          )
+      )
+    found
+    )
+  )
+
+(defun ap-mission-list-format! ((node game-task-node-info) (side-header game-task-node-info))
+  "If node is the side missions header or a side mission, write its line into *temp-string* and return #t."
+  (let ((str (cond
+               ((= node side-header) "Side Missions")
+               ((ap-side-mission-task? (-> node task)) (-> *ap-side-mission-names* (- (the-as int (-> node task)) 73)))
+               (else (the-as string #f))
+               )
+             )
+        )
+    (cond
+      (str
+       (clear *pc-encoded-temp-string*)
+       (pc-encode-utf8-string str *pc-encoded-temp-string*)
+       (string-format "~S" *pc-encoded-temp-string*)
+       #t
+       )
+      (else
+        #f
+        )
+      )
+    )
+  )
+
 (defmethod draw-option ((this menu-missions-option) (arg0 progress) (font-ctx font-context) (arg2 int) (arg3 symbol))
   (local-vars
     (sv-176 float)
@@ -606,10 +720,13 @@
     (sv-272 game-task-node-info)
     (sv-288 text-id)
     (prev-task game-task) ;; <ap:preserve-this> store the task from the previous row.
+    (side-header game-task-node-info) ;; <ap:preserve-this> "Side Missions" header row.
+    (side-last-task game-task) ;; <ap:preserve-this>
     )
   (set! sv-176 (fmax 0.0 (* 2.0 (- 0.5 (-> arg0 menu-transition)))))
   (set! sv-180 (new 'stack 'game-task-node-info))
   (set! sv-184 (new 'stack 'game-task-node-info))
+  (set! side-header (new 'stack 'game-task-node-info)) ;; <ap:preserve-this>
   (set! (-> arg0 current-task-index) (length (-> *game-info* sub-task-list)))
   (set! (-> arg0 current-line-index) -1)
   (set! (-> arg0 current-task) (game-task unknown))
@@ -623,6 +740,7 @@
   ;; give them game-task none so it's easier to figure out which nodes are real and which ones are dummies.
   (set! (-> sv-180 task) (game-task none))
   (set! (-> sv-184 task) (game-task none))
+  (set! (-> side-header task) (game-task none)) ;; <ap:preserve-this>
   (set! (-> sv-180 description) (text-id progress-missions-todo))
   (set! (-> sv-184 description) (text-id progress-missions-completed))
   (progress-method-33 arg0 (-> *progress-work* body-footer))
@@ -650,6 +768,26 @@
           )
         )
       )
+    ;; <ap:preserve-this> side missions section, after the main missions. lists every side mission that is
+    ;; currently available or already checked, one row per task (the first open node, or any node if done).
+    (set! side-last-task (game-task none))
+    (dotimes (s2-0 (length (-> *game-info* sub-task-list)))
+      (let ((side-node (-> *game-info* sub-task-list s2-0)))
+        (when (and (nonzero? s2-0)
+                   (ap-side-mission-task? (-> side-node task))
+                   (!= (-> side-node task) side-last-task)
+                   (or (ap-side-mission-done? (-> side-node task)) (game-task-node-info-method-12 side-node))
+                   )
+          (when (= side-last-task (game-task none))
+            (set! (-> sv-216 sv-192) side-header)
+            (1+! sv-192)
+            )
+          (set! side-last-task (-> side-node task))
+          (set! (-> sv-216 sv-192) side-node)
+          (1+! sv-192)
+          )
+        )
+      )
     (set! (-> arg0 total-num-tasks) sv-192)
     (sort-task-node-result (-> arg0 total-num-tasks))
     (set-flags! font-ctx (font-flags kerning large))
@@ -667,22 +805,25 @@
         ;; <ap:preserve-this> start from the task of the row above the first visible row,
         ;; so a scrolled-to duplicate row still knows it's the second copy.
         (set! prev-task (if (> s1-2 0) (-> s2-2 (+ s1-2 -1) task) (game-task none)))
-        (let* ((s0-1 (-> s2-2 s1-2))
-                (a1-10
-                  (if (and (logtest? (-> s0-1 flags) (game-task-node-flag closed)) (task-complete? *game-info* (-> s0-1 task)))
-                    (-> *game-info* play-list (-> s0-1 task) text-name)
-                    ;; <ap:preserve-this> identify duplicate or dummy nodes.
-                    (if (or (= (-> s0-1 task) prev-task)
-                            (= (-> s0-1 task) (game-task none)))
-                        (-> s0-1 description)
-                        (-> *game-info* play-list (-> s0-1 task) text-name)
-                        )
+        ;; <ap:preserve-this> the side missions header and side mission rows use our own names.
+        (when (not (ap-mission-list-format! (-> s2-2 s1-2) side-header))
+          (let* ((s0-1 (-> s2-2 s1-2))
+                  (a1-10
+                    (if (and (logtest? (-> s0-1 flags) (game-task-node-flag closed)) (task-complete? *game-info* (-> s0-1 task)))
+                      (-> *game-info* play-list (-> s0-1 task) text-name)
+                      ;; <ap:preserve-this> identify duplicate or dummy nodes.
+                      (if (or (= (-> s0-1 task) prev-task)
+                              (= (-> s0-1 task) (game-task none)))
+                          (-> s0-1 description)
+                          (-> *game-info* play-list (-> s0-1 task) text-name)
+                          )
+                    )
                   )
                 )
-              )
-          (set! sv-256 (lookup-text! *common-text* a1-10 #f))
+            (set! sv-256 (lookup-text! *common-text* a1-10 #f))
+            )
+          (string-format "~S" sv-256)
           )
-        (string-format "~S" sv-256)
         (let ((f28-0 (print-game-text *temp-string* font-ctx #t 44 (bucket-id hud-draw-hud-alpha)))
               (text-start-x (adjust-x-if-needed (+ 10.0 (-> s3-0 x))))
               )
@@ -696,28 +837,20 @@
           (set! (-> font-ctx height) sv-188)
           (while (and (< (-> font-ctx origin y) (-> s3-0 w)) (< s1-2 (-> arg0 total-num-tasks)))
             (set! sv-272 (-> s2-2 s1-2))
-            (if (and (logtest? (-> sv-272 flags) (game-task-node-flag closed)) (task-complete? *game-info* (-> sv-272 task)))
-                (set! sv-288 (-> *game-info* play-list (-> sv-272 task) text-name))
-                ;; <ap:preserve-this> identify duplicate or dummy nodes.
-                (if (or (= (-> sv-272 task) prev-task)
-                        (= (-> sv-272 task) (game-task none)))
-                    (set! sv-288 (-> sv-272 description))
-                    (set! sv-288 (-> *game-info* play-list (-> sv-272 task) text-name))
-                    )
-            )
             (set! (-> font-ctx origin x) text-start-x)
             (cond
-              ((or (= sv-288 (text-id progress-missions-todo)) (= sv-288 (text-id progress-missions-completed)))
+              ;; <ap:preserve-this> "Side Missions" header, drawn like the To Do / Completed headers.
+              ((= sv-272 side-header)
                 (set! (-> font-ctx color) (font-color font-color-34))
+                (ap-mission-list-format! sv-272 side-header)
+                (let ((f26-0 (-> font-ctx origin y)))
+                  (set! (-> font-ctx origin y) (+ f26-0 (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))))
+                )
               )
-              ;; <ap:preserve-this> don't show an icon for the duplicate (description) row, just indent it under the name.
-              ((= (-> sv-272 task) prev-task)
-                (set-color! font-ctx (font-color font-color-32))
-                (set! (-> font-ctx origin x) (+ mission-circle-icon-width (adjust-x-if-needed (+ 14.0 (-> s3-0 x)))))
-              )
-              (else
+              ;; <ap:preserve-this> side mission row: done/todo icon from its AP check, then its name.
+              ((ap-side-mission-task? (-> sv-272 task))
                 (string-format "~S" (lookup-text! *common-text*
-                                      (if (logtest? (-> sv-272 flags) (game-task-node-flag closed))
+                                      (if (ap-side-mission-done? (-> sv-272 task))
                                           (text-id progress-missions-complete-icon)
                                           (text-id progress-missions-todo-icon)
                                       )
@@ -726,11 +859,49 @@
                 (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
                 (set-color! font-ctx (font-color font-color-32))
                 (set! (-> font-ctx origin x) (+ mission-circle-icon-width (adjust-x-if-needed (+ 14.0 (-> s3-0 x)))))
+                (ap-mission-list-format! sv-272 side-header)
+                (let ((f26-0 (-> font-ctx origin y)))
+                  (set! (-> font-ctx origin y) (+ f26-0 (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))))
+                )
               )
-            )
-            (let ((f26-0 (-> font-ctx origin y)))
-              (string-format "~S" (lookup-text! *common-text* sv-288 #f))
-              (set! (-> font-ctx origin y) (+ f26-0 (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))))
+              (else
+                (if (and (logtest? (-> sv-272 flags) (game-task-node-flag closed)) (task-complete? *game-info* (-> sv-272 task)))
+                    (set! sv-288 (-> *game-info* play-list (-> sv-272 task) text-name))
+                    ;; <ap:preserve-this> identify duplicate or dummy nodes.
+                    (if (or (= (-> sv-272 task) prev-task)
+                            (= (-> sv-272 task) (game-task none)))
+                        (set! sv-288 (-> sv-272 description))
+                        (set! sv-288 (-> *game-info* play-list (-> sv-272 task) text-name))
+                        )
+                )
+                (set! (-> font-ctx origin x) text-start-x)
+                (cond
+                  ((or (= sv-288 (text-id progress-missions-todo)) (= sv-288 (text-id progress-missions-completed)))
+                    (set! (-> font-ctx color) (font-color font-color-34))
+                  )
+                  ;; <ap:preserve-this> don't show an icon for the duplicate (description) row, just indent it under the name.
+                  ((= (-> sv-272 task) prev-task)
+                    (set-color! font-ctx (font-color font-color-32))
+                    (set! (-> font-ctx origin x) (+ mission-circle-icon-width (adjust-x-if-needed (+ 14.0 (-> s3-0 x)))))
+                  )
+                  (else
+                    (string-format "~S" (lookup-text! *common-text*
+                                          (if (logtest? (-> sv-272 flags) (game-task-node-flag closed))
+                                              (text-id progress-missions-complete-icon)
+                                              (text-id progress-missions-todo-icon)
+                                          )
+                                        #f)
+                    )
+                    (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))
+                    (set-color! font-ctx (font-color font-color-32))
+                    (set! (-> font-ctx origin x) (+ mission-circle-icon-width (adjust-x-if-needed (+ 14.0 (-> s3-0 x)))))
+                  )
+                )
+                (let ((f26-0 (-> font-ctx origin y)))
+                  (string-format "~S" (lookup-text! *common-text* sv-288 #f))
+                  (set! (-> font-ctx origin y) (+ f26-0 (print-game-text *temp-string* font-ctx #f 44 (bucket-id hud-draw-hud-alpha))))
+                )
+              )
             )
             (set! prev-task (-> sv-272 task)) ;; <ap:preserve-this>
             (1+! s1-2)
